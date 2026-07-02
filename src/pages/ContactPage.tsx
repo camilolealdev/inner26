@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { InstagramIcon, WhatsAppIcon } from '../constants';
 import { useToast } from '../context/ToastContext';
+import { submitLead } from '../utils/leads';
 
 const ContactPage: React.FC = () => {
   useEffect(() => {
@@ -31,9 +32,10 @@ const ContactPage: React.FC = () => {
     email: '',
     message: '',
     type: 'clase',
+    consent: false,
     honeypot: '',
   });
-  
+
   const [focusedField, setFocusedField] = useState<string | null>(null);
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -44,16 +46,28 @@ const ContactPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formState.honeypot) return; // Bot protection
+    if (!formState.consent) {
+      showToast('Debes aceptar la política de privacidad para continuar.', 'error');
+      return;
+    }
     const typeLabel: Record<string, string> = {
       clase: 'Clases', evento: 'Eventos', producto: 'Tienda', otro: 'Otro',
     };
     const text = encodeURIComponent(
       `Hola Inner Spirit, me llamo ${formState.name} (${formState.email}).\nMotivo: ${typeLabel[formState.type] ?? formState.type}\n\n${formState.message}`
     );
+    submitLead({
+      source: 'contact',
+      name: formState.name,
+      email: formState.email,
+      interest: typeLabel[formState.type] ?? formState.type,
+      message: formState.message,
+      consent: true,
+    });
     showToast('Abriendo WhatsApp con tu mensaje...', 'success');
     // Abrir dentro del gesto del usuario: un window.open diferido lo bloquean los popup blockers.
     window.open(`https://wa.me/573212248261?text=${text}`, '_blank', 'noopener,noreferrer');
-    setFormState({ name: '', email: '', message: '', type: 'clase', honeypot: '' });
+    setFormState({ name: '', email: '', message: '', type: 'clase', consent: false, honeypot: '' });
   };
   
   const getInputClass = (fieldName: string) => `
@@ -218,6 +232,22 @@ const ContactPage: React.FC = () => {
                                 ></textarea>
                             </div>
                             
+                            <div className="flex items-start gap-3">
+                                <input
+                                    id="contact-consent"
+                                    type="checkbox"
+                                    name="consent"
+                                    checked={formState.consent}
+                                    onChange={(e) => setFormState((prev) => ({ ...prev, consent: e.target.checked }))}
+                                    className="mt-1 h-4 w-4 shrink-0 accent-accent"
+                                    required
+                                />
+                                <label htmlFor="contact-consent" className="text-sm text-stone-500 leading-relaxed">
+                                    Autorizo el tratamiento de mis datos según la{' '}
+                                    <a href="/privacidad" className="underline hover:text-accent">política de privacidad</a>.
+                                </label>
+                            </div>
+
                             <div className="pt-4">
                                 <button type="submit" className="w-full bg-stone-900 text-white font-heading text-xl py-4 hover:bg-accent transition-colors duration-500">
                                     Enviar Mensaje

@@ -40,6 +40,11 @@ El `window.open` estaba dentro de un `setTimeout(…, 500)`, fuera del gesto del
 ### 9. `sitemap.xml` con fechas estáticas
 `lastmod` actualizado de `2026-03-30` a `2026-07-01` en las 8 URLs.
 
+### 10. Captura real de leads (contacto + newsletter)  *(antes pendiente C)*
+- **Backend:** `api/leads.ts` (POST) valida email, honeypot anti-bot y **consentimiento explícito**; persiste en la tabla `leads` (Postgres) vía `recordLead`/`ensureLeadsSchema` en `api/_lib/db.ts`. Degrada con elegancia: si no hay `DATABASE_URL`, responde 200 `{stored:false}` sin romper nada.
+- **Frontend:** `ContactSection`, `ContactPage` y `NewsletterSection` ahora envían el lead con `submitLead()` (`src/utils/leads.ts`, *fire-and-forget*, no bloquea la UX) y añaden una **casilla de consentimiento obligatoria** que enlaza a `/privacidad`. Se mantiene el redirect a WhatsApp como canal principal.
+- ⚠️ **Dependencia legal:** el almacenamiento de datos personales solo debe activarse en producción **cuando la política de privacidad esté completa** (ver PENDIENTE B). La casilla ya referencia `/privacidad`.
+
 ---
 
 ## 🟡 PENDIENTE (requieren tu input o un deploy real)
@@ -54,8 +59,8 @@ Antes de promover a producción, desplegar a un preview de Vercel y comprobar:
 ### B. Placeholders legales de privacidad — `src/pages/PrivacyPage.tsx`  *(no puedo resolverlo sin datos)*
 Faltan datos reales del negocio: `[RAZÓN SOCIAL]`, `[NIT]`, `[CORREO HABEAS DATA]`, `[DIRECCIÓN LEGAL]`. Obligatorio para Habeas Data (Colombia). **Necesito que me pases estos datos** y los completo. (No los invento por ser información legal.)
 
-### C. Captura real de leads (contacto / newsletter)  *(decisión de producto)*
-Hoy los formularios solo abren WhatsApp; el "newsletter" no suscribe a ningún sistema. Definir destino (endpoint propio, Mailchimp/Brevo, Cal.com, etc.) y si quieres registrar un evento de analítica. Dime la herramienta y lo implemento.
+### C. ~~Captura de leads~~ ✅ RESUELTO — ver punto 10 arriba
+Implementada sobre la BD Postgres existente. Pendiente opcional: si prefieres además un proveedor externo (Mailchimp/Brevo) o un evento de analítica, dímelo y lo integro.
 
 ### D. Dominio `.co` vs `.net`  *(decisión consciente — recordatorio)*
 `canonical`, `sitemap.xml`, `robots.txt`, OG y `.env.example` usan `innerspirit.co` **a propósito** (per memoria del proyecto). Recordatorio: al lanzar en `innerspirit.net`, alinear estos valores o el SEO se resiente. No es un bug.

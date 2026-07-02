@@ -2,6 +2,7 @@
 import React from 'react';
 import Ribbons from '../effects/Ribbons';
 import { useToast } from '../../context/ToastContext';
+import { submitLead } from '../../utils/leads';
 
 const NewsletterSection: React.FC = () => {
   const { showToast } = useToast();
@@ -9,7 +10,13 @@ const NewsletterSection: React.FC = () => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const email = (form.querySelector('input[type="email"]') as HTMLInputElement)?.value ?? '';
+    const consent = (form.querySelector('input[name="consent"]') as HTMLInputElement)?.checked ?? false;
+    if (!consent) {
+      showToast('Debes aceptar la política de privacidad para continuar.', 'error');
+      return;
+    }
     const text = encodeURIComponent(`Hola Inner Spirit, quiero unirme a la comunidad y recibir noticias. Mi correo es: ${email}`);
+    submitLead({ source: 'newsletter', email, consent: true });
     showToast('Abriendo WhatsApp para confirmar tu suscripción...', 'success');
     // Abrir dentro del gesto del usuario: un window.open diferido lo bloquean los popup blockers.
     window.open(`https://wa.me/573212248261?text=${text}`, '_blank', 'noopener,noreferrer');
@@ -47,28 +54,36 @@ const NewsletterSection: React.FC = () => {
           ))}
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col sm:flex-row gap-0 max-w-md mx-auto border-b transition-colors focus-within:border-opacity-100"
-          style={{ borderColor: '#A0A083' }}
-        >
-          <input
-            type="email"
-            placeholder="Tu correo electrónico"
-            required
-            className="flex-grow py-4 bg-transparent outline-none text-lg placeholder-stone-400"
-            style={{ color: '#252520' }}
-            aria-label="Correo electrónico"
-          />
-          <button
-            type="submit"
-            className="py-4 font-serif italic text-lg transition-colors"
-            style={{ color: '#798478' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#4D6A6D'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#798478'; }}
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+          <div
+            className="flex flex-col sm:flex-row gap-0 border-b transition-colors focus-within:border-opacity-100"
+            style={{ borderColor: '#A0A083' }}
           >
-            Suscribirme
-          </button>
+            <input
+              type="email"
+              placeholder="Tu correo electrónico"
+              required
+              className="flex-grow py-4 bg-transparent outline-none text-lg placeholder-stone-400"
+              style={{ color: '#252520' }}
+              aria-label="Correo electrónico"
+            />
+            <button
+              type="submit"
+              className="py-4 font-serif italic text-lg transition-colors"
+              style={{ color: '#798478' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#4D6A6D'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#798478'; }}
+            >
+              Suscribirme
+            </button>
+          </div>
+          <label className="flex items-start gap-2 mt-4 text-xs text-left" style={{ color: '#A0A083' }}>
+            <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0" style={{ accentColor: '#4D6A6D' }} />
+            <span>
+              Autorizo el tratamiento de mis datos según la{' '}
+              <a href="/privacidad" className="underline">política de privacidad</a>.
+            </span>
+          </label>
         </form>
         <p className="text-xs mt-6" style={{ color: '#A0A083' }}>
           Sin spam. Solo lo que nutre. Siempre puedes darte de baja.
