@@ -152,9 +152,9 @@ const ArticleModal: React.FC<{ post: BlogPost; onClose: () => void }> = ({ post,
             />
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-heading font-bold leading-tight mb-8" style={{ color: '#252520' }}>
+          <h2 className="text-3xl md:text-4xl font-heading font-bold leading-tight mb-8" style={{ color: '#252520' }}>
             {post.title}
-          </h1>
+          </h2>
 
           <div className="space-y-5">
             {content?.body.map((paragraph, i) => {

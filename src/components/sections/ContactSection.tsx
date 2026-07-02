@@ -1,53 +1,11 @@
 
 import React, { useState } from 'react';
 import { InstagramIcon, WhatsAppIcon } from '../../constants';
-import { useToast } from '../../context/ToastContext';
-import { submitLead } from '../../utils/leads';
+import { useContactForm } from '../../hooks/useContactForm';
 
 const ContactSection: React.FC = () => {
-  const { showToast } = useToast();
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: '',
-    type: 'clase',
-    consent: false,
-    honeypot: '',
-  });
-
+  const { formState, handleInputChange, setConsent, handleSubmit } = useContactForm();
   const [focus, setFocus] = useState<string | null>(null);
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormState(prevState => ({ ...prevState, [name]: value }));
-  };
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formState.honeypot) return;
-    if (!formState.consent) {
-      showToast('Debes aceptar la política de privacidad para continuar.', 'error');
-      return;
-    }
-    const typeLabel: Record<string, string> = {
-      clase: 'Clases', evento: 'Eventos', producto: 'Tienda', otro: 'Otro',
-    };
-    const text = encodeURIComponent(
-      `Hola Inner Spirit, me llamo ${formState.name} (${formState.email}).\nMotivo: ${typeLabel[formState.type] ?? formState.type}\n\n${formState.message}`
-    );
-    submitLead({
-      source: 'contact',
-      name: formState.name,
-      email: formState.email,
-      interest: typeLabel[formState.type] ?? formState.type,
-      message: formState.message,
-      consent: true,
-    });
-    showToast('Abriendo WhatsApp con tu mensaje...', 'success');
-    // Abrir dentro del gesto del usuario: un window.open diferido lo bloquean los popup blockers.
-    window.open(`https://wa.me/573212248261?text=${text}`, '_blank', 'noopener,noreferrer');
-    setFormState({ name: '', email: '', message: '', type: 'clase', consent: false, honeypot: '' });
-  };
   
   const inputClasses = (fieldName: string) => `
     w-full bg-transparent border-b py-4 text-lg text-base-text transition-all duration-300 outline-none rounded-none appearance-none
@@ -227,7 +185,7 @@ const ContactSection: React.FC = () => {
                   type="checkbox"
                   name="consent"
                   checked={formState.consent}
-                  onChange={(e) => setFormState((prev) => ({ ...prev, consent: e.target.checked }))}
+                  onChange={(e) => setConsent(e.target.checked)}
                   className="mt-1 h-4 w-4 shrink-0 accent-accent"
                   required
                 />
