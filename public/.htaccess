@@ -1,0 +1,35 @@
+# API routing: map extensionless /api/* paths (used by the frontend fetch calls)
+# to the PHP scripts in api/ (see server-php/README.md for what goes where).
+# These rules must come BEFORE the SPA catch-all below.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteRule ^api/orders/(confirm|pdf|status)/?$ api/orders/$1.php [L,QSA]
+  RewriteRule ^api/webhooks/(mercadopago|wompi)/?$ api/webhooks/$1.php [L,QSA]
+  RewriteRule ^api/(checkout|leads)/?$ api/$1.php [L,QSA]
+
+  # SPA routing: serve index.html for any other path that isn't a real file/directory
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Security headers (equivalent to vercel.json for this Apache deploy).
+# connect-src is 'self' because the PHP API lives on this same origin.
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+</IfModule>
+
+# Long cache for hashed assets
+<IfModule mod_expires.c>
+  <FilesMatch "\.(js|css|woff2?|png|jpe?g|svg|webp|avif)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

@@ -319,3 +319,47 @@ export const updateEmailDelivery = async (
     [orderId, deliveryType, status, message || null]
   );
 };
+
+// --- Leads (contacto / newsletter) -----------------------------------------
+// Esquema propio para no arrastrar las tablas de comercio al capturar un lead.
+let leadsSchemaReady: Promise<void> | null = null;
+
+export interface LeadInput {
+  source: string;
+  name?: string;
+  email: string;
+  phone?: string;
+  interest?: string;
+  message?: string;
+  consent: boolean;
+}
+
+export const ensureLeadsSchema = async () => {
+  leadsSchemaReady ??= (async () => {
+    const db = getPool();
+    await db.query(`
+      create table if not exists leads (
+        id bigserial primary key,
+        source text not null,
+        name text,
+        email text not null,
+        phone text,
+        interest text,
+        message text,
+        consent boolean not null default false,
+        created_at timestamptz not null default now()
+      );
+    `);
+  })();
+  return leadsSchemaReady;
+};
+
+export const recordLead = async (lead: LeadInput) => {
+  await ensureLeadsSchema();
+  const db = getPool();
+  await db.query(
+    `insert into leads (source, name, email, phone, interest, message, consent)
+     values ($1,$2,$3,$4,$5,$6,$7)`,
+    [lead.source, lead.name || null, lead.email, lead.phone || null, lead.interest || null, lead.message || null, lead.consent]
+  );
+};

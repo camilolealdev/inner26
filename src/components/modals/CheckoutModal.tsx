@@ -4,6 +4,7 @@ import { useToast } from '../../context/ToastContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { CloseIcon } from '../../constants';
 import { Illustration } from '../../assets/Illustrations';
+import { apiUrl } from '../../utils/apiBase';
 
 const CheckoutModal: React.FC = () => {
   const { isCheckoutModalOpen, toggleCheckoutModal, cart, removeFromCart } = useContext(CartContext);
@@ -56,7 +57,7 @@ const CheckoutModal: React.FC = () => {
         typeof crypto !== 'undefined' && 'randomUUID' in crypto
           ? crypto.randomUUID()
           : `checkout-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-      const response = await fetch('/api/checkout', {
+      const response = await fetch(apiUrl('/api/checkout'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey },
         body: JSON.stringify({

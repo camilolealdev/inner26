@@ -58,3 +58,10 @@ next
 # ── OS generated ─────────────────────────────────────────────────────────────
 Thumbs.db
 desktop.ini
+
+# ── Local agent state (Claude/opencode) ─────────────────────────────────────
+.claude/.skills-selected.json
+.claude/memory/
+.claude/sessions/
+.claude/state/
+.claude/skills/
