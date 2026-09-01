@@ -14,7 +14,10 @@
       "Bash(grep -r \"from ''''../src\" components/ pages/ --include=\"*.tsx\")",
       "Bash(netstat -ano)",
       "Bash(taskkill //F //PID 22924)",
-      "Bash(taskkill //F //PID 8300)"
+      "Bash(taskkill //F //PID 8300)",
+      "Bash(npx vite:*)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(npx vitest:*)"
     ]
   }
 }
