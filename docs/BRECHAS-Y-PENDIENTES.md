@@ -45,6 +45,19 @@ El `window.open` estaba dentro de un `setTimeout(…, 500)`, fuera del gesto del
 - **Frontend:** `ContactSection`, `ContactPage` y `NewsletterSection` ahora envían el lead con `submitLead()` (`src/utils/leads.ts`, *fire-and-forget*, no bloquea la UX) y añaden una **casilla de consentimiento obligatoria** que enlaza a `/privacidad`. Se mantiene el redirect a WhatsApp como canal principal.
 - ⚠️ **Dependencia legal:** el almacenamiento de datos personales solo debe activarse en producción **cuando la política de privacidad esté completa** (ver PENDIENTE B). La casilla ya referencia `/privacidad`.
 
+### 11. Reorganización de estructura del frontend (`src/` y `docs/`)
+- Se movieron `App.tsx`, `index.tsx` e `index.css` dentro de `src/`.
+- Se corrigieron los alias en `tsconfig.json`, `vite.config.ts`, `vitest.config.ts` y las referencias en `index.html`.
+- Se sincronizaron tipos de React 18 (`@types/react-dom: 18.3.7`).
+
+### 12. Endurecimiento de seguridad en Apache / cPanel
+- Regla en `public/.htaccess`: bloqueo de acceso web directo a `api/_lib/`, `api/vendor/` y `_setup/` (`RewriteRule ^(api/(_lib|vendor)|_setup)(/.*)?$ - [F,L]`).
+- Añadidos `.htaccess` dedicados con `Require all denied` en `server-php/api/_lib/` y `server-php/api/vendor/`.
+
+### 13. Automatización de despliegue para cPanel
+- Creado `scripts/pack-cpanel.js` ejecutable mediante `npm run pack:cpanel` y `make deploy:cpanel`.
+- Regenerado el paquete listo para producción: `deploy/innerspirit-deploy.zip` (2.91 MB) con paridad 1:1 de frontend compilado, backend PHP nativo, dependencias PHPMailer y scripts SQL/guías de setup.
+
 ---
 
 ## 🟡 PENDIENTE (requieren tu input o un deploy real)
@@ -55,27 +68,33 @@ Se sirvió el `dist/` con **exactamente** las cabeceras de `vercel.json` y se ca
 - ✅ Las fuentes de Google cargan (tipografía Cormorant serif visible).
 - ✅ **Cero errores de consola / cero violaciones de CSP**.
 - El checkout usa `window.location.assign` (navegación de página completa), no afectado por el CSP.
-- ⚠️ Pendiente menor: repetir la comprobación en un **preview real de Vercel** antes de producción (confirma que la plataforma emite las cabeceras). Y si en el futuro se activa Google Analytics (`VITE_GA_MEASUREMENT_ID`) o el feed de Instagram (`VITE_IG_FEED_ENDPOINT`), añadir esos dominios a `script-src`/`connect-src` del CSP.
+- ⚠️ Pendiente menor: al lanzar en producción, si en el futuro se activa Google Analytics (`VITE_GA_MEASUREMENT_ID`) o el feed de Instagram (`VITE_IG_FEED_ENDPOINT`), añadir esos dominios a `script-src`/`connect-src` del CSP.
 
-### B. Placeholders legales de privacidad — `src/pages/PrivacyPage.tsx`  *(no puedo resolverlo sin datos)*
-Faltan datos reales del negocio: `[RAZÓN SOCIAL]`, `[NIT]`, `[CORREO HABEAS DATA]`, `[DIRECCIÓN LEGAL]`. Obligatorio para Habeas Data (Colombia). **Necesito que me pases estos datos** y los completo. (No los invento por ser información legal.)
+### B. Placeholders legales de privacidad — `src/pages/PrivacyPage.tsx`  *(requiere datos del negocio)*
+Faltan datos reales del negocio: `[RAZÓN SOCIAL]`, `[NIT]`, `[CORREO HABEAS DATA]`, `[DIRECCIÓN LEGAL]`. Obligatorio para cumplimiento estricto de Habeas Data (Colombia).
 
 ### C. ~~Captura de leads~~ ✅ RESUELTO — ver punto 10 arriba
-Implementada sobre la BD Postgres existente. Pendiente opcional: si prefieres además un proveedor externo (Mailchimp/Brevo) o un evento de analítica, dímelo y lo integro.
+Implementada sobre MySQL/Postgres. Si además requieres integración con Mailchimp o Brevo, indícalo para activarlo.
 
 ### D. Dominio `.co` vs `.net`  *(decisión consciente — recordatorio)*
-`canonical`, `sitemap.xml`, `robots.txt`, OG y `.env.example` usan `innerspirit.co` **a propósito** (per memoria del proyecto). Recordatorio: al lanzar en `innerspirit.net`, alinear estos valores o el SEO se resiente. No es un bug.
+`canonical`, `sitemap.xml`, `robots.txt`, OG y `.env.example` usan `innerspirit.co` **a propósito** (per memoria del proyecto). Recordatorio: al lanzar en `innerspirit.net`, alinear estos valores o configurar redirección 301.
+
+### E. Pasos de activación en cPanel (checklist de subida)
+1. **PHP:** En cPanel → *MultiPHP Manager*, seleccionar `innerspirit.net` y asignar PHP 8.1 u 8.2 (ver `server-php/multiphp.md`).
+2. **Base de Datos:** En cPanel → *MySQL Databases*, crear base de datos y usuario con privilegios totales.
+3. **Secretos:** Copiar `_setup/secure_config.example.php` a `/home/<usuario_cpanel>/secure_config/config.php` y rellenar credenciales de BD y pasarelas.
+4. **Archivos web:** Descomprimir `deploy/innerspirit-deploy.zip` directamente dentro de `public_html/`.
 
 ---
 
 ## ✅ Verificado y correcto (sin acción)
 - Secretos: `.env*` correctamente ignorados; nada commiteado; `dist/` no trackeado.
-- Pagos: precios forzados desde el catálogo del servidor; firmas con `crypto.timingSafeEqual`; idempotencia por `idempotency_key` + `payload_hash`; `ORDER_TOKEN_SECRET`/`DATABASE_URL` obligatorios en producción.
-- SQL parametrizado ($1, $2…) → sin SQLi. `confirm.ts` escapa HTML. Sin `dangerouslySetInnerHTML`/`eval`.
+- Pagos: precios forzados desde el catálogo del servidor; firmas con `crypto.timingSafeEqual`; idempotencia por `idempotency_key` + `payload_hash`; `ORDER_TOKEN_SECRET` obligatorio en producción.
+- SQL parametrizado ($1, $2… en Node / PDO bindings en PHP) → sin SQLi. `confirm.php` escapa HTML. Sin `dangerouslySetInnerHTML`/`eval`.
+- Backend PHP paridad 1:1 con Node.
 
 ## Verificación ejecutada
 - `npm run test:run` → **23/23** en verde (4 archivos).
 - `npm run lint` (`tsc --noEmit`) → **sin errores**.
-- `npm run build` → **OK**; `dist/index.html` sin scripts inline (compatible con `script-src 'self'`).
-
-> Los cambios están en el working tree, **sin commitear**. Dime si quieres que los commitee.
+- `npm run build` → **OK**; `dist/index.html` sin scripts inline (compatible con CSP `script-src 'self'`).
+- `npm run pack:cpanel` → **OK**; `deploy/innerspirit-deploy.zip` (2.91 MB) listo para subida.

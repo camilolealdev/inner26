@@ -1,15 +1,15 @@
 
 import React, { lazy, Suspense, useEffect } from 'react';
-import Header from './src/components/layout/Header';
-import Footer from './src/components/layout/Footer';
-import { CartProvider } from './src/context/CartContext';
-import { ToastProvider } from './src/context/ToastContext';
-import { NavigationProvider, useNavigation } from './src/context/NavigationContext';
-import BookingModal from './src/components/modals/BookingModal';
-import CheckoutModal from './src/components/modals/CheckoutModal';
-import ToastContainer from './src/components/ui/ToastContainer';
-import SplashCursor from './src/components/effects/SplashCursor';
-import ErrorBoundary from './src/components/ui/ErrorBoundary';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import { CartProvider } from './context/CartContext';
+import { ToastProvider } from './context/ToastContext';
+import { NavigationProvider, useNavigation } from './context/NavigationContext';
+import BookingModal from './components/modals/BookingModal';
+import CheckoutModal from './components/modals/CheckoutModal';
+import ToastContainer from './components/ui/ToastContainer';
+import SplashCursor from './components/effects/SplashCursor';
+import ErrorBoundary from './components/ui/ErrorBoundary';
 
 interface PageSEO {
   canonical: string;
@@ -75,16 +75,16 @@ const pageSEO: Record<string, PageSEO> = {
   },
 };
 
-const HomePage = lazy(() => import('./src/pages/HomePage'));
-const AboutPage = lazy(() => import('./src/pages/AboutPage'));
-const EspacioPage = lazy(() => import('./src/pages/EspacioPage'));
-const PrivacyPage = lazy(() => import('./src/pages/PrivacyPage'));
-const ClassesPage = lazy(() => import('./src/pages/ClassesPage'));
-const EventsPage = lazy(() => import('./src/pages/EventsPage'));
-const ConsultorioPage = lazy(() => import('./src/pages/ConsultorioPage'));
-const ShopPage = lazy(() => import('./src/modules/shop/pages/ShopPage'));
-const BlogPage = lazy(() => import('./src/modules/blog/pages/BlogPage'));
-const ContactPage = lazy(() => import('./src/pages/ContactPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const EspacioPage = lazy(() => import('./pages/EspacioPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const ClassesPage = lazy(() => import('./pages/ClassesPage'));
+const EventsPage = lazy(() => import('./pages/EventsPage'));
+const ConsultorioPage = lazy(() => import('./pages/ConsultorioPage'));
+const ShopPage = lazy(() => import('./modules/shop/pages/ShopPage'));
+const BlogPage = lazy(() => import('./modules/blog/pages/BlogPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 const LoadingSpinner: React.FC = () => (
   <div className="flex items-center justify-center min-h-[50vh]" role="status" aria-label="Cargando página">
