@@ -5,6 +5,9 @@
   RewriteEngine On
   RewriteBase /
 
+  # Deny direct access to internal backend libraries, vendor and setup files
+  RewriteRule ^(api/(_lib|vendor)|_setup)(/.*)?$ - [F,L]
+
   RewriteRule ^api/orders/(confirm|pdf|status)/?$ api/orders/$1.php [L,QSA]
   RewriteRule ^api/webhooks/(mercadopago|wompi)/?$ api/webhooks/$1.php [L,QSA]
   RewriteRule ^api/(checkout|leads)/?$ api/$1.php [L,QSA]

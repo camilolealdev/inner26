@@ -19,6 +19,9 @@ preview:			## Vista previa de la build de producción
 build:				## Construir para producción
 	npm run build
 
+deploy:cpanel:		## Construir paquete de despliegue para cPanel (.zip)
+	npm run pack:cpanel
+
 # ── Calidad ────────────────────────────────────────────────────────────────
 lint:				## Verificar tipos TypeScript
 	npm run lint
@@ -45,11 +48,12 @@ help:				## Mostrar esta ayuda
 	@echo ""
 	@echo "  make install          Instalar dependencias"
 	@echo "  make dev              Levantar servidor de desarrollo"
-	@echo "  make preview         Vista previa de producción"
-	@echo "  make build           Construir para producción"
-	@echo "  make lint            Verificar tipos TypeScript"
-	@echo "  make test            Ejecutar tests en modo watch"
-	@echo "  make test:run        Ejecutar tests una vez"
-	@echo "  make test:coverage   Ejecutar tests con cobertura"
-	@echo "  make clean           Limpiar artefactos"
+	@echo "  make preview          Vista previa de producción"
+	@echo "  make build            Construir para producción"
+	@echo "  make deploy:cpanel    Construir paquete .zip para cPanel"
+	@echo "  make lint             Verificar tipos TypeScript"
+	@echo "  make test             Ejecutar tests en modo watch"
+	@echo "  make test:run         Ejecutar tests una vez"
+	@echo "  make test:coverage    Ejecutar tests con cobertura"
+	@echo "  make clean            Limpiar artefactos"
 	@echo ""
