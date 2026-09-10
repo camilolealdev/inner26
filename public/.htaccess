@@ -1,26 +1,53 @@
-# API routing: map extensionless /api/* paths (used by the frontend fetch calls)
-# to the PHP scripts in api/ (see server-php/README.md for what goes where).
-# These rules must come BEFORE the SPA catch-all below.
+# ----------------------------------------------------------------------
+# Inner Spirit Studio — Apache / cPanel Configuration
+# ----------------------------------------------------------------------
+
+# Prevent directory listings and negotiation conflicts
+Options -Indexes -MultiViews
+
+# Default document
+DirectoryIndex index.html
+
+# Force UTF-8 encoding
+AddDefaultCharset UTF-8
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # Deny direct access to internal backend libraries, vendor and setup files
-  RewriteRule ^(api/(_lib|vendor)|_setup)(/.*)?$ - [F,L]
+  # 1. Block access to hidden files and directories (.git, .env, etc.)
+  RewriteRule (^\.|/\.) - [F,L]
 
-  RewriteRule ^api/orders/(confirm|pdf|status)/?$ api/orders/$1.php [L,QSA]
-  RewriteRule ^api/webhooks/(mercadopago|wompi)/?$ api/webhooks/$1.php [L,QSA]
-  RewriteRule ^api/(checkout|leads)/?$ api/$1.php [L,QSA]
+  # 2. Block direct web access to backend libraries, vendor and setup files
+  RewriteRule ^/?(api/(_lib|vendor)|_setup)(/.*)?$ - [F,L,NC]
 
-  # SPA routing: serve index.html for any other path that isn't a real file/directory
-  RewriteRule ^index\.html$ - [L]
+  # 3. API routing: map extensionless /api/* endpoints to PHP scripts
+  RewriteRule ^/?api/orders/(confirm|pdf|status)/?$ /api/orders/$1.php [L,QSA,NC]
+  RewriteRule ^/?api/webhooks/(mercadopago|wompi)/?$ /api/webhooks/$1.php [L,QSA,NC]
+  RewriteRule ^/?api/(checkout|leads)/?$ /api/$1.php [L,QSA,NC]
+
+  # 4. Return 404 for any unmatched /api/* requests (never serve SPA HTML for API calls)
+  RewriteCond %{REQUEST_URI} ^/api/ [NC]
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule ^api/ - [R=404,L]
+
+  # 5. SPA routing: don't rewrite real files or directories
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 6. Never rewrite missing static assets to index.html (return 404 instead of broken HTML)
+  RewriteCond %{REQUEST_URI} \.(js|css|png|jpe?g|gif|svg|webp|avif|ico|woff2?|ttf|eot)$ [NC]
+  RewriteRule ^ - [R=404,L]
+
+  # 7. Route all other frontend URLs to index.html for client-side navigation
+  RewriteRule ^ /index.html [L]
 </IfModule>
 
-# Security headers (equivalent to vercel.json for this Apache deploy).
-# connect-src is 'self' because the PHP API lives on this same origin.
+# ----------------------------------------------------------------------
+# Security headers (matching vercel.json production baseline)
+# ----------------------------------------------------------------------
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "DENY"
@@ -28,11 +55,26 @@
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
   Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
-</IfModule>
 
-# Long cache for hashed assets
-<IfModule mod_expires.c>
+  # Never cache index.html so frontend updates are immediate
+  <FilesMatch "(index\.html|sitemap\.xml|robots\.txt)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # Cache-Control for hashed assets (1 year immutable)
   <FilesMatch "\.(js|css|woff2?|png|jpe?g|svg|webp|avif)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
+</IfModule>
+
+# ----------------------------------------------------------------------
+# MIME Types
+# ----------------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType application/javascript js mjs
+  AddType text/css css
+  AddType image/svg+xml svg svgz
+  AddType font/woff2 woff2
 </IfModule>
