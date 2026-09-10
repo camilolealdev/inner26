@@ -61,15 +61,7 @@ console.log('  → Preparing staging/_setup/...');
 const setupDir = path.join(stagingDir, '_setup');
 fs.mkdirSync(setupDir, { recursive: true });
 
-const setupDenyHtaccess = `<IfModule mod_authz_core.c>
-  Require all denied
-</IfModule>
-<IfModule !mod_authz_core.c>
-  Order deny,allow
-  Deny from all
-</IfModule>
-`;
-fs.writeFileSync(path.join(setupDir, '.htaccess'), setupDenyHtaccess, 'utf8');
+fs.copyFileSync(path.join(serverPhpDir, '_setup.htaccess'), path.join(setupDir, '.htaccess'));
 
 const setupFiles = [
   'multiphp.md',
@@ -92,8 +84,15 @@ if (fs.existsSync(zipFile)) {
 console.log('  → Creating innerspirit-deploy.zip...');
 const stagingItems = fs.readdirSync(stagingDir);
 
+// Use paths relative to rootDir (not absolute paths with a drive letter):
+// GNU tar (as shipped with Git Bash/MSYS on Windows) misparses an absolute
+// "G:\..." path as a remote "host:path" spec and aborts with
+// "Cannot connect to G: resolve failed".
+const relZipFile = path.relative(rootDir, zipFile);
+const relStagingDir = path.relative(rootDir, stagingDir);
+
 try {
-  execFileSync('tar', ['-a', '-cf', zipFile, '-C', stagingDir, ...stagingItems], {
+  execFileSync('tar', ['-a', '-cf', relZipFile, '-C', relStagingDir, ...stagingItems], {
     cwd: rootDir,
     stdio: 'inherit',
   });

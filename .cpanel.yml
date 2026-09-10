@@ -1,0 +1,39 @@
+---
+# cPanel "Git Version Control" deployment file.
+#
+# Runs on the SERVER after you click "Update from Remote" + "Deploy HEAD
+# Commit" (or "Deploy" via the UAPI Git::update call) in cPanel's Git
+# Version Control UI. It never runs automatically on `git push` to GitHub —
+# cPanel has to pull first. See docs/DEPLOY_CPANEL_GIT.md for the one-time
+# setup and how to trigger a deploy.
+#
+# REQUIRED EDITS before first use — replace every <PLACEHOLDER>:
+#   <CPANEL_USER>   cPanel account username (e.g. innerspi)
+#   <REPO_PATH>     path where cPanel cloned this repo, matches the
+#                   "Application Root" from Setup Node.js App
+#                   (e.g. repositories/inner)
+#   <NODE_VERSION>  Node major version selected in Setup Node.js App (e.g. 20)
+#
+# ASSUMPTION THAT NEEDS VALIDATION ON YOUR ACCOUNT:
+#   The build step below sources the nodevenv created by cPanel's
+#   "Setup Node.js App" feature to get a working `node`/`npm` on PATH.
+#   You must create that Node.js App once (Application Root = <REPO_PATH>,
+#   same Node version as <NODE_VERSION>) BEFORE the first deploy, even
+#   though the site itself is served by PHP/Apache, not by that Node app.
+#   If your host has no Node.js App feature at all, tell me — the fallback
+#   is to build in GitHub Actions instead and have this file only `cp` a
+#   pre-built dist/ from a dedicated deploy branch.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/<CPANEL_USER>/public_html/
+    - export NODEENV=/home/<CPANEL_USER>/nodevenv/<REPO_PATH>/<NODE_VERSION>
+    - source $NODEENV/bin/activate && source $NODEENV/bin/../../nodeenv.bash
+    - npm ci
+    - npm run build
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R dist/. $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/api
+    - /bin/cp -R server-php/api/. $DEPLOYPATH/api/
+    - /bin/mkdir -p $DEPLOYPATH/_setup
+    - /bin/cp server-php/_setup.htaccess $DEPLOYPATH/_setup/.htaccess
+    - /bin/cp server-php/multiphp.md server-php/ROUTES.md server-php/schema.sql server-php/secure_config.example.php $DEPLOYPATH/_setup/
