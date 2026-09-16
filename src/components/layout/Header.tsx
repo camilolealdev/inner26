@@ -18,13 +18,13 @@ const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { cart, toggleCheckoutModal } = useContext(CartContext);
-  const { page, navigate } = useNavigation();
+  const { page, navigate, location, openLocationGate, setLocation } = useNavigation();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  // On homepage hero, header is transparent with white text until scrolled.
+  // On homepage & Portugal hero, header is transparent with white text until scrolled.
   // When the mobile menu is open the overlay is light (sand), so the header must
   // switch to its solid/ink style — otherwise the white brand + close icon vanish.
-  const isHeroPage = page === 'home';
+  const isHeroPage = page === 'home' || page === 'portugal';
   const isTransparent = isHeroPage && !scrolled && !isOpen;
 
   useEffect(() => {
@@ -84,10 +84,10 @@ const Header: React.FC = () => {
       <div className="is-shell flex justify-between items-center">
         <div className="w-auto xl:w-1/4 flex justify-start">
           <a
-            href={pageToPath('home')}
-            onClick={(event) => handleLinkClick(event, 'home')}
+            href={location === 'pt' ? pageToPath('portugal') : pageToPath('home')}
+            onClick={(event) => handleLinkClick(event, location === 'pt' ? 'portugal' : 'home')}
             className="flex items-center gap-2.5 relative z-50 transition-colors duration-300"
-            aria-current={page === 'home' ? 'page' : undefined}
+            aria-current={(location === 'pt' ? page === 'portugal' : page === 'home') ? 'page' : undefined}
           >
             {/* Logo mark — cropped to hide the built-in wordmark; color adapts to the
                 header background (white on the dark hero, natural maroon on light). */}
@@ -122,9 +122,37 @@ const Header: React.FC = () => {
               {link.label}
             </a>
           ))}
+          {location === 'pt' && (
+            <a
+              href="/portugal"
+              onClick={(event) => handleLinkClick(event, 'portugal')}
+              className={`text-xs font-bold uppercase tracking-widest transition-colors duration-300 text-[#8B9A8B] hover:text-white ${
+                page === 'portugal' ? 'opacity-100 underline underline-offset-4' : 'opacity-85'
+              }`}
+              aria-current={page === 'portugal' ? 'page' : undefined}
+            >
+              🇵🇹 Portugal Hub
+            </a>
+          )}
         </nav>
 
-        <div className="w-auto xl:w-1/4 flex justify-end items-center space-x-2 sm:space-x-4">
+        <div className="w-auto xl:w-1/4 flex justify-end items-center space-x-2 sm:space-x-3">
+          {/* Location Switcher Button */}
+          <button
+            type="button"
+            onClick={openLocationGate}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-sans tracking-wide transition-all border border-current/25 hover:border-current/70 hover:bg-current/10"
+            title="Cambiar sede / Choose sanctuary (Colombia / Portugal)"
+            aria-label="Cambiar sede"
+          >
+            <span className="text-sm select-none" role="img" aria-hidden="true">
+              {location === 'pt' ? '🇵🇹' : '🇨🇴'}
+            </span>
+            <span className="font-semibold uppercase tracking-widest text-[10px] hidden sm:inline">
+              {location === 'pt' ? 'Portugal' : 'Colombia'}
+            </span>
+          </button>
+
           <button
             onClick={toggleCheckoutModal}
             className="relative group flex h-11 w-11 items-center justify-center rounded-sm opacity-80 hover:opacity-100 transition-opacity"
@@ -178,7 +206,30 @@ const Header: React.FC = () => {
         }`}
       >
         {/* min-h-full wrapper: centers when it fits, scrolls (no top clipping) when it doesn't */}
-        <div className="min-h-full flex flex-col items-center justify-center gap-10 px-6 pt-28 pb-16 is-safe-bottom">
+        <div className="min-h-full flex flex-col items-center justify-center gap-8 px-6 pt-28 pb-16 is-safe-bottom">
+          {/* Mobile location pill */}
+          <div className="flex items-center gap-2 p-1.5 px-3 rounded-full border border-ink/20 bg-ink/5">
+            <span className="text-[11px] uppercase tracking-widest text-muted-light font-medium">Sede:</span>
+            <button
+              type="button"
+              onClick={() => { setLocation('co'); setIsOpen(false); }}
+              className={`text-xs uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full transition-all ${
+                location === 'co' ? 'bg-slate-is text-white' : 'text-ink opacity-70'
+              }`}
+            >
+              🇨🇴 Colombia
+            </button>
+            <button
+              type="button"
+              onClick={() => { setLocation('pt'); setIsOpen(false); }}
+              className={`text-xs uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full transition-all ${
+                location === 'pt' ? 'bg-slate-is text-white' : 'text-ink opacity-70'
+              }`}
+            >
+              🇵🇹 Portugal
+            </button>
+          </div>
+
           <nav className="flex flex-col items-center gap-4 sm:gap-6 text-center">
             {navLinks.map((link, idx) => (
               <a
@@ -194,6 +245,16 @@ const Header: React.FC = () => {
                 {link.label}
               </a>
             ))}
+            <a
+              href="/portugal"
+              onClick={(event) => handleLinkClick(event, 'portugal')}
+              className={`text-2xl sm:text-3xl font-heading text-[#8B9A8B] transition-all duration-500 ${
+                isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+              }`}
+              aria-current={page === 'portugal' ? 'page' : undefined}
+            >
+              🇵🇹 Portugal Hub
+            </a>
           </nav>
           <div className="flex gap-6 text-sm tracking-widest uppercase text-muted-light">
             <a href="https://instagram.com/innerspirit_studio" target="_blank" rel="noopener noreferrer">

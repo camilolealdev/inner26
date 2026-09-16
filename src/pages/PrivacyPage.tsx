@@ -39,9 +39,9 @@ const PrivacyPage: React.FC = () => {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       name: 'Política de Tratamiento de Datos Personales — Inner Spirit Studio',
-      url: 'https://innerspirit.co/privacidad',
+      url: 'https://innerspirit.net/privacidad',
       inLanguage: 'es-CO',
-      isPartOf: { '@type': 'WebSite', name: 'Inner Spirit Studio', url: 'https://innerspirit.co' },
+      isPartOf: { '@type': 'WebSite', name: 'Inner Spirit Studio', url: 'https://innerspirit.net' },
     };
     const script = document.createElement('script');
     script.type = 'application/ld+json';

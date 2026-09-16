@@ -16,33 +16,51 @@ const EventsPage: React.FC = () => {
   const activeEvent = studioEvents.find((event) => event.slug === activeSlug) ?? studioEvents[0];
 
   useEffect(() => {
-    const eventSchema = {
+    // Un ItemList de los eventos reales, no un único Event genérico envolviendo
+    // toda la página (eso describía la página entera como si fuera un solo evento
+    // llamado "Rituales y Encuentros", que no existe como tal).
+    const eventsSchema = {
       "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "Rituales y Encuentros - Inner Spirit Studio",
-      "description": "Eventos de yoga, meditación, sonido y crecimiento espiritual en Inner Spirit Studio, Bogotá.",
-      "url": "https://innerspirit.co/eventos",
-      "location": {
-        "@type": "Place",
-        "name": "Inner Spirit Studio",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Transversal 1 # 17-29",
-          "addressLocality": "La Candelaria",
-          "addressRegion": "Bogotá",
-          "addressCountry": "CO"
-        }
-      },
-      "organizer": {
-        "@type": "Organization",
-        "name": "Inner Spirit Studio",
-        "url": "https://innerspirit.co"
-      },
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+      "@type": "ItemList",
+      "name": "Eventos y Rituales — Inner Spirit Studio",
+      "url": "https://innerspirit.net/eventos",
+      "itemListElement": studioEvents.map((event, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "Event",
+          "name": event.title,
+          "description": event.description,
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {
+            "@type": "Place",
+            "name": "Inner Spirit Studio",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Transversal 1 # 17-29",
+              "addressLocality": "La Candelaria",
+              "addressRegion": "Bogotá",
+              "addressCountry": "CO"
+            }
+          },
+          "organizer": {
+            "@type": "Organization",
+            "name": "Inner Spirit Studio",
+            "url": "https://innerspirit.net"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": event.price,
+            "priceCurrency": "COP",
+            "url": "https://innerspirit.net/eventos"
+          },
+        },
+      })),
     };
     const script = document.createElement('script');
     script.type = 'application/ld+json';
-    script.text = JSON.stringify(eventSchema);
+    script.text = JSON.stringify(eventsSchema);
     document.head.appendChild(script);
     return () => { document.head.removeChild(script); };
   }, []);

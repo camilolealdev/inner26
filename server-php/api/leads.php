@@ -33,7 +33,8 @@ try {
         exit;
     }
 
-    $source = ($body['source'] ?? null) === 'newsletter' ? 'newsletter' : 'contact';
+    $sourceRaw = $body['source'] ?? null;
+    $source = ($sourceRaw === 'newsletter' || $sourceRaw === 'raffle') ? $sourceRaw : 'contact';
     $email = strtolower(leads_clean($body['email'] ?? '', 180));
     if (!leads_email_ok($email)) {
         http_response_code(400);
@@ -48,7 +49,7 @@ try {
     }
 
     $name = leads_clean($body['name'] ?? '', 120);
-    if ($source === 'contact' && mb_strlen($name) < 2) {
+    if (($source === 'contact' || $source === 'raffle') && mb_strlen($name) < 2) {
         http_response_code(400);
         echo json_encode(['error' => 'Nombre requerido']);
         exit;

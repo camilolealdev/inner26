@@ -18,7 +18,13 @@ Core tokens live in `index.css` under the additive `--is-*` layer.
 | Deep teal | `--is-color-teal-deep` | Hover/pressed states |
 | Ink | `--is-color-ink` | Primary readable text |
 | Night | `--is-color-night` | Immersive dark sections |
+| Night panel | `--is-color-night-panel` | `.is-surface--dark` background inside night sections |
+| Muted | `--is-color-muted` | Body copy (`.is-copy`) |
+| Muted soft | `--is-color-muted-soft` | Page lead paragraphs (`.is-page-lead`) |
 | Soft line | `--is-line-soft` | Borders and dividers |
+| Sage *(reserved, unused)* | `--is-color-sage` | Declared in `index.css` but not consumed anywhere yet |
+| Olive *(reserved, unused)* | `--is-color-olive` | Declared in `index.css` but not consumed anywhere yet |
+| Warm line *(reserved, unused)* | `--is-line-warm` | Declared in `index.css` but not consumed anywhere yet |
 
 ## Component Recipes
 

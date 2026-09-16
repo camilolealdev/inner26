@@ -18,7 +18,7 @@ export default async function handler(req: any, res: any) {
     // Honeypot anti-bot: si viene relleno, fingir exito sin guardar.
     if (clean(body.honeypot, 200)) return res.status(200).json({ stored: false });
 
-    const source = body.source === 'newsletter' ? 'newsletter' : 'contact';
+    const source = body.source === 'newsletter' || body.source === 'raffle' ? body.source : 'contact';
     const email = clean(body.email, 180).toLowerCase();
     if (!emailOk(email)) return res.status(400).json({ error: 'Email invalido' });
 
@@ -27,7 +27,7 @@ export default async function handler(req: any, res: any) {
     if (body.consent !== true) return res.status(400).json({ error: 'Consentimiento requerido' });
 
     const name = clean(body.name, 120);
-    if (source === 'contact' && name.length < 2) {
+    if ((source === 'contact' || source === 'raffle') && name.length < 2) {
       return res.status(400).json({ error: 'Nombre requerido' });
     }
 

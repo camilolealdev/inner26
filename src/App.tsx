@@ -19,57 +19,62 @@ interface PageSEO {
 
 const pageSEO: Record<string, PageSEO> = {
   '404': {
-    canonical: 'https://innerspirit.co/',
+    canonical: 'https://innerspirit.net/',
     title: 'Página no encontrada — Inner Spirit Studio',
     description: 'La página que buscas no existe. Vuelve al inicio para explorar nuestras clases de yoga, eventos y más.',
   },
   home: {
-    canonical: 'https://innerspirit.co/',
-    title: 'Inner Spirit Studio — Yoga & Bienestar en La Candelaria, Bogotá',
-    description: 'Centro de yoga, meditación, danza y bienestar integral en La Candelaria, Bogotá. Clases diarias, eventos, sound healing y acompañamiento individual. #1 estudio de yoga en Bogotá.',
+    canonical: 'https://innerspirit.net/',
+    title: 'Inner Spirit Studio — Yoga, Bienestar y Cultura en La Candelaria, Bogotá',
+    description: 'Centro de yoga, meditación, sound healing y bienestar integral en el corazón histórico de La Candelaria, Bogotá, a los pies de Monserrate. Clases diarias, eventos, ceremonias y acompañamiento individual. 4.9★ en Google (162 reseñas).',
   },
   nosotros: {
-    canonical: 'https://innerspirit.co/nosotros',
+    canonical: 'https://innerspirit.net/nosotros',
     title: 'Nosotros — Inner Spirit Studio | Nuestra Historia',
     description: 'Conoce la historia de Inner Spirit Studio, un santuario de yoga y bienestar en el corazón de La Candelaria. 4.9⭐ en Google con 143+ reseñas.',
   },
   espacio: {
-    canonical: 'https://innerspirit.co/espacio',
+    canonical: 'https://innerspirit.net/espacio',
     title: 'El Espacio — Alquiler para Workshops y Certificaciones | Inner Spirit Studio',
     description: 'Alquila Inner Spirit Studio en La Candelaria, Bogotá para workshops, certificaciones, rituales y experiencias de turismo wellness. Un espacio sereno para producir encuentros con identidad local.',
   },
   clases: {
-    canonical: 'https://innerspirit.co/clases',
+    canonical: 'https://innerspirit.net/clases',
     title: 'Clases de Yoga, Meditación y Breathwork — Inner Spirit Studio',
     description: 'Vinyasa, Hatha, Yin Yoga, meditación guiada, breathwork y sound healing. Clases para todos los niveles en La Candelaria, Bogotá. Desde $36.000 COP.',
   },
   eventos: {
-    canonical: 'https://innerspirit.co/eventos',
+    canonical: 'https://innerspirit.net/eventos',
     title: 'Eventos y Rituales — Inner Spirit Studio',
     description: 'Inner Dance, ceremonias de luna nueva, retiros y encuentros conscientes en Bogotá. Experiencias transformadoras en comunidad.',
   },
   consultorio: {
-    canonical: 'https://innerspirit.co/consultorio',
+    canonical: 'https://innerspirit.net/consultorio',
     title: 'Consultorio — Sesiones Individuales | Inner Spirit Studio',
     description: 'Acompañamiento individual: yoga terapéutico, meditación guiada, breathwork y arte terapia. Sesiones 1:1 personalizadas en La Candelaria.',
   },
   tienda: {
-    canonical: 'https://innerspirit.co/tienda',
+    canonical: 'https://innerspirit.net/tienda',
     title: 'Tienda — Objetos Conscientes | Inner Spirit Studio',
     description: 'Cristales, incienso, aceites esenciales, cuencos tibetanos y más. Herramientas para acompañar tu práctica y rituales diarios.',
   },
   blog: {
-    canonical: 'https://innerspirit.co/blog',
+    canonical: 'https://innerspirit.net/blog',
     title: 'Blog — Recursos para tu Viaje Interior | Inner Spirit Studio',
     description: 'Artículos sobre yoga, meditación, breathwork, chakras y crecimiento espiritual. Guías prácticas para nutrir tu bienestar.',
   },
   contacto: {
-    canonical: 'https://innerspirit.co/contacto',
+    canonical: 'https://innerspirit.net/contacto',
     title: 'Contacto — Inner Spirit Studio | La Candelaria, Bogotá',
     description: 'Visítanos en Transversal 1 #17-29, La Candelaria, Bogotá. WhatsApp: +57 321 224 8261. Horario: Lun-Vie 6:30AM–9PM, Sáb-Dom 8AM–9PM.',
   },
+  portugal: {
+    canonical: 'https://innerspirit.net/portugal',
+    title: 'Inner Spirit Portugal — Voluntariado & Comunidade na Costa da Nazaré',
+    description: 'Inner Spirit semeia um novo espaço de bem-estar na zona centro de Portugal, perto da Nazaré (costa de Leiria). Programa de voluntariado aberto: remodelações, horta e construção da futura comunidade.',
+  },
   privacidad: {
-    canonical: 'https://innerspirit.co/privacidad',
+    canonical: 'https://innerspirit.net/privacidad',
     title: 'Política de Tratamiento de Datos — Inner Spirit Studio',
     description: 'Política de Tratamiento de Datos Personales de Inner Spirit Studio conforme a la Ley 1581 de 2012 (Habeas Data) en Colombia. Conoce tus derechos como titular.',
   },
@@ -85,6 +90,9 @@ const ConsultorioPage = lazy(() => import('./pages/ConsultorioPage'));
 const ShopPage = lazy(() => import('./modules/shop/pages/ShopPage'));
 const BlogPage = lazy(() => import('./modules/blog/pages/BlogPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const PortugalPage = lazy(() => import('./pages/PortugalPage'));
+import LocationGateModal from './components/modals/LocationGateModal';
+import RafflePopupModal from './components/modals/RafflePopupModal';
 
 const LoadingSpinner: React.FC = () => (
   <div className="flex items-center justify-center min-h-[50vh]" role="status" aria-label="Cargando página">
@@ -132,6 +140,8 @@ const PageRenderer: React.FC = () => {
       return <BlogPage />;
     case 'contacto':
       return <ContactPage />;
+    case 'portugal':
+      return <PortugalPage />;
     case 'privacidad':
       return <PrivacyPage />;
     case '404':
@@ -204,11 +214,11 @@ const AppContent: React.FC = () => {
         <Header />
 
         {/* Main page content — wrapped in ErrorBoundary so WebGL crashes don't break nav */}
-        {/* Homepage hero handles its own spacing (full-screen); other pages need pt to clear fixed header */}
+        {/* Homepage and Portugal page handle their own spacing */}
         <main
           id="main-content"
           tabIndex={-1}
-          className={`${page !== 'home' ? 'pt-20 md:pt-24' : ''} focus:outline-none`}
+          className={`${page !== 'home' && page !== 'portugal' ? 'pt-20 md:pt-24' : ''} focus:outline-none`}
         >
           <ErrorBoundary>
             <Suspense fallback={<LoadingSpinner />}>
@@ -223,6 +233,8 @@ const AppContent: React.FC = () => {
         <div style={{ position: 'relative', zIndex: 60 }}>
           <BookingModal />
           <CheckoutModal />
+          <LocationGateModal />
+          <RafflePopupModal />
           <ToastContainer />
         </div>
       </div>

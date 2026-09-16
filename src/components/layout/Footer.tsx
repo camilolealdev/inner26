@@ -15,8 +15,10 @@ const WhatsAppSVG = () => (
 );
 
 const Footer: React.FC = () => {
-  const { navigate } = useNavigation();
+  const { navigate, location, setLocation, openLocationGate } = useNavigation();
   const year = new Date().getFullYear();
+
+  const isPt = location === 'pt';
 
   return (
     <footer className="py-14 md:py-20 bg-warm-black text-muted">
@@ -24,17 +26,19 @@ const Footer: React.FC = () => {
 
         {/* Final CTA */}
         <div className="max-w-xl mb-14">
-          <span className="is-eyebrow justify-center" style={{ color: '#8B9A8B' }}>Inicia una conversación</span>
+          <span className="is-eyebrow justify-center" style={{ color: '#8B9A8B' }}>
+            {isPt ? 'Inicia uma conversa' : 'Inicia una conversación'}
+          </span>
           <p className="font-heading text-2xl md:text-3xl leading-snug mt-5 mb-6" style={{ color: '#EAE0CC' }}>
-            Cuéntanos qué quieres traer al espacio.
+            {isPt ? 'Diz-nos o que gostarias de trazer ao espaço.' : 'Cuéntanos qué quieres traer al espacio.'}
           </p>
           <a
-            href="https://wa.me/573212248261?text=Hola%2C%20quiero%20iniciar%20una%20conversaci%C3%B3n%20con%20Inner%20Spirit%20Studio"
+            href={isPt ? "https://www.instagram.com/innerspirit_portugal" : "https://wa.me/573212248261?text=Hola%2C%20quiero%20iniciar%20una%20conversaci%C3%B3n%20con%20Inner%20Spirit%20Studio"}
             target="_blank"
             rel="noopener noreferrer"
             className="is-action is-action--light"
           >
-            Escríbenos por WhatsApp
+            {isPt ? 'Escreve-nos no Instagram' : 'Escríbenos por WhatsApp (+57)'}
           </a>
         </div>
 
@@ -46,24 +50,55 @@ const Footer: React.FC = () => {
           style={{ height: 'clamp(96px, 22vw, 140px)', filter: 'brightness(0) invert(1)', opacity: 0.92 }}
         />
         <p className="text-xs tracking-[0.3em] uppercase mb-3 text-slate-is">
-          Studio — La Candelaria, Bogotá
+          {isPt ? 'Portugal — Costa de Leiria, perto da Nazaré' : 'Studio — La Candelaria, Bogotá'}
         </p>
         <p className="font-heading italic text-lg mb-12" style={{ color: '#8B9A8B' }}>
-          Un santuario para volver a ti.
+          {isPt ? 'As primeiras sementes de um refúgio por construir.' : 'Un santuario para volver a ti.'}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 w-full gap-12 md:gap-0 border-t border-slate-is/20 pt-12 text-left md:text-center">
           {/* Location */}
           <div className="space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest block text-slate-is">Ubicación</span>
-            <p className="font-light leading-relaxed text-accent">
-              Transversal 1 # 17-29<br />
-              La Candelaria, Bogotá<br />
-              Colombia — CP 111711
-            </p>
-            <div className="space-y-1 text-sm mt-2 text-muted">
-              <p>Lun–Vie: 6:30 AM – 9:00 PM</p>
-              <p>Sáb–Dom: 8:00 AM – 9:00 PM</p>
+            <span className="text-xs font-bold uppercase tracking-widest block text-slate-is">Sedes & Presencia</span>
+            {isPt ? (
+              <div className="space-y-2">
+                <p className="font-light leading-relaxed text-accent">
+                  🇵🇹 <strong>Inner Spirit Portugal</strong><br />
+                  Costa de Leiria, perto da Nazaré<br />
+                  Zona Centro, Portugal
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setLocation('co')}
+                  className="text-xs text-[#C9ADA1] underline hover:text-white transition-colors block cursor-pointer"
+                >
+                  Ir a sede Colombia 🇨🇴
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="font-light leading-relaxed text-accent">
+                  🇨🇴 <strong>Inner Spirit Colombia</strong><br />
+                  Transversal 1 # 17-29<br />
+                  La Candelaria, Bogotá
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setLocation('pt')}
+                  className="text-xs text-[#8B9A8B] underline hover:text-white transition-colors block cursor-pointer"
+                >
+                  Ir a sede Portugal 🇵🇹
+                </button>
+              </div>
+            )}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={openLocationGate}
+                className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full border border-white/20 text-stone-300 hover:text-white hover:border-white/50 transition-all"
+              >
+                Cambiar Santuario
+              </button>
             </div>
           </div>
 
@@ -71,33 +106,37 @@ const Footer: React.FC = () => {
           <div className="space-y-6 flex flex-col items-center">
             <div className="flex gap-6 text-muted-light">
               <a
-                href="https://instagram.com/innerspirit_studio"
+                href={isPt ? "https://www.instagram.com/innerspirit_portugal" : "https://instagram.com/innerspirit_studio"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors duration-300 hover:text-white"
-                aria-label="Instagram @innerspirit_studio"
+                aria-label={isPt ? "Instagram @innerspirit_portugal" : "Instagram @innerspirit_studio"}
               >
                 <InstagramSVG />
               </a>
-              <a
-                href="https://wa.me/573212248261"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors duration-300 hover:text-white"
-                aria-label="WhatsApp +57 321 224 8261"
-              >
-                <WhatsAppSVG />
-              </a>
+              {!isPt && (
+                <a
+                  href="https://wa.me/573212248261"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-300 hover:text-white"
+                  aria-label="WhatsApp"
+                >
+                  <WhatsAppSVG />
+                </a>
+              )}
             </div>
             <div className="space-y-2 text-sm">
-              <a
-                href="https://wa.me/573212248261"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block transition-colors hover:text-white"
-              >
-                +57 321 224 8261
-              </a>
+              {!isPt && (
+                <a
+                  href="https://wa.me/573212248261"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block transition-colors hover:text-white"
+                >
+                  +57 321 224 8261
+                </a>
+              )}
               <a
                 href="mailto:hola@innerspirit.co"
                 className="block mx-auto transition-colors hover:text-white pb-0.5 border-b border-muted-light/40"
@@ -105,7 +144,9 @@ const Footer: React.FC = () => {
                 hola@innerspirit.co
               </a>
             </div>
-            <p className="text-xs tracking-widest uppercase text-slate-is">@innerspirit_studio</p>
+            <p className="text-xs tracking-widest uppercase text-slate-is">
+              {isPt ? '@innerspirit_portugal' : '@innerspirit_studio'}
+            </p>
           </div>
 
           {/* Navigation */}
@@ -122,6 +163,13 @@ const Footer: React.FC = () => {
                   {p.charAt(0).toUpperCase() + p.slice(1)}
                 </a>
               ))}
+              <a
+                href="/portugal"
+                onClick={(e) => { e.preventDefault(); navigate('portugal'); }}
+                className="transition-colors text-[#8B9A8B] hover:text-white text-left md:text-center font-medium"
+              >
+                🇵🇹 Portugal Hub
+              </a>
             </div>
             <a
               href="/privacidad"
@@ -136,16 +184,16 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* WhatsApp floating CTA */}
+        {/* Floating contact CTA — WhatsApp in Colombia, Instagram in Portugal (no live PT phone line yet) */}
         <a
-          href="https://wa.me/573212248261?text=Hola%2C%20quiero%20reservar%20una%20clase%20en%20Inner%20Spirit%20Studio"
+          href={isPt ? "https://www.instagram.com/innerspirit_portugal" : "https://wa.me/573212248261?text=Hola%2C%20quiero%20reservar%20una%20clase%20en%20Inner%20Spirit%20Studio"}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed is-safe-float w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-110 z-40 text-white"
-          style={{ background: '#25D366', touchAction: 'manipulation' }}
-          aria-label="Escríbenos por WhatsApp"
+          style={{ background: isPt ? 'linear-gradient(45deg, #F58529, #DD2A7B, #8134AF)' : '#25D366', touchAction: 'manipulation' }}
+          aria-label={isPt ? 'Escreve-nos no Instagram' : 'Escríbenos por WhatsApp'}
         >
-          <WhatsAppSVG />
+          {isPt ? <InstagramSVG /> : <WhatsAppSVG />}
         </a>
       </div>
     </footer>

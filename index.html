@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href="https://innerspirit.co/" />
+    <link rel="canonical" href="https://innerspirit.net/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#EAE0CC" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -18,10 +18,10 @@
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://innerspirit.co/" />
+    <meta property="og:url" content="https://innerspirit.net/" />
     <meta property="og:title" content="Inner Spirit Studio — Yoga & Bienestar en Bogotá" />
     <meta property="og:description" content="Centro de yoga, meditación, danza y bienestar integral en La Candelaria, Bogotá." />
-    <meta property="og:image" content="https://innerspirit.co/images/studio/yoga-clase-grupal.jpg" />
+    <meta property="og:image" content="https://innerspirit.net/images/studio/yoga-clase-grupal.jpg" />
     <meta property="og:locale" content="es_CO" />
     <meta property="og:site_name" content="Inner Spirit Studio" />
     
@@ -29,7 +29,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Inner Spirit Studio — Yoga & Bienestar en Bogotá" />
     <meta name="twitter:description" content="Centro de yoga, meditación, danza y bienestar integral en La Candelaria, Bogotá." />
-    <meta name="twitter:image" content="https://innerspirit.co/images/studio/yoga-clase-grupal.jpg" />
+    <meta name="twitter:image" content="https://innerspirit.net/images/studio/yoga-clase-grupal.jpg" />
     
     <!-- AI Bots - Allow access -->
     <meta name="GPTBot" content="Allow" />
@@ -42,6 +42,72 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:wght@100..600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/index.css">
+
+    <!-- Structured Data (JSON-LD): Global Organization & Bogotá Sanctuary -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://innerspirit.net/#organization",
+          "name": "Inner Spirit",
+          "alternateName": "Inner Spirit Global",
+          "url": "https://innerspirit.net",
+          "logo": "https://innerspirit.net/images/logo.png",
+          "description": "Global wellness, movement, culture and conscious experiences with hubs in Colombia, Portugal and Chicago.",
+          "sameAs": [
+            "https://instagram.com/innerspirit_studio",
+            "https://maps.google.com/?cid=12076127393282276532"
+          ]
+        },
+        {
+          "@type": "HealthAndBeautyBusiness",
+          "@id": "https://innerspirit.net/#bogota-studio",
+          "name": "Inner Spirit Studio Bogotá",
+          "parentOrganization": {
+            "@id": "https://innerspirit.net/#organization"
+          },
+          "url": "https://innerspirit.net",
+          "image": "https://innerspirit.net/images/studio/yoga-clase-grupal.jpg",
+          "telephone": "+573212248261",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Transversal 1 # 17-29",
+            "addressLocality": "La Candelaria",
+            "addressRegion": "Bogotá",
+            "postalCode": "111711",
+            "addressCountry": "CO"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 4.6015,
+            "longitude": -74.0664
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "06:30",
+              "closes": "21:00"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Saturday", "Sunday"],
+              "opens": "08:00",
+              "closes": "21:00"
+            }
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "158"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
   <body>
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>

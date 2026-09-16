@@ -204,11 +204,11 @@ const BlogPage: React.FC = () => {
       "@type": "Blog",
       "name": "Blog - Inner Spirit Studio",
       "description": "Artículos sobre yoga, meditación, crecimiento espiritual y bienestar integral.",
-      "url": "https://innerspirit.co/blog",
+      "url": "https://innerspirit.net/blog",
       "publisher": {
         "@type": "Organization",
         "name": "Inner Spirit Studio",
-        "url": "https://innerspirit.co"
+        "url": "https://innerspirit.net"
       }
     };
     const script = document.createElement('script');

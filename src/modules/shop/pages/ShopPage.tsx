@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import type { Product } from '../../../types';
 import { CartContext } from '../../../context/CartContext';
 import { Illustration } from '../../../assets/Illustrations';
@@ -68,7 +68,38 @@ const ProductCard: React.FC<{ product: ShopProduct }> = ({ product }) => {
   );
 };
 
+const shopSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Tienda Inner Spirit Studio — Objetos Conscientes',
+  url: 'https://innerspirit.net/tienda',
+  itemListElement: products.map((product, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Product',
+      name: product.name,
+      description: product.description,
+      offers: {
+        '@type': 'Offer',
+        price: parseFloat(product.price.replace('.', '')),
+        priceCurrency: 'COP',
+        availability: 'https://schema.org/InStock',
+        url: 'https://innerspirit.net/tienda',
+      },
+    },
+  })),
+};
+
 const ShopPage: React.FC = () => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(shopSchema);
+    document.head.appendChild(script);
+    return () => { document.head.removeChild(script); };
+  }, []);
+
   return (
     <div className="animate-fade-in-up">
       <section id="tienda-page" className="is-page-section is-section--paper">

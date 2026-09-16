@@ -5,16 +5,20 @@ import { CartProvider } from '../src/context/CartContext';
 import { ToastProvider } from '../src/context/ToastContext';
 import { NavigationProvider, useNavigation } from '../src/context/NavigationContext';
 
-// Minimal consumer component to test navigate
+// Minimal consumer component to test navigate and location
 const NavigationConsumer: React.FC = () => {
-  const { page, navigate } = useNavigation();
+  const { page, navigate, location, setLocation } = useNavigation();
   return (
     <div>
       <span data-testid="current-page">{page}</span>
+      <span data-testid="current-location">{location}</span>
       <button onClick={() => navigate('clases')}>Ir a Clases</button>
       <button onClick={() => navigate('eventos')}>Ir a Eventos</button>
       <button onClick={() => navigate('contacto')}>Ir a Contacto</button>
+      <button onClick={() => navigate('portugal')}>Ir a Portugal</button>
       <button onClick={() => navigate('home')}>Ir a Home</button>
+      <button onClick={() => setLocation('pt')}>Elegir Portugal</button>
+      <button onClick={() => setLocation('co')}>Elegir Colombia</button>
     </div>
   );
 };
@@ -29,6 +33,7 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 describe('Navigation', () => {
   beforeEach(() => {
+    localStorage.clear();
     window.history.pushState({}, '', '/');
   });
 
@@ -55,6 +60,21 @@ describe('Navigation', () => {
     expect(screen.getByTestId('current-page').textContent).toBe('contacto');
   });
 
+  it('navega a portugal', () => {
+    render(<NavigationConsumer />, { wrapper: Wrapper });
+    fireEvent.click(screen.getByText('Ir a Portugal'));
+    expect(screen.getByTestId('current-page').textContent).toBe('portugal');
+    expect(window.location.pathname).toBe('/portugal');
+  });
+
+  it('cambia de localización a Portugal y navega a /portugal', () => {
+    render(<NavigationConsumer />, { wrapper: Wrapper });
+    fireEvent.click(screen.getByText('Elegir Portugal'));
+    expect(screen.getByTestId('current-location').textContent).toBe('pt');
+    expect(screen.getByTestId('current-page').textContent).toBe('portugal');
+    expect(localStorage.getItem('inner_spirit_location')).toBe('pt');
+  });
+
   it('actualiza el pathname del navegador al navegar', () => {
     render(<NavigationConsumer />, { wrapper: Wrapper });
     fireEvent.click(screen.getByText('Ir a Clases'));
@@ -65,5 +85,12 @@ describe('Navigation', () => {
     window.history.pushState({}, '', '/blog');
     render(<NavigationConsumer />, { wrapper: Wrapper });
     expect(screen.getByTestId('current-page').textContent).toBe('blog');
+  });
+
+  it('detecta la página portugal desde la URL al iniciar', () => {
+    window.history.pushState({}, '', '/portugal');
+    render(<NavigationConsumer />, { wrapper: Wrapper });
+    expect(screen.getByTestId('current-page').textContent).toBe('portugal');
+    expect(screen.getByTestId('current-location').textContent).toBe('pt');
   });
 });

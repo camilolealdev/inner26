@@ -25,4 +25,4 @@ Disallow: /api/
 Disallow: /*.json$
 
 # Sitemap
-Sitemap: https://innerspirit.co/sitemap.xml
+Sitemap: https://innerspirit.net/sitemap.xml

@@ -10,7 +10,7 @@ const ContactPage: React.FC = () => {
       "@type": "ContactPage",
       "name": "Contacto - Inner Spirit Studio",
       "description": "Contáctanos para clases de yoga, eventos o consultas en Inner Spirit Studio, Bogotá.",
-      "url": "https://innerspirit.co/contacto",
+      "url": "https://innerspirit.net/contacto",
       "mainEntity": {
         "@type": "Organization",
         "name": "Inner Spirit Studio",

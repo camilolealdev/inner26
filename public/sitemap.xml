@@ -1,51 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://innerspirit.co/</loc>
+    <loc>https://innerspirit.net/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://innerspirit.net/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://innerspirit.net/portugal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://innerspirit.net/" />
   </url>
   <url>
-    <loc>https://innerspirit.co/nosotros</loc>
+    <loc>https://innerspirit.net/nosotros</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://innerspirit.co/clases</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://innerspirit.co/eventos</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://innerspirit.co/consultorio</loc>
+    <loc>https://innerspirit.net/espacio</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://innerspirit.co/tienda</loc>
+    <loc>https://innerspirit.net/clases</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://innerspirit.co/blog</loc>
+    <loc>https://innerspirit.net/eventos</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://innerspirit.co/contacto</loc>
+    <loc>https://innerspirit.net/consultorio</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://innerspirit.net/tienda</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://innerspirit.net/blog</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://innerspirit.net/contacto</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://innerspirit.net/portugal</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://innerspirit.net/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://innerspirit.net/portugal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://innerspirit.net/" />
   </url>
 </urlset>

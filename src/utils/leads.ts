@@ -1,7 +1,7 @@
 import { apiUrl } from './apiBase';
 
 export interface LeadPayload {
-  source: 'contact' | 'newsletter';
+  source: 'contact' | 'newsletter' | 'raffle';
   email: string;
   name?: string;
   phone?: string;

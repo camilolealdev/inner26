@@ -15,11 +15,11 @@ import NewsletterSection from '../components/sections/NewsletterSection';
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'YogaStudio',
-  '@id': 'https://innerspirit.co',
+  '@id': 'https://innerspirit.net',
   name: 'Inner Spirit Studio',
-  image: 'https://innerspirit.co/images/og-banner.jpg',
+  image: 'https://innerspirit.net/images/og-banner.jpg',
   description: 'Centro de yoga, meditación, danza y bienestar integral en La Candelaria, Bogotá.',
-  url: 'https://innerspirit.co',
+  url: 'https://innerspirit.net',
   telephone: '+573212248261',
   email: 'hola@innerspirit.co',
   address: {
@@ -53,7 +53,7 @@ const localBusinessSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.9',
-    reviewCount: '143',
+    reviewCount: '162',
     bestRating: '5',
   },
   sameAs: [
