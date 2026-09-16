@@ -15,6 +15,8 @@ interface PageSEO {
   canonical: string;
   title: string;
   description: string;
+  image?: string;
+  locale?: string;
 }
 
 const pageSEO: Record<string, PageSEO> = {
@@ -27,6 +29,8 @@ const pageSEO: Record<string, PageSEO> = {
     canonical: 'https://innerspirit.net/',
     title: 'Inner Spirit Studio — Yoga, Bienestar y Cultura en La Candelaria, Bogotá',
     description: 'Centro de yoga, meditación, sound healing y bienestar integral en el corazón histórico de La Candelaria, Bogotá, a los pies de Monserrate. Clases diarias, eventos, ceremonias y acompañamiento individual. 4.9★ en Google (162 reseñas).',
+    image: 'https://innerspirit.net/images/studio/yoga-clase-grupal.jpg',
+    locale: 'es_CO',
   },
   nosotros: {
     canonical: 'https://innerspirit.net/nosotros',
@@ -72,6 +76,8 @@ const pageSEO: Record<string, PageSEO> = {
     canonical: 'https://innerspirit.net/portugal',
     title: 'Inner Spirit Portugal — Voluntariado & Comunidade na Costa da Nazaré',
     description: 'Inner Spirit semeia um novo espaço de bem-estar na zona centro de Portugal, perto da Nazaré (costa de Leiria). Programa de voluntariado aberto: remodelações, horta e construção da futura comunidade.',
+    image: 'https://innerspirit.net/images/portugal/og-portugal.jpg',
+    locale: 'pt_PT',
   },
   privacidad: {
     canonical: 'https://innerspirit.net/privacidad',
@@ -179,12 +185,19 @@ const AppContent: React.FC = () => {
     if (ogDescription) ogDescription.setAttribute('content', seo.description);
     const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) ogUrl.setAttribute('content', seo.canonical);
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    const imageUrl = seo.image || 'https://innerspirit.net/images/studio/yoga-clase-grupal.jpg';
+    if (ogImage) ogImage.setAttribute('content', imageUrl);
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) ogLocale.setAttribute('content', seo.locale || 'es_CO');
 
     // Update Twitter tags
     const twTitle = document.querySelector('meta[name="twitter:title"]');
     if (twTitle) twTitle.setAttribute('content', seo.title);
     const twDescription = document.querySelector('meta[name="twitter:description"]');
     if (twDescription) twDescription.setAttribute('content', seo.description);
+    const twImage = document.querySelector('meta[name="twitter:image"]');
+    if (twImage) twImage.setAttribute('content', imageUrl);
 
     // Update canonical
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
