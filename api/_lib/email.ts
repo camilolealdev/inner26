@@ -18,7 +18,7 @@ export const sendOrderEmail = async (order: OrderSnapshot) => {
     },
   });
 
-  const from = process.env.SMTP_FROM || process.env.VITE_STUDIO_EMAIL || 'hola@innerspirit.co';
+  const from = process.env.SMTP_FROM || process.env.VITE_STUDIO_EMAIL || 'hola@innerspirit.net';
   const studioEmail = process.env.STUDIO_NOTIFY_EMAIL || process.env.VITE_STUDIO_EMAIL || from;
   const text = buildReceiptText(order).join('\n');
   const pdf = buildOrderPdf(order);

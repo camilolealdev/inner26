@@ -183,10 +183,10 @@ const Footer: React.FC = () => {
                 </a>
               )}
               <a
-                href="mailto:hola@innerspirit.co"
+                href="mailto:hola@innerspirit.net"
                 className="block mx-auto transition-colors hover:text-white pb-0.5 border-b border-muted-light/40"
               >
-                hola@innerspirit.co
+                hola@innerspirit.net
               </a>
             </div>
             <p className="text-xs tracking-widest uppercase text-slate-is">

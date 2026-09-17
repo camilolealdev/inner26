@@ -23,7 +23,7 @@ const localBusinessSchema = {
   description: 'Centro de yoga, meditación, danza y bienestar integral en La Candelaria, Bogotá.',
   url: 'https://innerspirit.net',
   telephone: '+573212248261',
-  email: 'hola@innerspirit.co',
+  email: 'hola@innerspirit.net',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Transversal 1 # 17-29',

@@ -73,7 +73,7 @@ const ContactSection: React.FC = () => {
               <div>
                 <p className="is-eyebrow mb-3">Escríbenos</p>
                 <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer" className="is-copy block transition-colors hover:text-slate-is">+57 321 224 8261</a>
-                <a href="mailto:hola@innerspirit.co" className="is-copy block transition-colors hover:text-slate-is">hola@innerspirit.co</a>
+                <a href="mailto:hola@innerspirit.net" className="is-copy block transition-colors hover:text-slate-is">hola@innerspirit.net</a>
               </div>
               <div>
                 <p className="is-eyebrow mb-3">Síguenos</p>

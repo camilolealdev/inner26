@@ -14,8 +14,8 @@ const RESPONSABLE = {
   nombreComercial: 'Inner Spirit Studio',
   nit: 'NIT en trámite de registro mercantil ante Cámara de Comercio de Bogotá',
   domicilio: 'Transversal 1 # 17-29, La Candelaria, Bogotá D.C., Colombia',
-  correoHabeasData: 'privacidad@innerspirit.co',
-  correoContacto: 'hola@innerspirit.co',
+  correoHabeasData: 'privacidad@innerspirit.net',
+  correoContacto: 'hola@innerspirit.net',
   telefono: '+57 321 224 8261',
   ultimaActualizacion: '17 de septiembre de 2026',
 } as const;

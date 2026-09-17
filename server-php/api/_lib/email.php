@@ -42,7 +42,7 @@ function send_order_email(array $order): array
             : PHPMailer::ENCRYPTION_STARTTLS;
         $mail->CharSet = 'UTF-8';
 
-        $fromRaw = inner_spirit_env('SMTP_FROM', 'hola@innerspirit.co');
+        $fromRaw = inner_spirit_env('SMTP_FROM', 'hola@innerspirit.net');
         [$fromEmail, $fromName] = parse_email_from($fromRaw);
         $studioEmail = inner_spirit_env('STUDIO_NOTIFY_EMAIL', $fromEmail);
 

@@ -9,8 +9,8 @@ const STUDIO_INFO = {
   razonSocial: 'Inner Spirit Studio S.A.S. (o titular responsable)',
   nit: 'NIT en trámite de registro mercantil — Bogotá D.C.',
   direccion: 'Transversal 1 # 17-29, La Candelaria, Bogotá D.C., Colombia',
-  correoGeneral: 'hola@innerspirit.co',
-  correoLegal: 'privacidad@innerspirit.co',
+  correoGeneral: 'hola@innerspirit.net',
+  correoLegal: 'privacidad@innerspirit.net',
   whatsapp: '+57 321 224 8261',
   ultimaActualizacion: '17 de septiembre de 2026',
 } as const;
@@ -540,7 +540,7 @@ const TermsPage: React.FC = () => {
                   <ol className="list-decimal pl-5 space-y-2 mt-2">
                     <li>
                       <strong>Notificación:</strong> Escríbenos dentro de los <strong>cinco (5) días hábiles</strong> siguientes a la fecha en que recibiste el paquete a{' '}
-                      <a className="underline" href="mailto:hola@innerspirit.co">hola@innerspirit.co</a> o a nuestro WhatsApp (+57 321 224 8261), adjuntando tu número de orden y factura o comprobante de pago.
+                      <a className="underline" href="mailto:hola@innerspirit.net">hola@innerspirit.net</a> o a nuestro WhatsApp (+57 321 224 8261), adjuntando tu número de orden y factura o comprobante de pago.
                     </li>
                     <li>
                       <strong>Estado del producto:</strong> El artículo debe encontrarse sin señales de uso, con sus sellos de seguridad intactos, accesorios completos y empaque original en perfecto estado.
@@ -564,7 +564,7 @@ const TermsPage: React.FC = () => {
                     Toma fotografías y/o video claro del empaque exterior y del artículo afectado dentro de las <strong>primeras 48 horas</strong> de recibido el envío.
                   </li>
                   <li>
-                    Envía el registro a <a className="underline font-semibold" style={{ color: '#4D6A6D' }} href="mailto:hola@innerspirit.co">hola@innerspirit.co</a> o al WhatsApp oficial.
+                    Envía el registro a <a className="underline font-semibold" style={{ color: '#4D6A6D' }} href="mailto:hola@innerspirit.net">hola@innerspirit.net</a> o al WhatsApp oficial.
                   </li>
                   <li>
                     Coordinaremos la reposición inmediata de la pieza sin ningún costo para ti, o el reembolso inmediato en caso de agotarse el stock disponible.

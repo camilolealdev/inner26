@@ -20,7 +20,7 @@ const ContactPage: React.FC = () => {
         "@type": "Organization",
         "name": "Inner Spirit Studio",
         "telephone": "+573212248261",
-        "email": "hola@innerspirit.co"
+        "email": "hola@innerspirit.net"
       }
     };
     const script = document.createElement('script');
@@ -93,7 +93,7 @@ const ContactPage: React.FC = () => {
                              <div>
                                 <p className="is-eyebrow mb-3">{t('contact.writeLabel') as string}</p>
                                 <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer" className="is-copy block transition-colors hover:text-slate-is">+57 321 224 8261</a>
-                                <a href="mailto:hola@innerspirit.co" className="is-copy block transition-colors hover:text-slate-is">hola@innerspirit.co</a>
+                                <a href="mailto:hola@innerspirit.net" className="is-copy block transition-colors hover:text-slate-is">hola@innerspirit.net</a>
                              </div>
                              <div>
                                 <p className="is-eyebrow mb-3">{t('contact.followLabel') as string}</p>

@@ -33,6 +33,6 @@ return [
     'SMTP_SECURE' => 'false',
     'SMTP_USER' => '',
     'SMTP_PASS' => '',
-    'SMTP_FROM' => 'Inner Spirit Studio <hola@innerspirit.co>',
-    'STUDIO_NOTIFY_EMAIL' => 'hola@innerspirit.co',
+    'SMTP_FROM' => 'Inner Spirit Studio <hola@innerspirit.net>',
+    'STUDIO_NOTIFY_EMAIL' => 'hola@innerspirit.net',
 ];
