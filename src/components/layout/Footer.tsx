@@ -260,12 +260,12 @@ const Footer: React.FC = () => {
             <p>
               {isPt ? 'Criado por' : isUs ? 'Created by' : 'Creado por'}{' '}
               <a
-                href="https://eazy-marketing.xyz"
+                href="https://easy-marketing.xyz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#EAE0CC] hover:text-white underline decoration-slate-is/40 underline-offset-2 transition-colors font-medium"
               >
-                eazy-marketing.xyz
+                easy-marketing.xyz
               </a>
             </p>
           </div>
