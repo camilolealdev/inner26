@@ -3,6 +3,7 @@ import { CartContext } from '../../context/CartContext';
 import { useToast } from '../../context/ToastContext';
 import { CloseIcon } from '../../constants';
 import { Illustration } from '../../assets/Illustrations';
+import { useTranslation } from '../../i18n/useTranslation';
 
 const defaultSlotsByType = {
   class: [
@@ -28,6 +29,7 @@ const sourceLabel = (source: string | undefined): string => {
 const BookingModal: React.FC = () => {
   const { isBookingModalOpen, closeBookingModal, bookingDetails, addToCart } = useContext(CartContext);
   const { showToast } = useToast();
+  const { t } = useTranslation();
 
   const availableTimeSlots = useMemo(() => {
     if (!bookingDetails) {
@@ -93,10 +95,10 @@ const BookingModal: React.FC = () => {
         type: bookingDetails.type,
         details: `${selectedSlot} · ${sourceLabel(bookingDetails.source)}`,
       });
-      showToast(`Agregado al carrito: ${bookingDetails.title}. Abre el carrito para pagar.`, 'success');
+      showToast((t('booking.addedToCart') as (title: string) => string)(bookingDetails.title), 'success');
       handleClose();
     } else {
-      showToast('Por favor, selecciona un horario.', 'error');
+      showToast(t('booking.selectSlotError') as string, 'error');
     }
   };
 
@@ -117,14 +119,14 @@ const BookingModal: React.FC = () => {
           onClick={handleClose}
           className="absolute top-4 right-4 transition-colors hover:scale-110"
           style={{ color: '#A0A083' }}
-          aria-label="Cerrar modal de reserva"
+          aria-label={t('booking.close') as string}
         >
           <CloseIcon className="w-5 h-5" />
         </button>
 
         <div className="p-5 md:p-8">
           <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: '#4D6A6D' }}>
-            Agendar
+            {t('booking.eyebrow') as string}
           </p>
           <h2 id="booking-modal-title" className="text-3xl font-heading font-bold mb-6" style={{ color: '#252520' }}>
             {bookingDetails.title}
@@ -150,12 +152,12 @@ const BookingModal: React.FC = () => {
           </div>
 
           <h3 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: '#798478' }}>
-            Selecciona un horario
+            {t('booking.selectTime') as string}
           </h3>
 
           {availableTimeSlots.length === 0 ? (
             <p className="text-sm" style={{ color: '#798478' }}>
-              No hay horarios cargados para este evento.
+              {t('booking.noSlots') as string}
             </p>
           ) : (
             <div className="space-y-2" role="radiogroup" aria-label="Horarios disponibles">
@@ -195,7 +197,7 @@ const BookingModal: React.FC = () => {
               style={{ background: '#4D6A6D', color: '#EAE0CC' }}
               disabled={availableTimeSlots.length === 0}
             >
-              Agregar al carrito
+              {t('booking.addToCart') as string}
             </button>
           </div>
         </div>

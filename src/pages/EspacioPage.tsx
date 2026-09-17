@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigation } from '../context/NavigationContext';
+import { useTranslation } from '../i18n/useTranslation';
+import { homePages } from '../i18n/translations/homePages';
 import ParaQuienSection from '../components/sections/espacio/ParaQuienSection';
 import EspacioBreakdownSection from '../components/sections/espacio/EspacioBreakdownSection';
 import AgendaTabsSection from '../components/sections/espacio/AgendaTabsSection';
@@ -15,6 +17,7 @@ const HERO_WHATSAPP_HREF =
 
 const EspacioPage: React.FC = () => {
   const { navigate } = useNavigation();
+  const { t } = useTranslation(homePages);
 
   return (
     <div className="animate-fade-in-up">
@@ -26,18 +29,16 @@ const EspacioPage: React.FC = () => {
         <div className="is-shell">
           <div className="max-w-3xl">
             <span className="is-eyebrow" style={{ color: '#4D6A6D' }}>
-              La Candelaria, Bogotá
+              {t('espacio.eyebrow') as string}
             </span>
             <h1
               id="espacio-hero-title"
               className="is-display mt-6 text-[2.75rem] leading-[0.98] sm:text-6xl md:text-7xl"
             >
-              Un espacio para habitar la práctica, no solo tomar una clase.
+              {t('espacio.heroTitle') as string}
             </h1>
             <p className="is-page-lead mt-8 max-w-2xl">
-              Inner Spirit Studio recibe clases permanentes, workshops, certificaciones,
-              rituales y experiencias de turismo wellness en el corazón histórico de
-              Bogotá.
+              {t('espacio.heroLead') as string}
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
@@ -47,7 +48,7 @@ const EspacioPage: React.FC = () => {
                 rel="noopener noreferrer"
                 className="is-action w-full sm:w-auto"
               >
-                Reservar el espacio
+                {t('espacio.ctaReserve') as string}
               </a>
               <a
                 href="/contacto"
@@ -57,7 +58,7 @@ const EspacioPage: React.FC = () => {
                 }}
                 className="is-action is-action--ghost w-full sm:w-auto"
               >
-                Conversar una idea
+                {t('espacio.ctaTalk') as string}
               </a>
             </div>
 

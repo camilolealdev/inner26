@@ -2,8 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { InstagramIcon, WhatsAppIcon } from '../constants';
 import { useContactForm } from '../hooks/useContactForm';
+import { useTranslation } from '../i18n/useTranslation';
+import { homePages } from '../i18n/translations/homePages';
 
 const ContactPage: React.FC = () => {
+  const { t } = useTranslation(homePages);
+  const typeOptions = t('contact.typeOptions') as { clase: string; evento: string; producto: string; otro: string };
+
   useEffect(() => {
     const contactSchema = {
       "@context": "https://schema.org",
@@ -40,11 +45,11 @@ const ContactPage: React.FC = () => {
 
                 {/* Hero Text */}
                 <div className="text-center mb-20 max-w-3xl mx-auto">
-                    <span className="is-eyebrow justify-center">Hablemos</span>
-                    <h1 className="is-page-heading mt-5">Nuestro Umbral</h1>
+                    <span className="is-eyebrow justify-center">{t('contact.eyebrow') as string}</span>
+                    <h1 className="is-page-heading mt-5">{t('contact.heading') as string}</h1>
                     <div className="is-luxury-rule mx-auto my-6" style={{ width: '1px', height: '3rem' }}></div>
                     <p className="is-page-lead">
-                        Si sientes que este es tu lugar, las puertas están abiertas. Escríbenos o visítanos en La Candelaria, Bogotá.
+                        {t('contact.lead') as string}
                     </p>
                 </div>
 
@@ -62,7 +67,7 @@ const ContactPage: React.FC = () => {
                                     backgroundSize: '2rem 2rem, 2rem 2rem, auto, auto',
                                 }}
                                 role="img"
-                                aria-label="Mapa ilustrado de la ubicación de Inner Spirit en La Candelaria, Bogotá"
+                                aria-label={t('contact.mapAriaLabel') as string}
                             >
                                 <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(115deg, transparent 46%, rgba(139,154,139,0.28) 46%, rgba(139,154,139,0.28) 49%, transparent 49%)' }} />
                                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full flex flex-col items-center">
@@ -71,51 +76,51 @@ const ContactPage: React.FC = () => {
                                 </div>
                                 <div className="absolute left-4 bottom-4 right-4 sm:right-auto sm:max-w-[16rem] px-4 py-3 rounded-sm" style={{ background: 'rgba(250,247,242,0.92)', backdropFilter: 'blur(4px)', border: '1px solid rgba(77,106,109,0.16)' }}>
                                     <p className="font-heading text-lg leading-tight" style={{ color: '#2D4A4D' }}>Inner Spirit Studio</p>
-                                    <p className="text-sm font-light mt-0.5" style={{ color: '#5E675D' }}>Transversal 1 #17-29 · La Candelaria</p>
+                                    <p className="text-sm font-light mt-0.5" style={{ color: '#5E675D' }}>{t('contact.mapCardAddress') as string}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7">
                              <div>
-                                <p className="is-eyebrow mb-3">Visítanos</p>
-                                <p className="is-copy" style={{ lineHeight: 1.6 }}>Transversal 1 #17-29<br />La Candelaria, Bogotá</p>
+                                <p className="is-eyebrow mb-3">{t('contact.visitLabel') as string}</p>
+                                <p className="is-copy" style={{ lineHeight: 1.6 }}>{t('contact.visitAddressLine1') as string}<br />{t('contact.visitAddressLine2') as string}</p>
                              </div>
                              <div>
-                                <p className="is-eyebrow mb-3">Horario</p>
-                                <p className="is-copy is-metric" style={{ lineHeight: 1.6 }}>Lun–Vie · 6:30 AM – 9:00 PM<br />Sáb–Dom · 8:00 AM – 9:00 PM</p>
+                                <p className="is-eyebrow mb-3">{t('contact.hoursLabel') as string}</p>
+                                <p className="is-copy is-metric" style={{ lineHeight: 1.6 }}>{t('contact.hoursLine1') as string}<br />{t('contact.hoursLine2') as string}</p>
                              </div>
                              <div>
-                                <p className="is-eyebrow mb-3">Escríbenos</p>
+                                <p className="is-eyebrow mb-3">{t('contact.writeLabel') as string}</p>
                                 <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer" className="is-copy block transition-colors hover:text-slate-is">+57 321 224 8261</a>
                                 <a href="mailto:hola@innerspirit.co" className="is-copy block transition-colors hover:text-slate-is">hola@innerspirit.co</a>
                              </div>
                              <div>
-                                <p className="is-eyebrow mb-3">Síguenos</p>
+                                <p className="is-eyebrow mb-3">{t('contact.followLabel') as string}</p>
                                 <div className="flex gap-5">
-                                    <a href="https://instagram.com/innerspirit_studio" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label="Instagram @innerspirit_studio"><InstagramIcon /></a>
-                                    <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label="WhatsApp +57 321 224 8261"><WhatsAppIcon /></a>
+                                    <a href="https://instagram.com/innerspirit_studio" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label={t('contact.igAriaLabel') as string}><InstagramIcon /></a>
+                                    <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label={t('contact.waAriaLabel') as string}><WhatsAppIcon /></a>
                                 </div>
                              </div>
                         </div>
 
                         {/* Antes de tu visita */}
                         <div className="is-surface p-5" style={{ background: 'linear-gradient(180deg, rgba(139,154,139,0.10), rgba(139,154,139,0.03)), #FAF7F2' }}>
-                            <p className="is-eyebrow mb-2">Antes de tu visita</p>
+                            <p className="is-eyebrow mb-2">{t('contact.beforeVisitLabel') as string}</p>
                             <p className="is-copy" style={{ fontSize: '0.95rem' }}>
-                                Llega 10 minutos antes para acomodarte sin prisa. Trae ropa cómoda; mat, mantas y props los tenemos en el estudio. Si es tu primera vez, escríbenos por WhatsApp y te orientamos con gusto.
+                                {t('contact.beforeVisitText') as string}
                             </p>
                         </div>
                     </div>
 
                     {/* Right Column: Minimalist Form */}
                     <div className="is-surface px-5 py-8 sm:px-8 md:px-12 md:py-14">
-                        <p className="is-eyebrow">Inicia una conversación</p>
+                        <p className="is-eyebrow">{t('contact.formEyebrow') as string}</p>
                         <h3 className="is-display text-3xl md:text-4xl mt-4 mb-4">
-                          Cuéntanos qué quieres <span className="italic" style={{ color: '#C9ADA1' }}>traer al espacio</span>.
+                          {t('contact.formTitlePrefix') as string}<span className="italic" style={{ color: '#C9ADA1' }}>{t('contact.formTitleEmphasis') as string}</span>{t('contact.formTitleSuffix') as string}
                         </h3>
                         <p className="is-copy mb-10">
-                          Déjanos un mensaje y seguimos por WhatsApp para coordinar lo que necesites.
+                          {t('contact.formLead') as string}
                         </p>
 
                         <form onSubmit={handleSubmit} className="space-y-8">
@@ -123,7 +128,7 @@ const ContactPage: React.FC = () => {
                             <input type="text" name="honeypot" value={formState.honeypot} onChange={handleInputChange} className="hidden" aria-hidden="true" tabIndex={-1} />
 
                             <div>
-                                <label htmlFor="contact-name" className="sr-only">Tu Nombre</label>
+                                <label htmlFor="contact-name" className="sr-only">{t('contact.nameLabel') as string}</label>
                                 <input
                                     id="contact-name"
                                     type="text"
@@ -132,7 +137,7 @@ const ContactPage: React.FC = () => {
                                     onChange={handleInputChange}
                                     onFocus={() => setFocusedField('name')}
                                     onBlur={() => setFocusedField(null)}
-                                    placeholder="Tu Nombre"
+                                    placeholder={t('contact.nameLabel') as string}
                                     className={getInputClass('name')}
                                     autoComplete="name"
                                     required
@@ -140,7 +145,7 @@ const ContactPage: React.FC = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="contact-email" className="sr-only">Tu Email</label>
+                                <label htmlFor="contact-email" className="sr-only">{t('contact.emailLabel') as string}</label>
                                 <input
                                     id="contact-email"
                                     type="email"
@@ -149,7 +154,7 @@ const ContactPage: React.FC = () => {
                                     onChange={handleInputChange}
                                     onFocus={() => setFocusedField('email')}
                                     onBlur={() => setFocusedField(null)}
-                                    placeholder="Tu Email"
+                                    placeholder={t('contact.emailLabel') as string}
                                     className={getInputClass('email')}
                                     autoComplete="email"
                                     required
@@ -157,7 +162,7 @@ const ContactPage: React.FC = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="contact-type" className="sr-only">Motivo de consulta</label>
+                                <label htmlFor="contact-type" className="sr-only">{t('contact.typeLabel') as string}</label>
                                 <select
                                     id="contact-type"
                                     name="type"
@@ -167,15 +172,15 @@ const ContactPage: React.FC = () => {
                                     onBlur={() => setFocusedField(null)}
                                     className={`${getInputClass('type')} cursor-pointer appearance-none`}
                                 >
-                                    <option value="clase">Consulta sobre Clases</option>
-                                    <option value="evento">Consulta sobre Eventos</option>
-                                    <option value="producto">Consulta sobre Tienda</option>
-                                    <option value="otro">Otro motivo</option>
+                                    <option value="clase">{typeOptions.clase}</option>
+                                    <option value="evento">{typeOptions.evento}</option>
+                                    <option value="producto">{typeOptions.producto}</option>
+                                    <option value="otro">{typeOptions.otro}</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label htmlFor="contact-message" className="sr-only">Mensaje</label>
+                                <label htmlFor="contact-message" className="sr-only">{t('contact.messageLabel') as string}</label>
                                 <textarea
                                     id="contact-message"
                                     name="message"
@@ -183,13 +188,13 @@ const ContactPage: React.FC = () => {
                                     onChange={handleInputChange}
                                     onFocus={() => setFocusedField('message')}
                                     onBlur={() => setFocusedField(null)}
-                                    placeholder="¿En qué podemos acompañarte?"
+                                    placeholder={t('contact.messagePlaceholder') as string}
                                     rows={4}
                                     className={`${getInputClass('message')} resize-none`}
                                     required
                                 ></textarea>
                             </div>
-                            
+
                             <div className="flex items-start gap-3">
                                 <input
                                     id="contact-consent"
@@ -201,14 +206,14 @@ const ContactPage: React.FC = () => {
                                     required
                                 />
                                 <label htmlFor="contact-consent" className="text-sm text-stone-500 leading-relaxed">
-                                    Autorizo el tratamiento de mis datos según la{' '}
-                                    <a href="/privacidad" className="underline hover:text-accent">política de privacidad</a>.
+                                    {t('contact.consentPrefix') as string}{' '}
+                                    <a href="/privacidad" className="underline hover:text-accent">{t('contact.consentLink') as string}</a>.
                                 </label>
                             </div>
 
                             <div className="pt-4">
                                 <button type="submit" className="w-full bg-stone-900 text-white font-heading text-xl py-4 hover:bg-accent transition-colors duration-500">
-                                    Enviar Mensaje
+                                    {t('contact.submit') as string}
                                 </button>
                             </div>
                         </form>

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { Illustration } from '../../assets/Illustrations';
-import EventInstagramFeed from '../../modules/events/components/EventInstagramFeed';
+import InstagramFeedEmbed from '../../modules/events/components/InstagramFeedEmbed';
 import {
   getEventCtaLabel,
   getEventWaitlistUrl,
@@ -9,10 +9,13 @@ import {
   studioEvents,
 } from '../../modules/events/data/events';
 import { toEventBookingDetails } from '../../modules/events/utils/toBookingDetails';
+import { useTranslation } from '../../i18n/useTranslation';
+import { home } from '../../i18n/translations/home';
 
 const EventsSection: React.FC = () => {
   const { openBookingModal } = useContext(CartContext);
   const [activeIdx, setActiveIdx] = useState(0);
+  const { t } = useTranslation(home);
   const event = studioEvents[activeIdx] ?? studioEvents[0];
 
   if (!event) return null;
@@ -25,27 +28,18 @@ const EventsSection: React.FC = () => {
     openBookingModal(toEventBookingDetails(event, 'site'));
   };
 
-  const reserveFromInstagram = () => {
-    if (!isEventBookable(event)) {
-      window.open(getEventWaitlistUrl(event), '_blank', 'noopener,noreferrer');
-      return;
-    }
-    openBookingModal(toEventBookingDetails(event, 'instagram'));
-  };
-
   return (
     <section id="eventos" className="is-section bg-base">
       <div className="is-shell">
         <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
           <span className="is-eyebrow justify-center" style={{ color: '#4D6A6D' }}>
-            Rituales & Encuentros
+            {t('events.eyebrow') as string}
           </span>
           <h2 className="is-display text-4xl sm:text-5xl md:text-6xl mt-4" style={{ color: '#252520' }}>
-            Reunirnos para volver al centro
+            {t('events.title') as string}
           </h2>
           <p className="mt-5 font-light leading-relaxed" style={{ color: '#798478' }}>
-            Inner Dance, ceremonias de luna nueva y encuentros de sonido. Espacios vivos que marcan
-            el ciclo y nos recuerdan que el camino también se transita en comunidad.
+            {t('events.intro') as string}
           </p>
         </div>
 
@@ -70,7 +64,7 @@ const EventsSection: React.FC = () => {
           <div className="lg:w-5/12 relative overflow-hidden group min-h-[260px] sm:min-h-[320px]">
             <img
               src={event.coverImageUrl}
-              alt={`Imagen del evento ${event.title}`}
+              alt={(t('events.imageAlt') as (title: string) => string)(event.title)}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
@@ -132,20 +126,18 @@ const EventsSection: React.FC = () => {
           </div>
         </div>
 
-        <EventInstagramFeed event={event} onReserveFromPost={reserveFromInstagram} />
+        <InstagramFeedEmbed />
 
         {/* Cómo participar */}
         <div className="mt-16 md:mt-24">
           <div className="text-center mb-10">
-            <span className="is-eyebrow justify-center" style={{ color: '#4D6A6D' }}>Cómo participar</span>
-            <h3 className="is-display text-3xl sm:text-4xl mt-4" style={{ color: '#252520' }}>Tres pasos para acompañarnos</h3>
+            <span className="is-eyebrow justify-center" style={{ color: '#4D6A6D' }}>{t('events.howParticipateEyebrow') as string}</span>
+            <h3 className="is-display text-3xl sm:text-4xl mt-4" style={{ color: '#252520' }}>{t('events.howParticipateTitle') as string}</h3>
           </div>
           <ol className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto list-none">
-            {[
-              { n: '01', t: 'Elige tu encuentro', d: 'Explora los rituales activos arriba. Cada uno tiene su fecha, intención y energía propia.' },
-              { n: '02', t: 'Reserva tu lugar', d: 'Aparta cupo desde el sitio o únete a la lista de espera si la formación está cerrada.' },
-              { n: '03', t: 'Llega y habítalo', d: 'Ven con ropa cómoda y mente abierta. Nosotros sostenemos el espacio para que solo te entregues.' },
-            ].map((step) => (
+            {(['chooseEvent', 'bookSpot', 'arrive'] as const).map((key) =>
+              t(`events.steps.${key}`) as { n: string; t: string; d: string }
+            ).map((step) => (
               <li
                 key={step.n}
                 className="px-6 py-7 rounded-sm"

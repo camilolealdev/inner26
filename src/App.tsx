@@ -79,10 +79,29 @@ const pageSEO: Record<string, PageSEO> = {
     image: 'https://innerspirit.net/images/portugal/og-portugal.jpg',
     locale: 'pt_PT',
   },
+  chicago: {
+    canonical: 'https://innerspirit.net/chicago',
+    title: 'Static Dance Chicago — Conscious Movement & Sound Healing | Inner Spirit',
+    description: 'Static Dance in Chicago: mindful, barefoot, substance-free ecstatic dance and somatic movement in an authentic timber loft. Live 432Hz sound healing.',
+    image: 'https://innerspirit.net/images/chicago/chicago-loft-static-dance.jpg',
+    locale: 'en_US',
+  },
+  comunidad: {
+    canonical: 'https://innerspirit.net/comunidad',
+    title: 'Comunidad — Nuestra Tribu & Testimonios | Inner Spirit Studio',
+    description: 'Conoce la comunidad viva de Inner Spirit: más de 162 reseñas reales 4.9★ en Google, círculos de luna, voluntariado y momentos compartidos.',
+    image: 'https://innerspirit.net/images/studio/yoga-clase-grupal.jpg',
+    locale: 'es_CO',
+  },
   privacidad: {
     canonical: 'https://innerspirit.net/privacidad',
     title: 'Política de Tratamiento de Datos — Inner Spirit Studio',
     description: 'Política de Tratamiento de Datos Personales de Inner Spirit Studio conforme a la Ley 1581 de 2012 (Habeas Data) en Colombia. Conoce tus derechos como titular.',
+  },
+  terminos: {
+    canonical: 'https://innerspirit.net/terminos',
+    title: 'Términos y Condiciones — Inner Spirit Studio',
+    description: 'Términos y condiciones de uso, reservas de clases, eventos, alquiler de espacio, tienda online y derecho de retracto de Inner Spirit Studio en Bogotá.',
   },
 };
 
@@ -90,6 +109,7 @@ const HomePage = lazy(() => import('./pages/HomePage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const EspacioPage = lazy(() => import('./pages/EspacioPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
 const ClassesPage = lazy(() => import('./pages/ClassesPage'));
 const EventsPage = lazy(() => import('./pages/EventsPage'));
 const ConsultorioPage = lazy(() => import('./pages/ConsultorioPage'));
@@ -97,6 +117,8 @@ const ShopPage = lazy(() => import('./modules/shop/pages/ShopPage'));
 const BlogPage = lazy(() => import('./modules/blog/pages/BlogPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const PortugalPage = lazy(() => import('./pages/PortugalPage'));
+const ChicagoPage = lazy(() => import('./pages/ChicagoPage'));
+const CommunityPage = lazy(() => import('./pages/CommunityPage'));
 import LocationGateModal from './components/modals/LocationGateModal';
 import RafflePopupModal from './components/modals/RafflePopupModal';
 
@@ -148,8 +170,14 @@ const PageRenderer: React.FC = () => {
       return <ContactPage />;
     case 'portugal':
       return <PortugalPage />;
+    case 'chicago':
+      return <ChicagoPage />;
+    case 'comunidad':
+      return <CommunityPage />;
     case 'privacidad':
       return <PrivacyPage />;
+    case 'terminos':
+      return <TermsPage />;
     case '404':
       return <NotFoundPage />;
     default:
@@ -231,7 +259,7 @@ const AppContent: React.FC = () => {
         <main
           id="main-content"
           tabIndex={-1}
-          className={`${page !== 'home' && page !== 'portugal' ? 'pt-20 md:pt-24' : ''} focus:outline-none`}
+          className={`${page !== 'home' && page !== 'portugal' && page !== 'chicago' ? 'pt-20 md:pt-24' : ''} focus:outline-none`}
         >
           <ErrorBoundary>
             <Suspense fallback={<LoadingSpinner />}>

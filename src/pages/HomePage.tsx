@@ -4,11 +4,13 @@ import HeroSection from '../components/sections/HeroSection';
 import ExperienceGatewaySection from '../components/sections/ExperienceGatewaySection';
 import StudioSection from '../components/sections/StudioSection';
 import AboutSection from '../components/sections/AboutSection';
+import DestinationsSection from '../components/sections/DestinationsSection';
 import FindYourPracticeSection from '../components/sections/FindYourPracticeSection';
 import EventsSection from '../components/sections/EventsSection';
 import ConsultorioSection from '../components/sections/ConsultorioSection';
 import ShopSection from '../modules/shop/components/ShopSection';
 import TestimonialsSection from '../components/sections/TestimonialsSection';
+import ExploraBogotaSection from '../components/sections/ExploraBogotaSection';
 import BlogSection from '../modules/blog/components/BlogSection';
 import NewsletterSection from '../components/sections/NewsletterSection';
 
@@ -75,11 +77,13 @@ const HomePage: React.FC = () => {
     <>
       <HeroSection />
       <ExperienceGatewaySection />
+      <EventsSection />
       <StudioSection />
       <AboutSection />
+      <DestinationsSection />
       <FindYourPracticeSection />
-      <EventsSection />
       <ConsultorioSection />
+      <ExploraBogotaSection />
       <TestimonialsSection />
       <ShopSection />
       <BlogSection />

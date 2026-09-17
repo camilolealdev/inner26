@@ -12,10 +12,17 @@ export type PageName =
   | 'blog'
   | 'contacto'
   | 'privacidad'
+  | 'terminos'
   | 'portugal'
+  | 'chicago'
+  | 'comunidad'
   | '404';
 
-export type LocationChoice = 'co' | 'pt';
+export type LocationChoice = 'co' | 'pt' | 'us';
+export type Language = 'es' | 'pt' | 'en';
+
+const languageForLocation = (loc: LocationChoice): Language =>
+  loc === 'pt' ? 'pt' : loc === 'us' ? 'en' : 'es';
 
 export const PAGE_TO_PATH: Record<PageName, string> = {
   '404': '/404',
@@ -29,7 +36,10 @@ export const PAGE_TO_PATH: Record<PageName, string> = {
   blog: '/blog',
   contacto: '/contacto',
   privacidad: '/privacidad',
+  terminos: '/terminos',
   portugal: '/portugal',
+  chicago: '/chicago',
+  comunidad: '/comunidad',
 };
 
 export const pathToPage = (pathname: string): PageName => {
@@ -37,8 +47,31 @@ export const pathToPage = (pathname: string): PageName => {
   if (normalizedPath === '/pt' || normalizedPath === '/portugal') {
     return 'portugal';
   }
+  if (normalizedPath === '/us' || normalizedPath === '/chicago' || normalizedPath === '/static-dance') {
+    return 'chicago';
+  }
+  if (normalizedPath === '/comunidad' || normalizedPath === '/community') {
+    return 'comunidad';
+  }
   if (normalizedPath === '/co' || normalizedPath === '/colombia') {
     return 'home';
+  }
+  if (
+    normalizedPath === '/terminos' ||
+    normalizedPath === '/terminos-y-condiciones' ||
+    normalizedPath === '/terms' ||
+    normalizedPath === '/cookies' ||
+    normalizedPath === '/devoluciones'
+  ) {
+    return 'terminos';
+  }
+  if (
+    normalizedPath === '/privacidad' ||
+    normalizedPath === '/politica-privacidad' ||
+    normalizedPath === '/privacy' ||
+    normalizedPath === '/habeas-data'
+  ) {
+    return 'privacidad';
   }
   const found = (Object.entries(PAGE_TO_PATH) as Array<[PageName, string]>).find(
     ([, path]) => path === normalizedPath
@@ -53,6 +86,8 @@ interface NavigationContextType {
   navigate: (page: PageName) => void;
   location: LocationChoice;
   setLocation: (loc: LocationChoice) => void;
+  language: Language;
+  setLanguage: (lang: Language) => void;
   isLocationGateOpen: boolean;
   openLocationGate: () => void;
   closeLocationGate: () => void;
@@ -61,6 +96,7 @@ interface NavigationContextType {
 const NavigationContext = createContext<NavigationContextType>({} as NavigationContextType);
 
 const STORAGE_KEY = 'inner_spirit_location';
+const LANGUAGE_STORAGE_KEY = 'inner_spirit_language';
 
 export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [page, setPage] = useState<PageName>(() => {
@@ -74,8 +110,11 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
     if (currentPath.includes('/pt') || currentPath.includes('/portugal')) {
       return 'pt';
     }
+    if (currentPath.includes('/us') || currentPath.includes('/chicago')) {
+      return 'us';
+    }
     const saved = localStorage.getItem(STORAGE_KEY) as LocationChoice | null;
-    return saved === 'pt' || saved === 'co' ? saved : 'co';
+    return saved === 'pt' || saved === 'co' || saved === 'us' ? saved : 'co';
   });
 
   const [isLocationGateOpen, setIsLocationGateOpen] = useState<boolean>(() => {
@@ -85,14 +124,35 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
     return !saved;
   });
 
+  // Idioma: independiente de la sede. Por defecto se deriva de la sede activa,
+  // pero el visitante puede cambiarlo aparte (persistido en su propia clave).
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window === 'undefined') return languageForLocation(location);
+    const savedLang = localStorage.getItem(LANGUAGE_STORAGE_KEY) as Language | null;
+    if (savedLang === 'es' || savedLang === 'pt' || savedLang === 'en') {
+      return savedLang;
+    }
+    return languageForLocation(location);
+  });
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+    }
+  };
+
   const setLocation = (newLoc: LocationChoice) => {
     setLocationState(newLoc);
+    setLanguage(languageForLocation(newLoc));
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, newLoc);
     }
     if (newLoc === 'pt') {
       navigate('portugal');
-    } else if (page === 'portugal') {
+    } else if (newLoc === 'us') {
+      navigate('chicago');
+    } else if (page === 'portugal' || page === 'chicago') {
       navigate('home');
     }
     setIsLocationGateOpen(false);
@@ -127,6 +187,10 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
       const targetPage = pathToPage(window.location.pathname);
       if (targetPage === 'portugal') {
         setLocationState('pt');
+      } else if (targetPage === 'chicago') {
+        setLocationState('us');
+      } else if (targetPage === 'home') {
+        setLocationState('co');
       }
       if (document.startViewTransition) {
         document.startViewTransition(() => setPage(targetPage));
@@ -146,6 +210,8 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         navigate,
         location,
         setLocation,
+        language,
+        setLanguage,
         isLocationGateOpen,
         openLocationGate,
         closeLocationGate,

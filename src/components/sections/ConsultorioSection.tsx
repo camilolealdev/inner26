@@ -2,9 +2,15 @@
 import React from 'react';
 import { useNavigation } from '../../context/NavigationContext';
 import { Illustration } from '../../assets/Illustrations';
+import { useTranslation } from '../../i18n/useTranslation';
+import { home } from '../../i18n/translations/home';
 
 const ConsultorioSection: React.FC = () => {
   const { navigate } = useNavigation();
+  const { t } = useTranslation(home);
+  const services = t('consultorio.services') as {
+    yoga: string; meditacion: string; breathwork: string; arteTerapia: string;
+  };
 
   return (
     <section
@@ -37,29 +43,29 @@ const ConsultorioSection: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 is-shell text-center text-white py-12 md:py-16">
         <span className="block text-xs font-bold tracking-[0.35em] uppercase mb-4 opacity-70 text-muted">
-          Sesiones 1:1
+          {t('consultorio.eyebrow') as string}
         </span>
         <h2 className="text-4xl md:text-5xl font-heading font-medium text-white mb-6 leading-tight">
-          Acompañamiento <br />
-          <span className="italic font-light text-accent">Individual</span>
+          {t('consultorio.headingLine1') as string} <br />
+          <span className="italic font-light text-accent">{t('consultorio.headingItalic') as string}</span>
         </h2>
 
         <div className="w-10 h-px mx-auto mb-6 bg-slate-is" />
 
         <p className="max-w-xl mx-auto text-lg font-light leading-relaxed mb-8 text-accent">
-          Un espacio seguro para explorar lo que emerge en el silencio, con acompañamiento profesional personalizado.
+          {t('consultorio.description') as string}
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mb-10">
           {[
             {
-              label: 'Yoga terapéutico',
+              label: services.yoga,
               icon: (
                 <path d="M12 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM6 11h12M12 8v4m0 0-3 8m3-8 3 8" />
               ),
             },
             {
-              label: 'Meditación guiada',
+              label: services.meditacion,
               icon: (
                 <>
                   <circle cx="12" cy="12" r="3" />
@@ -68,13 +74,13 @@ const ConsultorioSection: React.FC = () => {
               ),
             },
             {
-              label: 'Breathwork',
+              label: services.breathwork,
               icon: (
                 <path d="M12 20c4-3 7-6 7-10a4 4 0 0 0-7-2.6A4 4 0 0 0 5 10c0 4 3 7 7 10Z" />
               ),
             },
             {
-              label: 'Arte terapia',
+              label: services.arteTerapia,
               icon: (
                 <>
                   <path d="M12 3a9 9 0 0 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.2 0-.8.7-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-3.9-4-7-9-7Z" />
@@ -106,7 +112,7 @@ const ConsultorioSection: React.FC = () => {
             onClick={(e) => { e.preventDefault(); navigate('consultorio'); }}
             className="px-6 sm:px-10 py-3 sm:py-4 font-heading text-lg sm:text-xl transition-all duration-300 inline-block border border-slate-is/60 text-sand-dune hover:bg-slate-is"
           >
-            Ver Consultorio
+            {t('consultorio.ctaVer') as string}
           </a>
           <a
             href="https://wa.me/573212248261?text=Hola%2C%20me%20interesa%20una%20sesi%C3%B3n%20individual"
@@ -114,7 +120,7 @@ const ConsultorioSection: React.FC = () => {
             rel="noopener noreferrer"
             className="px-6 sm:px-10 py-3 sm:py-4 font-heading text-lg sm:text-xl transition-all duration-300 bg-slate-is text-sand-dune border border-slate-is hover:bg-deep-teal"
           >
-            Agendar por WhatsApp
+            {t('consultorio.ctaWhatsapp') as string}
           </a>
         </div>
       </div>

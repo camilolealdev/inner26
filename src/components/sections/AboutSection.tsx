@@ -1,9 +1,16 @@
 
 import React from 'react';
 import { useNavigation } from '../../context/NavigationContext';
+import { useTranslation } from '../../i18n/useTranslation';
+import { home } from '../../i18n/translations/home';
 
 const AboutSection: React.FC = () => {
   const { navigate } = useNavigation();
+  const { t } = useTranslation(home);
+  const metrics = (['ranking', 'rating', 'reviews'] as const).map((key) => ({
+    key,
+    ...(t(`about.metrics.${key}`) as { value: string; label: string }),
+  }));
 
   return (
     <section id="about" className="is-section is-section--paper overflow-hidden">
@@ -12,37 +19,30 @@ const AboutSection: React.FC = () => {
 
           {/* Left: Text */}
           <div className="lg:w-1/2 lg:pr-12 order-2 lg:order-1">
-            <span className="is-eyebrow">Nuestra Esencia</span>
+            <span className="is-eyebrow">{t('about.eyebrow') as string}</span>
             <h2 className="is-display text-5xl md:text-6xl leading-none mt-6 mb-8">
-              Un espacio para <br />
-              <span className="italic font-light" style={{ color: '#C9ADA1' }}>recordar</span>.
+              {t('about.headingLine1') as string} <br />
+              <span className="italic font-light" style={{ color: '#C9ADA1' }}>{t('about.headingItalic') as string}</span>.
             </h2>
 
             <div className="is-luxury-rule mb-8" />
 
             <div className="is-copy space-y-6">
               <p>
-                Inner Spirit no es un destino, es un punto de partida. Un santuario a los pies de Monserrate,
-                en el corazón histórico de La Candelaria, diseñado para soltar el ruido externo y reconectar
-                con la sabiduría que ya habita en ti.
+                {t('about.p1') as string}
               </p>
               <p>
-                Aquí el movimiento nace desde adentro y la práctica es una forma de <span className="italic" style={{ color: '#5C6B5C' }}>dejar fluir</span>.
-                Ofrecemos yoga, meditación, danza, breathwork, sound healing y arte terapia en un espacio
-                inclusivo para la comunidad local e internacional — clasificado como el
-                <strong className="text-slate-is"> #1 estudio de yoga en Bogotá</strong> con
-                4.9 en Google (143+ reseñas).
+                {t('about.p2Part1') as string}<span className="italic" style={{ color: '#5C6B5C' }}>{t('about.p2Italic') as string}</span>
+                {t('about.p2Part2') as string}
+                <strong className="text-slate-is">{t('about.p2Strong') as string}</strong>
+                {t('about.p2Part3') as string}
               </p>
             </div>
 
             {/* Trust metrics */}
             <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
-              {[
-                { value: '#1', label: 'Estudio en Bogotá' },
-                { value: '4.9', label: 'En Google' },
-                { value: '143+', label: 'Reseñas' },
-              ].map((m) => (
-                <div key={m.label} className="is-surface px-3 py-4 text-center">
+              {metrics.map((m) => (
+                <div key={m.key} className="is-surface px-3 py-4 text-center">
                   <p className="is-metric font-heading text-3xl leading-none text-slate-is">{m.value}</p>
                   <p className="text-[10px] font-bold uppercase tracking-[0.14em] mt-2 text-muted">{m.label}</p>
                 </div>
@@ -55,7 +55,7 @@ const AboutSection: React.FC = () => {
                 onClick={(e) => { e.preventDefault(); navigate('nosotros'); }}
                 className="font-heading text-xl pb-1 transition-all duration-300 inline-block text-ink border-b border-sage hover:text-slate-is hover:border-slate-is"
               >
-                Conoce nuestra historia &rarr;
+                {t('about.linkHistoria') as string} &rarr;
               </a>
               <a
                 href="https://wa.me/573212248261?text=Hola%2C%20quiero%20info%20sobre%20clases"
@@ -63,7 +63,7 @@ const AboutSection: React.FC = () => {
                 rel="noopener noreferrer"
                 className="font-heading text-xl pb-1 transition-all duration-300 text-slate-is border-b border-slate-is"
               >
-                Reservar clase
+                {t('about.linkReservar') as string}
               </a>
             </div>
           </div>
@@ -73,7 +73,7 @@ const AboutSection: React.FC = () => {
             <div className="is-frame relative aspect-[3/4] overflow-hidden">
               <img
                 src="/images/studio/yoga-postura-ventanas.jpg"
-                alt="Práctica de yoga junto a los ventanales del estudio en La Candelaria"
+                alt={t('about.imgAlt') as string}
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.5s] ease-out hover:scale-105"
               />
@@ -86,18 +86,15 @@ const AboutSection: React.FC = () => {
         {/* Para qué / Por qué — propósito y comunidad */}
         <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
           <article className="is-surface p-8 md:p-10">
-            <span className="is-eyebrow">¿Para qué?</span>
+            <span className="is-eyebrow">{t('about.paraQueEyebrow') as string}</span>
             <p className="is-copy mt-5">
-              En un mundo lleno de ruido, Inner Spirit es un espacio diseñado para ayudarte a
-              reconectar con tu esencia. Ofrecemos clases, terapias y eventos que nutren tu
-              cuerpo, mente y espíritu.
+              {t('about.paraQueText') as string}
             </p>
           </article>
           <article className="is-surface p-8 md:p-10">
-            <span className="is-eyebrow">¿Por qué?</span>
+            <span className="is-eyebrow">{t('about.porQueEyebrow') as string}</span>
             <p className="is-copy mt-5">
-              Somos más que un centro de bienestar: somos una comunidad que celebra tu crecimiento
-              y te acompaña en cada paso de tu viaje hacia la paz interior.
+              {t('about.porQueText') as string}
             </p>
           </article>
         </div>

@@ -1,6 +1,8 @@
 
 import React, { useEffect } from 'react';
 import { useNavigation } from '../../context/NavigationContext';
+import { useTranslation } from '../../i18n/useTranslation';
+import { home } from '../../i18n/translations/home';
 
 // Reseñas reales verificadas en Google Business Profile (Inner Spirit Studio, Bogotá).
 // Solo se incluyen reseñas completas tal como las dejó cada persona — sin recortar ni
@@ -47,6 +49,7 @@ const GoogleIcon = () => (
 
 const TestimonialsSection: React.FC = () => {
   const { location } = useNavigation();
+  const { t } = useTranslation(home);
   const isPt = location === 'pt';
   const list = testimonialsCO;
   const loop = [...list, ...list, ...list];
@@ -70,12 +73,12 @@ const TestimonialsSection: React.FC = () => {
       <section
         className="py-14 md:py-20 border-t text-center"
         style={{ background: '#121210', borderColor: 'rgba(77,106,109,0.15)' }}
-        aria-label="Comunidade Inner Spirit Portugal"
+        aria-label={t('testimonials.honestAriaLabel') as string}
       >
         <div className="is-shell max-w-xl mx-auto">
-          <span className="is-eyebrow justify-center" style={{ color: '#8B9A8B' }}>Comunidade Inner Spirit</span>
+          <span className="is-eyebrow justify-center" style={{ color: '#8B9A8B' }}>{t('testimonials.honestEyebrow') as string}</span>
           <h2 className="font-heading text-2xl md:text-3xl mt-3 leading-snug" style={{ color: '#FAF7F2' }}>
-            Uma comunidade que está a começar agora em Portugal.
+            {t('testimonials.honestHeading') as string}
           </h2>
         </div>
       </section>
@@ -86,21 +89,21 @@ const TestimonialsSection: React.FC = () => {
     <section
       className="py-14 md:py-20 overflow-hidden border-t"
       style={{ background: '#121210', borderColor: 'rgba(77,106,109,0.15)' }}
-      aria-label="Lo que dice la comunidad"
+      aria-label={t('testimonials.ariaLabel') as string}
     >
       <div className="is-shell mb-10 text-center">
         <span className="is-eyebrow justify-center" style={{ color: '#8B9A8B' }}>
-          Comunidad Inner Spirit
+          {t('testimonials.eyebrow') as string}
         </span>
         <h2 className="font-heading text-2xl md:text-4xl mt-3 leading-snug" style={{ color: '#FAF7F2' }}>
-          Historias de quienes vuelven a respirar aquí.
+          {t('testimonials.heading') as string}
         </h2>
 
         {/* Live Google Badge */}
         <div className="inline-flex flex-wrap items-center justify-center gap-3 mt-6 p-2.5 px-5 rounded-full border border-white/10 bg-white/[0.03]">
           <div className="flex items-center gap-2">
             <GoogleIcon />
-            <span className="text-xs font-semibold uppercase tracking-wider text-white">Google Reviews</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-white">{t('testimonials.googleReviewsLabel') as string}</span>
           </div>
           <span className="text-xl font-heading font-bold" style={{ color: '#C9ADA1' }}>
             4.9
@@ -113,7 +116,7 @@ const TestimonialsSection: React.FC = () => {
             ))}
           </div>
           <span className="text-xs text-stone-400">
-            162 reseñas verificadas
+            {t('testimonials.reviewsCount') as string}
           </span>
           <a
             href="https://maps.google.com/?cid=12076127393282276532"
@@ -121,7 +124,7 @@ const TestimonialsSection: React.FC = () => {
             rel="noopener noreferrer"
             className="text-[11px] uppercase tracking-wider font-semibold underline text-[#8B9A8B] hover:text-white transition-colors ml-1"
           >
-            Ver en Google
+            {t('testimonials.verEnGoogle') as string}
           </a>
         </div>
       </div>
@@ -183,7 +186,7 @@ const TestimonialsSection: React.FC = () => {
           rel="noopener noreferrer"
           className="text-xs uppercase tracking-widest text-stone-400 hover:text-white transition-colors border-b border-stone-600 hover:border-white pb-1"
         >
-          ✦ Deja tu reseña en Google Maps
+          {t('testimonials.leaveReview') as string}
         </a>
       </div>
     </section>

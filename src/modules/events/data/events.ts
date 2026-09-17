@@ -1,4 +1,7 @@
 import type { StudioEvent } from '../types';
+import { eventsData } from '../../../i18n/translations/data';
+
+type Language = keyof typeof eventsData;
 
 export const studioEvents: StudioEvent[] = [
   {
@@ -19,28 +22,6 @@ export const studioEvents: StudioEvent[] = [
       'Lista de espera - Confirmacion por WhatsApp',
     ],
     type: 'event',
-    instagramPosts: [
-      {
-        id: 'ig-inner-dance-01',
-        eventSlug: 'inner-dance-luna-nueva',
-        imageUrl: '/images/instagram/inner-dance-post-1.jpg',
-        caption:
-          'Esta semana activamos pista ritual. Llega con ropa comoda y tu intencion.',
-        publishDate: '2026-03-22',
-        permalink: 'https://instagram.com/innerspirit_studio',
-        ctaLabel: 'Reservar cupo de Inner Dance',
-      },
-      {
-        id: 'ig-inner-dance-02',
-        eventSlug: 'inner-dance-luna-nueva',
-        imageUrl: '/images/instagram/inner-dance-post-2.jpg',
-        caption:
-          'Set sonoro para expansion y cierre en silencio. Ultimos cupos anticipados.',
-        publishDate: '2026-03-24',
-        permalink: 'https://instagram.com/innerspirit_studio',
-        ctaLabel: 'Quiero este evento',
-      },
-    ],
   },
   {
     slug: 'rocket-yoga-training',
@@ -61,28 +42,6 @@ export const studioEvents: StudioEvent[] = [
     status: 'waitlist',
     ctaLabel: 'Entrar a lista de espera',
     type: 'event',
-    instagramPosts: [
-      {
-        id: 'ig-rocket-01',
-        eventSlug: 'rocket-yoga-training',
-        imageUrl: '/images/instagram/rocket-yoga-post-1.jpg',
-        caption:
-          'Abrimos cohorte para Rocket Yoga TT. Incluye manual, mentoring y certificado.',
-        publishDate: '2026-03-19',
-        permalink: 'https://instagram.com/innerspirit_studio',
-        ctaLabel: 'Entrar a lista de espera',
-      },
-      {
-        id: 'ig-rocket-02',
-        eventSlug: 'rocket-yoga-training',
-        imageUrl: '/images/instagram/rocket-yoga-post-2.jpg',
-        caption:
-          'Sesion Q&A para resolver dudas de formacion. Early bird activo esta semana.',
-        publishDate: '2026-03-23',
-        permalink: 'https://instagram.com/innerspirit_studio',
-        ctaLabel: 'Quiero siguiente cohorte',
-      },
-    ],
   },
   {
     slug: 'circulo-luna-llena',
@@ -102,28 +61,6 @@ export const studioEvents: StudioEvent[] = [
       'Pack mensual - 3 encuentros',
     ],
     type: 'event',
-    instagramPosts: [
-      {
-        id: 'ig-luna-01',
-        eventSlug: 'circulo-luna-llena',
-        imageUrl: '/images/instagram/luna-post-1.jpg',
-        caption:
-          'Ritual de luna llena con meditacion guiada y cierre energetico en circulo.',
-        publishDate: '2026-03-20',
-        permalink: 'https://instagram.com/innerspirit_studio',
-        ctaLabel: 'Reservar circulo de luna',
-      },
-      {
-        id: 'ig-luna-02',
-        eventSlug: 'circulo-luna-llena',
-        imageUrl: '/images/instagram/luna-post-2.jpg',
-        caption:
-          'Trae tu journal y una intencion clara. Cupos limitados para presencial.',
-        publishDate: '2026-03-25',
-        permalink: 'https://instagram.com/innerspirit_studio',
-        ctaLabel: 'Apartar cupo ahora',
-      },
-    ],
   },
 ];
 
@@ -135,6 +72,34 @@ export const isEventBookable = (event: StudioEvent): boolean =>
 
 export const getEventCtaLabel = (event: StudioEvent): string =>
   event.ctaLabel ?? 'Reservar Lugar';
+
+// Devuelve el evento con su copy (tag/title/subtitle/description/dateLabel/
+// priceLabel/bookingSlots/ctaLabel) en el idioma pedido, con fallback a
+// español si el slug no tiene traducción todavía. Campos estructurales
+// (price, slug, illustrationName, coverImageUrl, status, type) no cambian:
+// no son copy, son datos operativos. Pensado para que las vistas que
+// consuman studioEvents (EventsPage, EventsSection) se conecten a esto en
+// una migración posterior sin romper el shape actual de StudioEvent.
+export const getLocalizedEvent = (event: StudioEvent, language: Language): StudioEvent => {
+  const translation = eventsData[language]?.[event.slug as keyof (typeof eventsData)['es']]
+    ?? eventsData.es[event.slug as keyof (typeof eventsData)['es']];
+  if (!translation) return event;
+  const ctaLabel = (translation as { ctaLabel?: string }).ctaLabel ?? event.ctaLabel;
+  return {
+    ...event,
+    tag: translation.tag,
+    title: translation.title,
+    subtitle: translation.subtitle,
+    description: translation.description,
+    dateLabel: translation.dateLabel,
+    priceLabel: translation.priceLabel,
+    bookingSlots: [...translation.bookingSlots],
+    ...(ctaLabel !== undefined ? { ctaLabel } : {}),
+  };
+};
+
+export const getLocalizedEvents = (language: Language): StudioEvent[] =>
+  studioEvents.map((event) => getLocalizedEvent(event, language));
 
 export const getEventWaitlistUrl = (event: StudioEvent): string => {
   const text = encodeURIComponent(

@@ -1,11 +1,15 @@
 
 import React from 'react';
 import { Illustration } from '../assets/Illustrations';
+import { useTranslation } from '../i18n/useTranslation';
+import { homePages } from '../i18n/translations/homePages';
 
 const galleryIllustrations = ['yoga', 'meditation', 'lotus'];
-const galleryLabels = ['Movimiento Consciente', 'Silencio Interior', 'Florecimiento'];
 
 const AboutPage: React.FC = () => {
+  const { t } = useTranslation(homePages);
+  const galleryLabels = t('about.galleryLabels') as string[];
+
   return (
     <div className="animate-fade-in-up">
 
@@ -19,13 +23,13 @@ const AboutPage: React.FC = () => {
         </div>
         <div className="is-shell relative z-10 text-center text-white">
           <span className="text-xs font-bold tracking-[0.3em] uppercase mb-6 block" style={{ color: '#4D6A6D' }}>
-            Inner Spirit Studio
+            {t('about.eyebrowStudio') as string}
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-heading font-semibold mb-6" style={{ color: '#EAE0CC' }}>
-            Somos un espacio<br />para recordar
+            {t('about.heroTitleLine1') as string}<br />{t('about.heroTitleLine2') as string}
           </h1>
           <p className="mt-4 text-xl max-w-3xl mx-auto font-light leading-relaxed" style={{ color: '#A0A083' }}>
-            Un lugar para soltar el ruido de afuera y volver a escuchar la sabiduría que ya habita en ti.
+            {t('about.heroLead') as string}
           </p>
         </div>
       </section>
@@ -34,18 +38,14 @@ const AboutPage: React.FC = () => {
       <section className="is-page-section bg-base">
         <div className="is-shell max-w-3xl text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-semibold mb-8" style={{ color: '#4D6A6D' }}>
-            Nuestra Filosofía
+            {t('about.philosophyTitle') as string}
           </h2>
           <div className="text-xl font-light leading-relaxed space-y-8" style={{ color: '#5c5c52' }}>
             <p>
-              No somos un gimnasio. No somos un centro de terapia. Somos un espacio donde el
-              movimiento nace desde adentro. Donde la meditación no es una técnica, sino un descanso.
-              Donde la danza no tiene pasos, solo impulso.
+              {t('about.philosophyP1') as string}
             </p>
             <p>
-              Creemos que cada persona posee su propia brújula interna. Nuestro rol no es dar
-              respuestas, sino crear las condiciones de calma y presencia para que puedas escuchar
-              las tuyas.
+              {t('about.philosophyP2') as string}
             </p>
           </div>
         </div>
@@ -75,15 +75,13 @@ const AboutPage: React.FC = () => {
             </div>
             <div className="md:w-3/5 text-center md:text-left">
               <h2 className="text-4xl md:text-5xl font-heading font-semibold mb-6" style={{ color: '#4D6A6D' }}>
-                La Guía
+                {t('about.guideTitle') as string}
               </h2>
               <p className="text-xl font-light leading-relaxed mb-4" style={{ color: '#252520' }}>
-                El camino de Inner Spirit es sostenido por una escucha.
+                {t('about.guideP1') as string}
               </p>
               <p className="text-lg font-light leading-relaxed" style={{ color: '#798478' }}>
-                Una que ha sido nutrida por estudios en Sanación Energética, Meditación y Yoga Holístico,
-                pero cuya verdadera guía es la presencia compartida en el silencio. Más que enseñar,
-                el propósito es crear el espacio para que cada quien recuerde su propia sabiduría.
+                {t('about.guideP2') as string}
               </p>
             </div>
           </div>
@@ -95,11 +93,10 @@ const AboutPage: React.FC = () => {
         <div className="is-shell">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading font-semibold mb-6" style={{ color: '#4D6A6D' }}>
-              El Espacio
+              {t('about.spaceTitle') as string}
             </h2>
             <p className="text-xl font-light leading-relaxed max-w-3xl mx-auto" style={{ color: '#798478' }}>
-              100 m² de espacio sagrado a los pies de Monserrate, en el barrio La Candelaria de Bogotá.
-              Luz natural, paredes de barro y un piso que ha visto miles de respiraciones.
+              {t('about.spaceLead') as string}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

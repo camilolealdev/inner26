@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react';
 import type { BlogPost } from '../../../types';
 import { Illustration } from '../../../assets/Illustrations';
 import { CloseIcon } from '../../../constants';
-
-
-
+import { useTranslation } from '../../../i18n/useTranslation';
+import { homePages } from '../../../i18n/translations/homePages';
 
 
 
@@ -76,7 +75,7 @@ const blogPosts: BlogPost[] = [
     title: '5 Pasos para Iniciar tu Práctica de Meditación',
     category: 'Meditación',
     excerpt: 'La meditación no requiere experiencia previa — solo la disposición de sentarte contigo mismo unos minutos al día.',
-    imageUrl: '',
+    imageUrl: '/images/studio/meditacion-mudra.jpg',
     illustrationName: 'meditation',
   },
   {
@@ -84,7 +83,7 @@ const blogPosts: BlogPost[] = [
     title: 'Yoga para Principiantes: Posturas Esenciales',
     category: 'Yoga',
     excerpt: 'Una guía de las posturas fundamentales de Hatha Yoga para construir una base sólida y consciente.',
-    imageUrl: '',
+    imageUrl: '/images/studio/yoga-postura-ventanas.jpg',
     illustrationName: 'yoga',
   },
   {
@@ -92,7 +91,7 @@ const blogPosts: BlogPost[] = [
     title: 'Alineando tu Energía Vital con los Chakras',
     category: 'Crecimiento Espiritual',
     excerpt: 'Aprende qué son los chakras y cómo mantenerlos en equilibrio para tu salud física y emocional.',
-    imageUrl: '',
+    imageUrl: '/images/products/cristal-cuarzo.jpg',
     illustrationName: 'abstract-spirit',
   },
   {
@@ -100,7 +99,7 @@ const blogPosts: BlogPost[] = [
     title: 'Rituales de Luna Nueva: Sembrando Intenciones',
     category: 'Crecimiento Espiritual',
     excerpt: 'Aprovecha la energía renovadora de la luna nueva con estos rituales simples para plantar las semillas de tus deseos.',
-    imageUrl: '',
+    imageUrl: '/images/events/circulo-luna.jpg',
     illustrationName: 'ritual',
   },
   {
@@ -108,13 +107,14 @@ const blogPosts: BlogPost[] = [
     title: 'Breathwork: El Arte de Respirar con Consciencia',
     category: 'Bienestar',
     excerpt: 'La respiración es la herramienta más accesible para transformar tu energía. Descubre las técnicas más usadas en el studio.',
-    imageUrl: '',
+    imageUrl: '/images/studio/danza-movimiento.jpg',
     illustrationName: 'breathwork',
   },
 ];
 
 const ArticleModal: React.FC<{ post: BlogPost; onClose: () => void }> = ({ post, onClose }) => {
   const content = articleContent[post.id];
+  const { t } = useTranslation(homePages);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -138,18 +138,27 @@ const ArticleModal: React.FC<{ post: BlogPost; onClose: () => void }> = ({ post,
       >
         <div className="sticky top-0 flex justify-between items-center px-8 py-5 border-b z-10 rounded-t-sm" style={{ background: '#FAF7F2', borderColor: '#EAE0CC' }}>
           <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#4D6A6D' }}>{post.category}</span>
-          <button onClick={onClose} aria-label="Cerrar artículo" className="transition-transform hover:scale-110" style={{ color: '#A0A083' }}>
+          <button onClick={onClose} aria-label={t('blog.closeArticle') as string} className="transition-transform hover:scale-110" style={{ color: '#A0A083' }}>
             <CloseIcon className="w-5 h-5" />
           </button>
         </div>
 
         <div className="px-5 py-7 md:px-8 md:py-10">
-          <div className="flex items-center justify-center aspect-[3/1] mb-8 rounded-sm" style={{ background: '#EAE0CC' }}>
-            <Illustration
-              name={post.illustrationName ?? 'meditation'}
-              className="w-1/4 h-1/4"
-              style={{ color: '#C9ADA1' } as React.CSSProperties}
-            />
+          <div className="relative overflow-hidden aspect-[16/8] mb-8 rounded-sm flex items-center justify-center bg-[#EAE0CC]">
+            {post.imageUrl ? (
+              <img
+                src={post.imageUrl}
+                alt={post.title}
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
+            ) : (
+              <Illustration
+                name={post.illustrationName ?? 'meditation'}
+                className="w-1/4 h-1/4"
+                style={{ color: '#C9ADA1' } as React.CSSProperties}
+              />
+            )}
           </div>
 
           <h2 className="text-3xl md:text-4xl font-heading font-bold leading-tight mb-8" style={{ color: '#252520' }}>
@@ -185,7 +194,7 @@ const ArticleModal: React.FC<{ post: BlogPost; onClose: () => void }> = ({ post,
               className="inline-block font-heading text-lg px-8 py-3 transition-all hover:opacity-90"
               style={{ background: '#4D6A6D', color: '#EAE0CC' }}
             >
-              Reservar una clase →
+              {t('blog.reserveClassCta') as string}
             </a>
           </div>
         </div>
@@ -197,6 +206,7 @@ const ArticleModal: React.FC<{ post: BlogPost; onClose: () => void }> = ({ post,
 const BlogPage: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [featuredPost, ...otherPosts] = blogPosts;
+  const { t } = useTranslation(homePages);
 
   useEffect(() => {
     const blogSchema = {
@@ -228,12 +238,12 @@ const BlogPage: React.FC = () => {
         <div className="is-shell">
 
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <span className="is-eyebrow justify-center">Journal</span>
+            <span className="is-eyebrow justify-center">{t('blog.eyebrow') as string}</span>
             <h1 className="is-page-heading mt-5">
-              Palabras para el Camino
+              {t('blog.heading') as string}
             </h1>
             <p className="is-page-lead mt-6">
-              Recursos, guías e inspiración para nutrir tu viaje interior — escritos desde la práctica, no desde la teoría.
+              {t('blog.lead') as string}
             </p>
           </div>
 
@@ -244,17 +254,30 @@ const BlogPage: React.FC = () => {
               onClick={() => setSelectedPost(featuredPost)}
               className="is-surface is-surface--dark is-surface--interactive group w-full text-left flex flex-col md:flex-row overflow-hidden mb-12"
             >
-              <div className="is-media-stage md:w-2/5 aspect-[16/10] md:aspect-auto flex items-center justify-center">
-                <Illustration
-                  name={featuredPost.illustrationName ?? 'meditation'}
-                  className="w-1/3 h-1/3 transition-transform duration-700 group-hover:scale-110"
-                  style={{ color: '#C9ADA1' } as React.CSSProperties}
+              <div className="is-media-stage md:w-2/5 aspect-[16/10] md:aspect-auto flex items-center justify-center relative overflow-hidden bg-[#181512]">
+                {featuredPost.imageUrl ? (
+                  <img
+                    src={featuredPost.imageUrl}
+                    alt={featuredPost.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <Illustration
+                    name={featuredPost.illustrationName ?? 'meditation'}
+                    className="w-1/3 h-1/3 transition-transform duration-700 group-hover:scale-110"
+                    style={{ color: '#C9ADA1' } as React.CSSProperties}
+                  />
+                )}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'linear-gradient(to top, rgba(18,18,16,0.5) 0%, transparent 60%)' }}
                 />
               </div>
               <div className="md:w-3/5 p-7 md:p-10 flex flex-col justify-center">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: '#C9ADA1' }}>
-                    Lectura destacada
+                    {t('blog.featuredLabel') as string}
                   </span>
                   <span className="is-luxury-rule" />
                   <span className="text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: '#8B9A8B' }}>
@@ -268,7 +291,7 @@ const BlogPage: React.FC = () => {
                   {featuredPost.excerpt}
                 </p>
                 <span className="font-heading text-lg transition-colors group-hover:text-white" style={{ color: '#C9ADA1' }}>
-                  Leer artículo &rarr;
+                  {t('blog.readArticleArrow') as string}
                 </span>
               </div>
             </button>
@@ -284,12 +307,21 @@ const BlogPage: React.FC = () => {
                 onClick={() => setSelectedPost(post)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedPost(post); } }}
               >
-                <div className="is-media-stage overflow-hidden aspect-[3/2] flex items-center justify-center">
-                  <Illustration
-                    name={post.illustrationName ?? 'meditation'}
-                    className="w-2/5 h-2/5 transition-all duration-700 group-hover:scale-110"
-                    style={{ color: '#C9ADA1' } as React.CSSProperties}
-                  />
+                <div className="is-media-stage overflow-hidden aspect-[3/2] flex items-center justify-center relative bg-sand-light">
+                  {post.imageUrl ? (
+                    <img
+                      src={post.imageUrl}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <Illustration
+                      name={post.illustrationName ?? 'meditation'}
+                      className="w-2/5 h-2/5 transition-all duration-700 group-hover:scale-110"
+                      style={{ color: '#C9ADA1' } as React.CSSProperties}
+                    />
+                  )}
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <p className="text-[11px] font-bold uppercase tracking-[0.16em] mb-2 text-slate-is">
@@ -302,7 +334,7 @@ const BlogPage: React.FC = () => {
                     {post.excerpt}
                   </p>
                   <span className="inline-block text-sm font-semibold pb-0.5 text-ink border-b border-accent transition-all group-hover:text-slate-is group-hover:border-slate-is self-start">
-                    Leer artículo
+                    {t('blog.readArticle') as string}
                   </span>
                 </div>
               </div>

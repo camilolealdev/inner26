@@ -1,54 +1,47 @@
 
 import React from 'react';
+import { useTranslation } from '../../i18n/useTranslation';
+import { home } from '../../i18n/translations/home';
 
-const stats = [
-  { value: '4.9', label: 'Calificación Google', sub: '143+ reseñas' },
-  { value: '#1', label: 'Yoga Studio', sub: 'Bogotá, Colombia' },
-  { value: '100m²', label: 'Espacio sagrado', sub: 'La Candelaria' },
-];
-
-const pillars = [
-  {
-    img: '/images/studio/yoga-clase-grupal.jpg',
-    label: 'Yoga',
-    alt: 'Clase de yoga en grupo sobre esterillas en Inner Spirit Studio',
-  },
-  {
-    img: '/images/studio/danza-movimiento.jpg',
-    label: 'Danza',
-    alt: 'Clase de danza y movimiento consciente en comunidad',
-  },
-  {
-    img: '/images/studio/capoeira-roda.jpg',
-    label: 'Capoeira',
-    alt: 'Roda de capoeira con músicos en el estudio de La Candelaria',
-  },
-];
+const pillarImages = {
+  yoga: '/images/studio/yoga-clase-grupal.jpg',
+  danza: '/images/studio/danza-movimiento.jpg',
+  capoeira: '/images/studio/capoeira-roda.jpg',
+} as const;
 
 const StudioSection: React.FC = () => {
+  const { t } = useTranslation(home);
+  const pillars = (Object.keys(pillarImages) as (keyof typeof pillarImages)[]).map((key) => ({
+    key,
+    img: pillarImages[key],
+    ...(t(`studio.pillars.${key}`) as { label: string; alt: string }),
+  }));
+  const stats = (['rating', 'ranking', 'space'] as const).map((key) => ({
+    key,
+    ...(t(`studio.stats.${key}`) as { value: string; label: string; sub: string }),
+  }));
+
   return (
     <section id="studio" className="is-section bg-base relative overflow-hidden">
       <div className="is-shell">
 
         {/* Editorial heading */}
         <div className="flex flex-col items-center text-center mb-10">
-          <span className="is-eyebrow">El Espacio</span>
+          <span className="is-eyebrow">{t('studio.eyebrow') as string}</span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading leading-tight mt-5 mb-4" style={{ color: '#1A1A18' }}>
-            No somos un gimnasio.<br />
-            <span className="italic font-light" style={{ color: '#5C6B5C' }}>Somos un santuario.</span>
+            {t('studio.headingLine1') as string}<br />
+            <span className="italic font-light" style={{ color: '#5C6B5C' }}>{t('studio.headingItalic') as string}</span>
           </h2>
           <div className="is-luxury-rule my-4" />
           <p className="text-base md:text-lg font-light max-w-2xl leading-relaxed" style={{ color: '#5c5c52' }}>
-            Yoga, meditación, danza, capoeira, breathwork y sound healing reunidos en un espacio de 100&nbsp;m²
-            a los pies de Monserrate. Un lugar para dejar fluir, respirar hondo y reencontrarte
-            con la comunidad. Clases en español e inglés.
+            {t('studio.description') as string}
           </p>
         </div>
 
         {/* Pillar cards — real photography of the space and its community */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
           {pillars.map((item) => (
-            <div key={item.label} className="flex flex-col items-center group">
+            <div key={item.key} className="flex flex-col items-center group">
               <div className="w-full aspect-[3/4] rounded-sm overflow-hidden mb-5">
                 <img
                   src={item.img}
@@ -70,7 +63,7 @@ const StudioSection: React.FC = () => {
           style={{ background: '#F3EDE2' }}
         >
           {stats.map((s) => (
-            <div key={s.value} className="flex flex-col items-center py-6 md:py-0">
+            <div key={s.key} className="flex flex-col items-center py-6 md:py-0">
               <span className="text-4xl md:text-5xl font-heading font-bold" style={{ color: '#4D6A6D' }}>
                 {s.value}
               </span>

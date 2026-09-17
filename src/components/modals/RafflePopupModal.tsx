@@ -3,6 +3,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { useToast } from '../../context/ToastContext';
 import { submitLead } from '../../utils/leads';
 import { rafflePopupConfig } from '../../config/rafflePopup';
+import { useTranslation } from '../../i18n/useTranslation';
 
 const enteredKey = (id: string) => `inner_spirit_raffle_${id}_entered`;
 const dismissedKey = (id: string) => `inner_spirit_raffle_${id}_dismissed_at`;
@@ -10,6 +11,7 @@ const dismissedKey = (id: string) => `inner_spirit_raffle_${id}_dismissed_at`;
 const RafflePopupModal: React.FC = () => {
   const { page, isLocationGateOpen } = useNavigation();
   const { showToast } = useToast();
+  const { t } = useTranslation();
   const config = rafflePopupConfig;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -60,11 +62,11 @@ const RafflePopupModal: React.FC = () => {
     e.preventDefault();
     if (form.honeypot) return;
     if (!form.consent) {
-      showToast('Debes aceptar la política de privacidad para participar.', 'error');
+      showToast(t('raffle.consentError') as string, 'error');
       return;
     }
     if (form.name.trim().length < 2) {
-      showToast('Cuéntanos tu nombre para inscribirte.', 'error');
+      showToast(t('raffle.nameError') as string, 'error');
       return;
     }
 
@@ -97,7 +99,7 @@ const RafflePopupModal: React.FC = () => {
       }}
     >
       <div
-        className="relative w-full max-w-md rounded-2xl p-6 sm:p-9 text-center border shadow-2xl animate-in fade-in zoom-in-95 duration-500"
+        className="relative w-full max-w-md max-h-[92vh] flex flex-col rounded-2xl overflow-hidden border shadow-2xl animate-in fade-in zoom-in-95 duration-500 text-center"
         style={{
           background: 'linear-gradient(150deg, #1E1B16 0%, #121210 100%)',
           borderColor: 'rgba(201, 173, 161, 0.3)',
@@ -106,37 +108,70 @@ const RafflePopupModal: React.FC = () => {
       >
         <button
           onClick={handleDismiss}
-          aria-label="Cerrar"
-          className="absolute top-4 right-4 p-2.5 rounded-full text-stone-400 hover:text-white transition-colors"
+          aria-label={t('raffle.close') as string}
+          className="absolute top-3 right-3 z-20 p-2 rounded-full text-stone-300 hover:text-white transition-colors bg-black/50 hover:bg-black/70 backdrop-blur-md"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        {submitted ? (
-          <div className="py-6">
-            <div className="text-4xl mb-4" aria-hidden="true">🎉</div>
-            <h2 id="raffle-popup-title" className="font-heading text-2xl mb-3">
-              {config.successTitle}
-            </h2>
-            <p className="text-sm text-stone-300 font-light leading-relaxed mb-6">{config.successMessage}</p>
-            <button
-              onClick={handleDismiss}
-              className="is-action is-action--light"
-            >
-              Cerrar
-            </button>
+        {config.imageUrl && (
+          <div className="relative w-full h-44 sm:h-48 shrink-0 overflow-hidden bg-[#181512]">
+            <img
+              src={config.imageUrl}
+              alt={config.title}
+              className="w-full h-full object-cover object-center"
+              loading="eager"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'linear-gradient(to bottom, rgba(18, 18, 16, 0.15) 0%, rgba(18, 18, 16, 0.5) 65%, #1E1B16 100%)',
+              }}
+            />
+            <div className="absolute bottom-3 left-4 text-left">
+              <span
+                className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-sans font-medium backdrop-blur-md border shadow-sm"
+                style={{
+                  background: 'rgba(30, 27, 22, 0.85)',
+                  borderColor: 'rgba(201, 173, 161, 0.4)',
+                  color: '#FAF7F2',
+                }}
+              >
+                {config.eyebrow}
+              </span>
+            </div>
           </div>
-        ) : (
-          <>
-            <span className="text-xs uppercase tracking-[0.28em] font-sans font-medium" style={{ color: '#C9ADA1' }}>
-              {config.eyebrow}
-            </span>
-            <h2 id="raffle-popup-title" className="font-heading text-2xl sm:text-3xl mt-3 mb-3 leading-snug">
-              {config.title}
-            </h2>
-            <p className="text-sm font-light text-stone-300 leading-relaxed mb-5">{config.description}</p>
+        )}
+
+        <div className="overflow-y-auto p-6 sm:p-7 pt-4">
+          {submitted ? (
+            <div className="py-6">
+              <div className="text-4xl mb-4" aria-hidden="true">🎉</div>
+              <h2 id="raffle-popup-title" className="font-heading text-2xl mb-3">
+                {config.successTitle}
+              </h2>
+              <p className="text-sm text-stone-300 font-light leading-relaxed mb-6">{config.successMessage}</p>
+              <button
+                onClick={handleDismiss}
+                className="is-action is-action--light"
+              >
+                {t('raffle.close') as string}
+              </button>
+            </div>
+          ) : (
+            <>
+              {!config.imageUrl && (
+                <span className="text-xs uppercase tracking-[0.28em] font-sans font-medium" style={{ color: '#C9ADA1' }}>
+                  {config.eyebrow}
+                </span>
+              )}
+              <h2 id="raffle-popup-title" className="font-heading text-2xl sm:text-3xl mt-1 mb-2.5 leading-snug">
+                {config.title}
+              </h2>
+              <p className="text-sm font-light text-stone-300 leading-relaxed mb-5">{config.description}</p>
 
             <div
               className="rounded-xl border p-4 mb-6 text-left"
@@ -169,11 +204,11 @@ const RafflePopupModal: React.FC = () => {
               />
 
               <div>
-                <label htmlFor="raffle-name" className="sr-only">Tu nombre</label>
+                <label htmlFor="raffle-name" className="sr-only">{t('raffle.namePlaceholder') as string}</label>
                 <input
                   id="raffle-name"
                   type="text"
-                  placeholder="Tu nombre"
+                  placeholder={t('raffle.namePlaceholder') as string}
                   required
                   autoComplete="name"
                   value={form.name}
@@ -184,11 +219,11 @@ const RafflePopupModal: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="raffle-email" className="sr-only">Tu correo</label>
+                <label htmlFor="raffle-email" className="sr-only">{t('raffle.emailPlaceholder') as string}</label>
                 <input
                   id="raffle-email"
                   type="email"
-                  placeholder="Tu correo electrónico"
+                  placeholder={t('raffle.emailPlaceholder') as string}
                   required
                   autoComplete="email"
                   value={form.email}
@@ -199,11 +234,11 @@ const RafflePopupModal: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="raffle-phone" className="sr-only">Tu WhatsApp</label>
+                <label htmlFor="raffle-phone" className="sr-only">{t('raffle.phonePlaceholder') as string}</label>
                 <input
                   id="raffle-phone"
                   type="tel"
-                  placeholder="Tu WhatsApp (opcional)"
+                  placeholder={t('raffle.phonePlaceholder') as string}
                   autoComplete="tel"
                   value={form.phone}
                   onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
@@ -222,11 +257,11 @@ const RafflePopupModal: React.FC = () => {
                   style={{ accentColor: '#C9ADA1' }}
                 />
                 <span>
-                  Autorizo el tratamiento de mis datos según la{' '}
+                  {t('raffle.consentPrefix') as string}{' '}
                   {config.termsUrl ? (
-                    <a href={config.termsUrl} className="underline hover:text-white">política de privacidad</a>
+                    <a href={config.termsUrl} className="underline hover:text-white">{t('raffle.consentLink') as string}</a>
                   ) : (
-                    'política de privacidad'
+                    (t('raffle.consentLink') as string)
                   )}
                   .
                 </span>
@@ -238,6 +273,7 @@ const RafflePopupModal: React.FC = () => {
             </form>
           </>
         )}
+        </div>
       </div>
     </div>
   );

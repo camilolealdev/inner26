@@ -1,7 +1,7 @@
 ﻿import React, { useContext, useState, useEffect } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Illustration } from '../assets/Illustrations';
-import EventInstagramFeed from '../modules/events/components/EventInstagramFeed';
+import InstagramFeedEmbed from '../modules/events/components/InstagramFeedEmbed';
 import {
   getEventCtaLabel,
   getEventWaitlistUrl,
@@ -9,11 +9,15 @@ import {
   studioEvents,
 } from '../modules/events/data/events';
 import { toEventBookingDetails } from '../modules/events/utils/toBookingDetails';
+import { useTranslation } from '../i18n/useTranslation';
+import { homePages } from '../i18n/translations/homePages';
 
 const EventsPage: React.FC = () => {
   const { openBookingModal } = useContext(CartContext);
   const [activeSlug, setActiveSlug] = useState(studioEvents[0]?.slug ?? '');
   const activeEvent = studioEvents.find((event) => event.slug === activeSlug) ?? studioEvents[0];
+  const { t } = useTranslation(homePages);
+  const steps = t('events.steps') as { n: string; t: string; d: string }[];
 
   useEffect(() => {
     // Un ItemList de los eventos reales, no un único Event genérico envolviendo
@@ -83,14 +87,13 @@ const EventsPage: React.FC = () => {
         <div className="is-shell">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <span className="is-eyebrow justify-center mb-4" style={{ color: '#4D6A6D' }}>
-              Próximos Encuentros
+              {t('events.eyebrow') as string}
             </span>
             <h1 className="is-page-heading">
-              Rituales y Encuentros
+              {t('events.heading') as string}
             </h1>
             <p className="is-page-lead mt-6">
-              Inner Dance, ceremonias de luna nueva y encuentros de sonido para marcar el ciclo en comunidad.
-              Encuentros activos, lista de espera para formaciones cerradas y reserva directa cuando hay cupo.
+              {t('events.lead') as string}
             </p>
           </div>
 
@@ -141,7 +144,7 @@ const EventsPage: React.FC = () => {
                             style={{ background: bookable ? '#5C6B5C' : '#C9ADA1' }}
                             aria-hidden="true"
                           />
-                          {bookable ? 'Cupos abiertos' : 'Lista de espera'}
+                          {bookable ? (t('events.bookable') as string) : (t('events.waitlist') as string)}
                         </span>
                       );
                     })()}
@@ -170,7 +173,7 @@ const EventsPage: React.FC = () => {
                         className="font-heading text-sm px-4 py-2 border transition-all duration-300 hover:opacity-90"
                         style={{ borderColor: '#4D6A6D', color: '#4D6A6D' }}
                       >
-                        Ver Feed IG
+                        {t('events.viewFeed') as string}
                       </button>
                       {isEventBookable(event) ? (
                         <button
@@ -216,22 +219,18 @@ const EventsPage: React.FC = () => {
                   </button>
                 ))}
               </div>
-              <EventInstagramFeed event={activeEvent} onReserveFromPost={() => reserveEvent(activeEvent.slug, 'instagram')} />
+              <InstagramFeedEmbed />
             </div>
           )}
 
           {/* Cómo participar */}
           <div className="mt-20 md:mt-28 max-w-4xl mx-auto">
             <div className="text-center mb-10">
-              <span className="is-eyebrow justify-center" style={{ color: '#4D6A6D' }}>Cómo participar</span>
-              <h2 className="is-display text-3xl sm:text-4xl mt-4" style={{ color: '#252520' }}>Tres pasos para acompañarnos</h2>
+              <span className="is-eyebrow justify-center" style={{ color: '#4D6A6D' }}>{t('events.stepsEyebrow') as string}</span>
+              <h2 className="is-display text-3xl sm:text-4xl mt-4" style={{ color: '#252520' }}>{t('events.stepsHeading') as string}</h2>
             </div>
             <ol className="grid grid-cols-1 md:grid-cols-3 gap-5 list-none">
-              {[
-                { n: '01', t: 'Elige tu encuentro', d: 'Explora los rituales activos. Cada uno tiene su fecha, intención y energía propia.' },
-                { n: '02', t: 'Reserva tu lugar', d: 'Aparta cupo desde el sitio o únete a la lista de espera si la formación está cerrada.' },
-                { n: '03', t: 'Llega y habítalo', d: 'Ven con ropa cómoda y mente abierta. Nosotros sostenemos el espacio para que solo te entregues.' },
-              ].map((step) => (
+              {steps.map((step) => (
                 <li
                   key={step.n}
                   className="px-6 py-7 rounded-sm"

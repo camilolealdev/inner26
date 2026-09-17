@@ -4,10 +4,13 @@ import { useNavigation } from '../../context/NavigationContext';
 import { usePrefersReducedMotion } from '../../hooks';
 import Galaxy from '../effects/Galaxy';
 import VariableProximity from '../effects/VariableProximity';
+import { useTranslation } from '../../i18n/useTranslation';
+import { home } from '../../i18n/translations/home';
 
 const HeroSection: React.FC = () => {
   const { navigate } = useNavigation();
   const reduceMotion = usePrefersReducedMotion();
+  const { t } = useTranslation(home);
 
   return (
     <section
@@ -52,15 +55,15 @@ const HeroSection: React.FC = () => {
 
           {/* Badge — location only, compact */}
           <span className="text-white/45 text-[10px] sm:text-[11px] font-bold tracking-[0.22em] sm:tracking-[0.34em] uppercase mb-8 border border-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm">
-            La Candelaria, Bogotá
+            {t('hero.badge') as string}
           </span>
 
           {/* Headline — "Movimiento" reacts to mouse proximity */}
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] font-heading text-white leading-[0.9] tracking-normal">
             <span className="block opacity-95">
-              {reduceMotion ? 'Movimiento' : (
+              {reduceMotion ? (t('hero.headlineMain') as string) : (
                 <VariableProximity
-                  text="Movimiento"
+                  text={t('hero.headlineMain') as string}
                   radius={220}
                   minWeight={300}
                   maxWeight={700}
@@ -68,7 +71,7 @@ const HeroSection: React.FC = () => {
               )}
             </span>
             <span className="block font-light italic opacity-75 mt-2 md:mt-4" style={{ color: '#C9ADA1' }}>
-              Consciente
+              {t('hero.headlineSub') as string}
             </span>
           </h1>
 
@@ -77,13 +80,12 @@ const HeroSection: React.FC = () => {
 
           {/* Subtitle — reduced, lowered descriptor */}
           <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.26em] text-stone-400/70 mb-5">
-            Santuario de Yoga y Meditación
+            {t('hero.subtitle') as string}
           </p>
 
           {/* Description */}
           <p className="text-base md:text-lg text-stone-400 font-light max-w-lg mx-auto mb-10 leading-relaxed">
-            Un refugio en el corazón histórico de Bogotá para calmar la mente, habitar el cuerpo
-            y volver a ti. Aquí la práctica es una forma de vivir: dejar fluir.
+            {t('hero.description') as string}
           </p>
 
           {/* CTA buttons */}
@@ -93,20 +95,20 @@ const HeroSection: React.FC = () => {
               onClick={(e) => { e.preventDefault(); navigate('clases'); }}
               className="w-full sm:w-auto px-9 py-4 font-heading text-lg min-w-[200px] text-center inline-block bg-slate-is text-sand-dune border border-slate-is hover:bg-deep-teal transition-all duration-300"
             >
-              Ver Clases
+              {t('hero.ctaClasses') as string}
             </a>
             <a
               href="/eventos"
               onClick={(e) => { e.preventDefault(); navigate('eventos'); }}
               className="w-full sm:w-auto px-9 py-4 font-heading text-lg italic min-w-[200px] text-center inline-block text-white/70 hover:text-white border-b border-white/25 hover:border-white/60 transition-all duration-300"
             >
-              Próximos Eventos &rarr;
+              {t('hero.ctaEvents') as string} &rarr;
             </a>
           </div>
 
           {/* Meta row — three quiet value props */}
           <ul className="mt-12 md:mt-14 flex w-full max-w-md flex-wrap items-center justify-center gap-x-5 gap-y-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-white/45">
-            {['Comunidad', 'Cuidado', 'Reconexión'].map((meta, i) => (
+            {(t('hero.metaItems') as readonly string[]).map((meta, i) => (
               <li key={meta} className="flex items-center gap-5">
                 {i > 0 && <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/25" />}
                 <span>{meta}</span>
@@ -119,7 +121,7 @@ const HeroSection: React.FC = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 opacity-35 animate-pulse" style={{ zIndex: 2 }} aria-hidden="true">
-        <span className="text-[10px] tracking-[0.3em] text-white uppercase">Descubre</span>
+        <span className="text-[10px] tracking-[0.3em] text-white uppercase">{t('hero.scrollLabel') as string}</span>
         <div className="w-px h-8 bg-white" />
       </div>
     </section>

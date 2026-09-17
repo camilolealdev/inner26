@@ -1,13 +1,3 @@
-export interface InstagramEventPost {
-  id: string;
-  eventSlug: string;
-  imageUrl: string;
-  caption: string;
-  publishDate: string;
-  permalink: string;
-  ctaLabel?: string;
-}
-
 export interface StudioEvent {
   slug: string;
   tag: string;
@@ -23,5 +13,4 @@ export interface StudioEvent {
   status?: 'active' | 'waitlist';
   ctaLabel?: string;
   type: 'event';
-  instagramPosts: InstagramEventPost[];
 }

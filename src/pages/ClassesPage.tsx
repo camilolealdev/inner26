@@ -1,30 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Illustration } from '../assets/Illustrations';
-
-const weeklyRhythm = [
-  { day: 'Lun – Vie', time: '6:30 AM', focus: 'Yoga & Pranayama al amanecer' },
-  { day: 'Sáb – Dom', time: '8:00 AM', focus: 'Vinyasa, danza y sound healing' },
-];
-
-const faqs = [
-  {
-    q: '¿Necesito experiencia previa?',
-    a: 'No. Nuestras clases son para todos los niveles; los guías adaptan las instrucciones para principiantes y para quienes ya tienen práctica.',
-  },
-  {
-    q: '¿Qué debo llevar?',
-    a: 'Ropa cómoda y disposición de estar presente. Contamos con tapetes, cojines y mantas en el estudio; solo trae tu botella de agua.',
-  },
-  {
-    q: '¿Las clases son en español o inglés?',
-    a: 'Ambos. Nuestro espacio es bilingüe y damos la bienvenida a visitantes internacionales: guiamos en español e inglés según el grupo.',
-  },
-  {
-    q: '¿Cómo reservo mi lugar?',
-    a: 'Elige una práctica y pulsa "Ver Horarios" para reservar, o escríbenos por WhatsApp. Los cupos son limitados para cuidar la intimidad del grupo.',
-  },
-];
+import { useTranslation } from '../i18n/useTranslation';
+import { homePages, type ClassItem as ClassItemCopy } from '../i18n/translations/homePages';
 
 interface ClassItem {
   title: string;
@@ -37,50 +15,35 @@ interface ClassItem {
   priceLabel: string;
 }
 
-const classes: ClassItem[] = [
-  {
-    title: 'Yoga',
-    subtitle: 'Hatha · Vinyasa · Yin · AcroYoga · Kundalini',
-    description: 'Una práctica para unificar cuerpo, mente y respiración. Flujos dinámicos, posturas clásicas y trabajo energético con mantras. Para todos los niveles, en español e inglés.',
-    illustrationName: 'yoga',
-    imageUrl: '/images/studio/yoga-clase-grupal.jpg',
-    imageAlt: 'Clase de yoga en grupo sobre esterillas en Inner Spirit Studio',
-    price: 36000,
-    priceLabel: '$36.000 COP / sesión',
-  },
-  {
-    title: 'Meditación & Breathwork',
-    subtitle: 'Silencio · Pranayama · Atención Plena',
-    description: 'Un espacio de silencio para observar y descansar. Técnicas de respiración para liberar tensiones, expandir la energía y cultivar la claridad interior. Sin experiencia previa.',
-    illustrationName: 'breathwork',
-    imageUrl: '/images/studio/meditacion-mudra.jpg',
-    imageAlt: 'Persona en meditación con mudra sobre un cojín',
-    price: 36000,
-    priceLabel: '$36.000 COP / sesión',
-  },
-  {
-    title: 'Danza & Movimiento',
-    subtitle: 'Inner Dance · Danza Boreal · Inner Movement',
-    description: 'Movimiento libre para liberar el cuerpo y la mente. Sin coreografías — una invitación a que tu cuerpo se exprese auténticamente guiado por la música y tu impulso interior.',
-    illustrationName: 'dance',
-    imageUrl: '/images/studio/danza-movimiento.jpg',
-    imageAlt: 'Clase de danza y movimiento consciente en comunidad',
-    price: 36000,
-    priceLabel: '$36.000 COP / sesión',
-  },
-  {
-    title: 'Sound Healing',
-    subtitle: 'Gong · Cuencos Tibetanos · Arte Terapia',
-    description: 'Sesiones de sanación sonora con gong, cuencos tibetanos y campanas. El sonido como vehículo de transformación para armonizar cuerpo, mente y espíritu.',
-    illustrationName: 'sound-healing',
-    price: 36000,
-    priceLabel: '$36.000 COP / sesión',
-  },
+// Ilustraciones/imagenes e id de precio no dependen del idioma — el copy
+// (title/subtitle/description/priceLabel) viene de homePages.classes.items.
+const classMeta: { illustrationName: string; imageUrl?: string; imageAlt?: string; price: number }[] = [
+  { illustrationName: 'yoga', imageUrl: '/images/studio/yoga-clase-grupal.jpg', imageAlt: 'Clase de yoga en grupo sobre esterillas en Inner Spirit Studio', price: 36000 },
+  { illustrationName: 'breathwork', imageUrl: '/images/studio/meditacion-mudra.jpg', imageAlt: 'Persona en meditación con mudra sobre un cojín', price: 36000 },
+  { illustrationName: 'dance', imageUrl: '/images/studio/danza-movimiento.jpg', imageAlt: 'Clase de danza y movimiento consciente en comunidad', price: 36000 },
+  { illustrationName: 'sound-healing', imageUrl: '/images/chicago/chicago-sound-movement.jpg', imageAlt: 'Sesión de Sound Healing con cuencos tibetanos y gongs', price: 36000 },
 ];
 
 const ClassesPage: React.FC = () => {
   const { openBookingModal } = useContext(CartContext);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const { t } = useTranslation(homePages);
+  const weeklyRhythm = t('classes.weeklyRhythm') as { day: string; time: string; focus: string }[];
+  const faqs = t('classes.faqs') as { q: string; a: string }[];
+  const classItems = t('classes.items') as ClassItemCopy[];
+  const classes: ClassItem[] = classItems.map((item, index) => {
+    const meta = classMeta[index] ?? { illustrationName: 'yoga', price: 36000 };
+    return {
+      title: item.title,
+      subtitle: item.subtitle,
+      description: item.description,
+      priceLabel: item.priceLabel,
+      illustrationName: meta.illustrationName,
+      ...(meta.imageUrl ? { imageUrl: meta.imageUrl } : {}),
+      ...(meta.imageAlt ? { imageAlt: meta.imageAlt } : {}),
+      price: meta.price,
+    };
+  });
 
   useEffect(() => {
     const faqSchema = {
@@ -135,14 +98,13 @@ const ClassesPage: React.FC = () => {
 
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <span className="text-xs font-bold tracking-[0.3em] uppercase mb-4 block" style={{ color: '#4D6A6D' }}>
-              Práctica Diaria
+              {t('classes.eyebrow') as string}
             </span>
             <h1 className="is-page-heading">
-              Nuestras Prácticas
+              {t('classes.heading') as string}
             </h1>
             <p className="is-page-lead mt-6">
-              Cada clase es una invitación a habitar tu cuerpo y calmar tu mente.
-              No se requiere experiencia, solo presencia.
+              {t('classes.lead') as string}
             </p>
           </div>
 
@@ -217,7 +179,7 @@ const ClassesPage: React.FC = () => {
                     onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#4D6A6D'; (e.currentTarget as HTMLButtonElement).style.color = '#EAE0CC'; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.color = '#4D6A6D'; }}
                   >
-                    Ver Horarios
+                    {t('classes.viewSchedule') as string}
                   </button>
                 </div>
               </div>
@@ -229,9 +191,9 @@ const ClassesPage: React.FC = () => {
             style={{ background: '#F3EDE2', border: '1px solid #D9D1C0' }}
           >
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#4D6A6D' }}>Promo Mensual</p>
-              <h3 className="text-2xl font-heading" style={{ color: '#252520' }}>3 sesiones por $100.000 COP</h3>
-              <p className="text-sm mt-1" style={{ color: '#798478' }}>~$25 USD · Lun–Vie 6:30 AM · Sáb–Dom 8:00 AM</p>
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#4D6A6D' }}>{t('classes.promoLabel') as string}</p>
+              <h3 className="text-2xl font-heading" style={{ color: '#252520' }}>{t('classes.promoTitle') as string}</h3>
+              <p className="text-sm mt-1" style={{ color: '#798478' }}>{t('classes.promoDetail') as string}</p>
             </div>
             <a
               href="https://wa.me/573212248261?text=Hola%2C%20me%20interesa%20la%20promo%20de%203%20sesiones"
@@ -240,15 +202,15 @@ const ClassesPage: React.FC = () => {
               className="w-full sm:w-auto px-8 py-3 font-heading text-lg text-center transition-all hover:opacity-90"
               style={{ background: '#4D6A6D', color: '#EAE0CC' }}
             >
-              Reservar por WhatsApp
+              {t('classes.promoCta') as string}
             </a>
           </div>
 
           {/* FAQ accordion */}
           <div className="mt-20 md:mt-28 max-w-3xl mx-auto">
             <div className="text-center mb-8 md:mb-10">
-              <span className="is-eyebrow justify-center" style={{ color: '#A0A083' }}>Antes de tu primera clase</span>
-              <h2 className="is-display text-3xl sm:text-4xl mt-4" style={{ color: '#252520' }}>Preguntas frecuentes</h2>
+              <span className="is-eyebrow justify-center" style={{ color: '#A0A083' }}>{t('classes.faqEyebrow') as string}</span>
+              <h2 className="is-display text-3xl sm:text-4xl mt-4" style={{ color: '#252520' }}>{t('classes.faqHeading') as string}</h2>
             </div>
             <ul className="space-y-3">
               {faqs.map((item, index) => {

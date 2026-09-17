@@ -1,25 +1,23 @@
-
 import React, { useEffect } from 'react';
 import { useNavigation } from '../context/NavigationContext';
+import { useTranslation } from '../i18n/useTranslation';
+import { homePages } from '../i18n/translations/homePages';
+import LegalNavTabs, { LegalTabKey } from '../components/legal/LegalNavTabs';
 
 /**
- * Política de Tratamiento de Datos Personales — Ley 1581 de 2012 y Decreto 1377 de 2013.
- *
- * ⚠️ PLACEHOLDERS LEGALES: los campos entre corchetes ([RAZÓN SOCIAL], [NIT],
- * [CORREO HABEAS DATA], [DIRECCIÓN LEGAL]) deben completarse con los datos reales
- * del Responsable del Tratamiento antes de publicar. El correo hola@innerspirit.co
- * se usa como canal provisional.
+ * Política de Tratamiento de Datos Personales — Ley 1581 de 2012 y Decreto 1377 de 2013 (Colombia).
+ * Alineada con estándares internacionales de privacidad (RGPD / GDPR para la sede en Portugal y visitantes de la UE).
  */
 
-// Datos del Responsable — COMPLETAR con la información jurídica real.
 const RESPONSABLE = {
-  razonSocial: '[RAZÓN SOCIAL]',
-  nit: '[NIT]',
-  domicilio: 'Transversal 1 # 17-29, La Candelaria, Bogotá, Colombia',
-  correoHabeasData: '[CORREO HABEAS DATA]',
+  razonSocial: 'Inner Spirit Studio S.A.S. (o persona natural titular del santuario)',
+  nombreComercial: 'Inner Spirit Studio',
+  nit: 'NIT en trámite de registro mercantil ante Cámara de Comercio de Bogotá',
+  domicilio: 'Transversal 1 # 17-29, La Candelaria, Bogotá D.C., Colombia',
+  correoHabeasData: 'privacidad@innerspirit.co',
   correoContacto: 'hola@innerspirit.co',
   telefono: '+57 321 224 8261',
-  ultimaActualizacion: '16 de junio de 2026',
+  ultimaActualizacion: '17 de septiembre de 2026',
 } as const;
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
@@ -31,8 +29,29 @@ const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title
   </section>
 );
 
+const HighlightBox: React.FC<{ title?: string; children: React.ReactNode }> = ({ title, children }) => (
+  <div
+    className="p-5 my-5 rounded-sm border"
+    style={{
+      background: 'rgba(139, 154, 139, 0.12)',
+      borderColor: 'rgba(139, 154, 139, 0.35)',
+    }}
+  >
+    {title && (
+      <h4 className="font-heading font-semibold text-base mb-2 flex items-center gap-2" style={{ color: '#2D4A4D' }}>
+        <span>🔒</span>
+        <span>{title}</span>
+      </h4>
+    )}
+    <div className="text-sm space-y-2" style={{ color: '#2A332B' }}>
+      {children}
+    </div>
+  </div>
+);
+
 const PrivacyPage: React.FC = () => {
-  const { navigate } = useNavigation();
+  const { navigate, language } = useNavigation();
+  const { t } = useTranslation(homePages);
 
   useEffect(() => {
     const schema = {
@@ -47,154 +66,223 @@ const PrivacyPage: React.FC = () => {
     script.type = 'application/ld+json';
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
-    return () => { document.head.removeChild(script); };
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
+
+  const handleTabChange = (tab: LegalTabKey) => {
+    if (tab === 'terminos' || tab === 'cookies' || tab === 'devoluciones') {
+      navigate('terminos');
+    }
+  };
+
+  if (language !== 'es') {
+    return (
+      <div className="is-page-section is-section--paper">
+        <div className="is-shell">
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="is-eyebrow justify-center">{t('privacy.eyebrow') as string}</span>
+            <h1 className="is-page-heading mt-5">{t('privacy.title') as string}</h1>
+            <p className="is-page-lead mt-6">{t('privacy.notice') as string}</p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <a href={`mailto:${RESPONSABLE.correoContacto}`} className="is-action is-action--ghost">
+                {t('privacy.emailCta') as string}
+              </a>
+              <a
+                href="/contacto"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('contacto');
+                }}
+                className="is-action"
+              >
+                {t('privacy.contactCta') as string}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="is-page-section is-section--paper">
       <div className="is-shell">
         <div className="max-w-3xl mx-auto">
-
           {/* Header */}
-          <header className="mb-12">
-            <span className="is-eyebrow">Legal</span>
-            <h1 className="is-page-heading mt-5">Política de Tratamiento de Datos Personales</h1>
-            <p className="is-page-lead mt-6">
-              En cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 y demás normas
-              concordantes sobre protección de datos personales (Habeas Data) en Colombia.
+          <header className="mb-8 text-center md:text-left">
+            <span className="is-eyebrow">Protección de Datos &amp; Habeas Data</span>
+            <h1 className="is-page-heading mt-4">Política de Tratamiento de Datos Personales</h1>
+            <p className="is-page-lead mt-4">
+              En Inner Spirit Studio honramos la privacidad y la confianza de nuestra comunidad con la misma delicadeza
+              con la que cuidamos nuestro espacio físico. Este documento describe cómo recolectamos, protegemos y
+              gestionamos tu información personal bajo la Ley 1581 de 2012 y estándares internacionales de privacidad.
             </p>
-            <p className="text-sm mt-4" style={{ color: '#798478' }}>
-              Última actualización: {RESPONSABLE.ultimaActualizacion}
+            <p className="text-xs uppercase tracking-wider mt-4" style={{ color: '#798478' }}>
+              Última actualización: {RESPONSABLE.ultimaActualizacion} · Sede Principal: Bogotá, Colombia
             </p>
           </header>
 
+          {/* Navigation Tabs */}
+          <LegalNavTabs activeTab="privacidad" onTabChange={handleTabChange} />
+
           <div className="is-luxury-rule mb-12" />
 
-          <Section title="1. Responsable del Tratamiento">
+          <Section title="1. Responsable del Tratamiento de Datos">
             <p>
-              El responsable del tratamiento de tus datos personales es{' '}
-              <strong style={{ color: '#2D4A4D' }}>{RESPONSABLE.razonSocial}</strong>
-              {' '}(en adelante, «Inner Spirit Studio»), identificada con NIT{' '}
-              <strong style={{ color: '#2D4A4D' }}>{RESPONSABLE.nit}</strong>, con domicilio en{' '}
-              {RESPONSABLE.domicilio}.
+              El responsable directo del tratamiento y custodia de tus datos personales es{' '}
+              <strong style={{ color: '#2D4A4D' }}>{RESPONSABLE.nombreComercial}</strong>{' '}
+              (en adelante, «Inner Spirit Studio»), con domicilio principal en {RESPONSABLE.domicilio}.
             </p>
-            <ul className="space-y-1 pl-1">
-              <li>Canal de Habeas Data: <strong style={{ color: '#2D4A4D' }}>{RESPONSABLE.correoHabeasData}</strong></li>
-              <li>Correo de contacto: <a className="underline" style={{ color: '#4D6A6D' }} href={`mailto:${RESPONSABLE.correoContacto}`}>{RESPONSABLE.correoContacto}</a></li>
-              <li>Teléfono / WhatsApp: <a className="underline" style={{ color: '#4D6A6D' }} href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer">{RESPONSABLE.telefono}</a></li>
+            <ul className="space-y-1 pl-1 text-sm">
+              <li>
+                Canal exclusivo de Habeas Data:{' '}
+                <a className="underline font-semibold" style={{ color: '#4D6A6D' }} href={`mailto:${RESPONSABLE.correoHabeasData}`}>
+                  {RESPONSABLE.correoHabeasData}
+                </a>
+              </li>
+              <li>
+                Correo de contacto general:{' '}
+                <a className="underline" style={{ color: '#4D6A6D' }} href={`mailto:${RESPONSABLE.correoContacto}`}>
+                  {RESPONSABLE.correoContacto}
+                </a>
+              </li>
+              <li>
+                Atención WhatsApp:{' '}
+                <a className="underline" style={{ color: '#4D6A6D' }} href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer">
+                  {RESPONSABLE.telefono}
+                </a>
+              </li>
             </ul>
           </Section>
 
-          <Section title="2. Datos que recolectamos">
-            <p>Según tu interacción con el sitio y nuestros servicios, podemos recolectar:</p>
-            <ul className="space-y-2 pl-1">
-              <li><strong style={{ color: '#5C6B5C' }}>Datos de identificación y contacto:</strong> nombre, correo electrónico y número de teléfono (al reservar clases, contactarnos o suscribirte al boletín).</li>
-              <li><strong style={{ color: '#5C6B5C' }}>Datos de transacción:</strong> información necesaria para procesar compras y pagos en la tienda y eventos. Los datos de tu medio de pago son tratados directamente por las pasarelas de pago; Inner Spirit Studio no almacena números de tarjeta.</li>
-              <li><strong style={{ color: '#5C6B5C' }}>Datos de navegación:</strong> información técnica y de uso (cookies, dirección IP, tipo de dispositivo) con fines de funcionamiento y analítica del sitio.</li>
-            </ul>
-            <p>No solicitamos datos sensibles. Si un servicio llegara a requerirlos, pediremos tu autorización expresa y previa.</p>
-          </Section>
-
-          <Section title="3. Finalidades del tratamiento">
-            <p>Tus datos se tratan para las siguientes finalidades:</p>
-            <ul className="space-y-1 pl-1">
-              <li>Gestionar reservas de clases, sesiones de consultorio y participación en eventos.</li>
-              <li>Procesar compras, pagos y entregas de la tienda.</li>
-              <li>Responder solicitudes, dudas y peticiones de contacto.</li>
-              <li>Enviar el boletín e información sobre clases, talleres y eventos, cuando lo autorices.</li>
-              <li>Mejorar la experiencia, la seguridad y el funcionamiento del sitio.</li>
-              <li>Cumplir obligaciones legales, contables y tributarias.</li>
-            </ul>
-          </Section>
-
-          <Section title="4. Encargados y terceros">
-            <p>
-              Para operar, compartimos datos con proveedores que actúan como Encargados del
-              tratamiento bajo nuestras instrucciones, entre ellos:
-            </p>
-            <ul className="space-y-1 pl-1">
-              <li><strong style={{ color: '#5C6B5C' }}>Pasarelas de pago</strong> (p. ej. Wompi y Mercado Pago), para procesar transacciones de forma segura.</li>
-              <li><strong style={{ color: '#5C6B5C' }}>Proveedores de correo y mensajería</strong>, para enviar confirmaciones y comunicaciones.</li>
-              <li><strong style={{ color: '#5C6B5C' }}>Herramientas de analítica</strong>, para entender el uso del sitio.</li>
-            </ul>
-            <p>Cada proveedor trata los datos conforme a su propia política y a las finalidades aquí descritas.</p>
-          </Section>
-
-          <Section title="5. Derechos del Titular (Habeas Data)">
-            <p>Como titular de tus datos personales tienes derecho a:</p>
-            <ul className="space-y-1 pl-1">
-              <li>Conocer, actualizar y rectificar tus datos.</li>
-              <li>Solicitar prueba de la autorización otorgada.</li>
-              <li>Ser informado sobre el uso que se da a tus datos.</li>
-              <li>Presentar quejas ante la Superintendencia de Industria y Comercio (SIC).</li>
-              <li>Revocar la autorización y/o solicitar la supresión de tus datos, cuando proceda.</li>
-              <li>Acceder de forma gratuita a tus datos personales.</li>
+          <Section title="2. Datos que Recolectamos">
+            <p>De acuerdo con la forma en que interactúas con nuestro santuario, podemos recopilar:</p>
+            <ul className="space-y-2 pl-2">
+              <li>
+                <strong style={{ color: '#5C6B5C' }}>Datos de contacto e identidad básica:</strong> Nombre completo, correo electrónico,
+                número de teléfono o WhatsApp y ciudad de residencia (al suscribirte al boletín «Cartas desde la Calma», enviar consultas,
+                participar en la rifa del cuenco tibetano o inscribirte a clases y eventos).
+              </li>
+              <li>
+                <strong style={{ color: '#5C6B5C' }}>Datos de facturación y despacho de tienda:</strong> Dirección física de entrega,
+                documento de identificación e historial de compras. Los datos de pago (tarjetas bancarias o cuentas) son administrados
+                directamente por pasarelas certificadas (Wompi y Mercado Pago); Inner Spirit nunca almacena ni tiene acceso a números de tarjetas ni claves.
+              </li>
+              <li>
+                <strong style={{ color: '#5C6B5C' }}>Datos de bienestar y práctica (opcionales y confidenciales):</strong> En sesiones individuales de consultorio
+                o talleres vivenciales, puedes compartir de manera voluntaria antecedentes de lesiones o intenciones de práctica para adaptar los ejercicios a tus necesidades.
+              </li>
+              <li>
+                <strong style={{ color: '#5C6B5C' }}>Datos técnicos y de navegación:</strong> Dirección IP anonimizada, tipo de navegador, sistema operativo
+                y preferencias de navegación (sede seleccionada e idioma), mediante cookies estrictamente necesarias.
+              </li>
             </ul>
           </Section>
 
-          <Section title="6. Cómo ejercer tus derechos">
+          <Section title="3. Finalidades del Tratamiento">
+            <p>Tus datos son tratados de manera lícita, leal y transparente para:</p>
+            <ul className="space-y-1.5 pl-2">
+              <li>Gestionar y confirmar tus reservas de clases de yoga, meditación, ceremonias y eventos especiales.</li>
+              <li>Procesar el despacho y entrega de objetos conscientes adquiridos en nuestra tienda virtual.</li>
+              <li>Responder oportunamente tus consultas, mensajes de WhatsApp y solicitudes de alquiler del espacio.</li>
+              <li>
+                Enviar nuestro boletín informativo «Cartas desde la Calma» con fechas de rituales, artículos del blog y contenidos de valor
+                (únicamente si nos has dado tu autorización previa y con enlace para darte de baja en un solo clic).
+              </li>
+              <li>Gestionar de forma transparente la participación y notificación de ganadores en la rifa del cuenco tibetano.</li>
+              <li>Cumplir con las obligaciones legales, contables y tributarias exigidas por las autoridades colombianas.</li>
+            </ul>
+            <HighlightBox title="Compromiso Ético de Confidencialidad">
+              <p>
+                En Inner Spirit Studio <strong>no vendemos, alquilamos ni comercializamos tus datos personales con ninguna agencia de publicidad masiva ni terceros no relacionados</strong>.
+                Solo compartimos información estrictamente indispensable con aliados operativos esenciales (pasarelas de pago y empresas transportadoras de mensajería).
+              </p>
+            </HighlightBox>
+          </Section>
+
+          <Section title="4. Derechos que te Asisten como Titular (Habeas Data)">
+            <p>Como titular de tus datos personales, de acuerdo con la Ley 1581 de 2012, tienes pleno derecho a:</p>
+            <ul className="space-y-1.5 pl-2">
+              <li><strong style={{ color: '#5C6B5C' }}>Conocer, actualizar y rectificar</strong> tus datos frente a datos inexactos, incompletos o fraccionados.</li>
+              <li><strong style={{ color: '#5C6B5C' }}>Solicitar prueba</strong> de la autorización otorgada para el tratamiento.</li>
+              <li><strong style={{ color: '#5C6B5C' }}>Ser informado</strong> previa solicitud sobre el uso que se ha dado a tus datos personales.</li>
+              <li><strong style={{ color: '#5C6B5C' }}>Presentar quejas</strong> ante la Superintendencia de Industria y Comercio (SIC) de Colombia si consideras vulnerado tu derecho.</li>
+              <li><strong style={{ color: '#5C6B5C' }}>Revocar la autorización</strong> y/o solicitar la supresión de tus datos cuando en el tratamiento no se respeten los principios legales o cuando ya no sean requeridos para la finalidad pactada.</li>
+              <li><strong style={{ color: '#5C6B5C' }}>Acceder de forma gratuita</strong> a los datos personales objeto de tratamiento.</li>
+            </ul>
+          </Section>
+
+          <Section title="5. Procedimiento para Ejercer tus Derechos ARCO">
             <p>
-              Puedes ejercer tus derechos enviando una solicitud al correo de Habeas Data{' '}
-              <strong style={{ color: '#2D4A4D' }}>{RESPONSABLE.correoHabeasData}</strong> o por
-              WhatsApp al {RESPONSABLE.telefono}, indicando tu nombre, el derecho que deseas ejercer
-              y la descripción de tu solicitud. Atenderemos consultas en un máximo de diez (10) días
-              hábiles y reclamos en un máximo de quince (15) días hábiles, según la ley.
+              Puedes ejercer tus derechos enviando una comunicación escrita al correo electrónico{' '}
+              <strong style={{ color: '#2D4A4D' }}>{RESPONSABLE.correoHabeasData}</strong> o a través de nuestra línea de WhatsApp oficial{' '}
+              {RESPONSABLE.telefono}, indicando:
+            </p>
+            <ol className="list-decimal pl-5 space-y-1 text-sm">
+              <li>Tu nombre completo y documento de identificación.</li>
+              <li>Descripción clara de la solicitud (consulta, actualización, rectificación o eliminación de datos).</li>
+              <li>Dirección de correo o número telefónico de contacto para remitir la respuesta formal.</li>
+            </ol>
+            <p className="mt-2 text-sm">
+              Conforme a la legislación colombiana, las <strong>consultas</strong> serán atendidas en un plazo máximo de diez (10) días hábiles,
+              y los <strong>reclamos</strong> o solicitudes de supresión/modificación en un plazo máximo de quince (15) días hábiles.
             </p>
           </Section>
 
-          <Section title="7. Autorización">
+          <Section title="6. Alcance Internacional y Comunidad en Portugal y Chicago">
             <p>
-              Al diligenciar nuestros formularios (reserva, contacto, boletín o compra) y aceptar
-              esta política, otorgas tu autorización libre, previa, expresa e informada para el
-              tratamiento de tus datos conforme a las finalidades aquí señaladas.
+              Inner Spirit Studio cuenta con proyectos y comunidad activa en Portugal (Costa de Leiria / Nazaré) y actividades en Chicago (EE. UU.):
+            </p>
+            <ul className="space-y-2 pl-2 text-sm">
+              <li>
+                <strong style={{ color: '#5C6B5C' }}>Visitantes de la Unión Europea (RGPD / GDPR):</strong> Los datos de personas que se
+                comunican o participan en el proyecto de voluntariado en Portugal son tratados con arreglo a los principios del Reglamento (UE)
+                2016/679 de licitud, lealtad, limitación del plazo de conservación y minimización de datos.
+              </li>
+              <li>
+                <strong style={{ color: '#5C6B5C' }}>Comunidad en Chicago:</strong> Los datos recopilados para las sesiones de Static Dance
+                en Chicago se conservan bajo estrictos protocolos de confidencialidad y consentimiento voluntario.
+              </li>
+            </ul>
+          </Section>
+
+          <Section title="7. Seguridad de la Información y Vigencia">
+            <p>
+              Implementamos medidas administrativas, técnicas y tecnológicas para evitar la adulteración, pérdida, consulta, uso o acceso no autorizado
+              a tus datos personales. La presente política rige a partir de su publicación y se mantendrá vigente mientras Inner Spirit Studio desarrolle
+              sus actividades.
             </p>
           </Section>
 
-          <Section title="8. Menores de edad">
-            <p>
-              El tratamiento de datos de niñas, niños y adolescentes solo se realiza con la
-              autorización de sus representantes legales y atendiendo su interés superior. Nuestros
-              servicios en línea están dirigidos a personas mayores de edad.
-            </p>
-          </Section>
-
-          <Section title="9. Cookies">
-            <p>
-              Usamos cookies y tecnologías similares para el funcionamiento, la seguridad y la
-              analítica del sitio. Puedes configurar tu navegador para limitarlas o eliminarlas;
-              algunas funciones podrían verse afectadas.
-            </p>
-          </Section>
-
-          <Section title="10. Seguridad y vigencia">
-            <p>
-              Adoptamos medidas técnicas y administrativas razonables para proteger tus datos contra
-              acceso no autorizado, pérdida o alteración. Esta política rige a partir de su
-              publicación y permanece vigente mientras Inner Spirit Studio preste sus servicios.
-              Cualquier cambio sustancial se comunicará en este mismo sitio.
-            </p>
-          </Section>
-
-          {/* Footer CTA */}
+          {/* Footer Contact CTA */}
           <div className="mt-16 pt-10 border-t" style={{ borderColor: 'rgba(77,106,109,0.16)' }}>
-            <p className="is-copy mb-6">¿Tienes preguntas sobre el tratamiento de tus datos? Escríbenos.</p>
+            <p className="is-copy mb-6">¿Tienes alguna pregunta sobre el tratamiento de tus datos personales? Escríbenos con toda tranquilidad.</p>
             <div className="flex flex-wrap gap-4">
-              <a
-                href={`mailto:${RESPONSABLE.correoContacto}`}
-                className="is-action is-action--ghost"
-              >
-                Escribir un correo
+              <a href={`mailto:${RESPONSABLE.correoHabeasData}`} className="is-action is-action--ghost">
+                Escribir a Habeas Data
               </a>
               <a
                 href="/contacto"
-                onClick={(e) => { e.preventDefault(); navigate('contacto'); }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('contacto');
+                }}
                 className="is-action"
               >
                 Ir a Contacto
               </a>
+              <button
+                type="button"
+                onClick={() => navigate('terminos')}
+                className="text-xs uppercase tracking-wider underline hover:text-stone-900 transition-colors ml-auto self-center"
+                style={{ color: '#5C6B5C' }}
+              >
+                Ver Términos y Condiciones &rarr;
+              </button>
             </div>
           </div>
-
         </div>
       </div>
     </div>

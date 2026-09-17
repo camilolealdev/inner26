@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { ArrowIcon, Surface } from '../ui';
+import { useTranslation } from '../../i18n/useTranslation';
+import { home } from '../../i18n/translations/home';
 
 const GatewayIcon: React.FC<{ kind: 'mat' | 'moon' | 'hands' }> = ({ kind }) => {
   if (kind === 'moon') {
@@ -34,11 +36,12 @@ const GatewayIcon: React.FC<{ kind: 'mat' | 'moon' | 'hands' }> = ({ kind }) => 
 const ExperienceGatewaySection: React.FC = () => {
   const { openBookingModal } = useContext(CartContext);
   const { navigate } = useNavigation();
+  const { t } = useTranslation(home);
 
   const reserveFirstClass = () => {
     openBookingModal({
       type: 'class',
-      title: 'Yoga',
+      title: t('gateway.bookingTitle') as string,
       price: 36000,
       imageUrl: '',
       illustrationName: 'yoga',
@@ -47,46 +50,39 @@ const ExperienceGatewaySection: React.FC = () => {
 
   const items = [
     {
-      label: 'Primera práctica',
-      title: 'Agenda una clase esta semana',
-      copy: 'Yoga, meditación, breathwork y movimiento consciente con reserva directa.',
-      action: 'Reservar clase',
+      key: 'firstPractice' as const,
       icon: 'mat' as const,
       onClick: reserveFirstClass,
     },
     {
-      label: 'Rituales próximos',
-      title: 'Encuentros con fecha y cupo',
-      copy: 'Rituales y experiencias de comunidad con cada detalle claro antes de reservar.',
-      action: 'Ver eventos',
+      key: 'upcomingRituals' as const,
       icon: 'moon' as const,
       onClick: () => navigate('eventos'),
     },
     {
-      label: 'Acompañamiento',
-      title: 'Sesiones individuales 1:1',
-      copy: 'Un espacio privado para explorar lo que emerge, con escucha y presencia.',
-      action: 'Ver consultorio',
+      key: 'accompaniment' as const,
       icon: 'hands' as const,
       onClick: () => navigate('consultorio'),
     },
-  ];
+  ].map((item) => ({
+    ...item,
+    ...(t(`gateway.items.${item.key}`) as { label: string; title: string; copy: string; action: string }),
+  }));
 
   return (
-    <section className="is-section is-section--sand" aria-label="Accesos principales">
+    <section className="is-section is-section--sand" aria-label={t('gateway.sectionAriaLabel') as string}>
       <div className="is-shell">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-[0.9fr_2.1fr] lg:items-stretch">
           <div className="is-surface p-6 md:p-8 flex flex-col justify-between">
             <div>
-              <span className="is-eyebrow">Entrada guiada</span>
+              <span className="is-eyebrow">{t('gateway.eyebrow') as string}</span>
               <h2 className="is-display mt-5 text-3xl md:text-4xl">
-                Elige el ritmo de tu visita.
+                {t('gateway.title') as string}
               </h2>
               <div className="is-luxury-rule mt-6" />
             </div>
             <p className="is-copy mt-8">
-              Tres caminos para pasar de explorar a reservar: una clase para esta semana,
-              un ritual con fecha o un acompañamiento solo para ti.
+              {t('gateway.intro') as string}
             </p>
           </div>
 

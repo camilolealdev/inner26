@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '../context/NavigationContext';
+import { useTranslation } from '../i18n/useTranslation';
+import { portugal as portugalTranslations } from '../i18n/translations/portugal';
 
 const IG_URL = 'https://www.instagram.com/innerspirit_portugal';
 
@@ -12,7 +14,8 @@ interface GalleryPhoto {
 }
 
 const PortugalPage: React.FC = () => {
-  const { setLocation, openLocationGate } = useNavigation();
+  const { openLocationGate } = useNavigation();
+  const { t } = useTranslation(portugalTranslations);
   const [activePhoto, setActivePhoto] = useState<GalleryPhoto | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -41,50 +44,28 @@ const PortugalPage: React.FC = () => {
     };
   }, [activePhoto]);
 
-  const offers = [
-    'Quarto privado, banho partilhado',
-    'Alimentação incluída',
-    'Internet de boa qualidade',
-    'Uma sessão de Sound Healing',
-    'Uma sessão fotográfica profissional',
-  ];
+  const offers = t('volunteer.offers') as string[];
+  const asks = t('volunteer.asks') as string[];
+  const tasks = t('volunteer.tasks') as string[];
 
-  const asks = [
-    '3 horas diárias de troca, com 1 dia de descanso por semana',
-    'ou 4 horas diárias de troca, com 2 dias de descanso por semana',
-    'Estadia mínima: 2 semanas',
+  const territoryPhotoSrcs = [
+    '/images/portugal/regiao-nazare-leiria.jpg',
+    '/images/portugal/lagoa-ervedeira.jpg',
+    '/images/portugal/serras-aire-candeeiros.jpg',
   ];
-
-  const tasks = [
-    'Remodelações básicas e pintura',
-    'Trabalho de terra para a futura horta',
-    'Preparação da zona de campismo',
-    'Primeiros passos para a construção de cabanas (ecoturismo & bem-estar)',
-  ];
-
-  const territoryPhotos: GalleryPhoto[] = [
-    {
-      src: '/images/portugal/regiao-nazare-leiria.jpg',
-      alt: 'Nazaré ondas gigantes e farol, castelo de Leiria e canais de Aveiro',
-      category: 'Costa & História',
-      tag: 'Nazaré • Leiria',
-      caption: 'Do farol das maiores ondas do mundo ao castelo medieval de Leiria e aos canais da costa centro.',
-    },
-    {
-      src: '/images/portugal/lagoa-ervedeira.jpg',
-      alt: 'Lagoa da Ervedeira com praia de areia branca e passadiços entre pinheiros',
-      category: 'Natureza & Água Doce',
-      tag: 'Ervedeira, Leiria',
-      caption: 'Lagoa de água doce com passadiços de madeira em pleno pinhal, ideal para banhos e meditação.',
-    },
-    {
-      src: '/images/portugal/serras-aire-candeeiros.jpg',
-      alt: 'Cascatas, grutas e vales verdes do Parque Natural das Serras de Aire e Candeeiros',
-      category: 'Parque Natural',
-      tag: 'Serras de Aire e Candeeiros',
-      caption: 'Cascatas secretas, grutas subterrâneas e vales calcários preservados a curta distância.',
-    },
-  ];
+  const territoryPhotoMeta = t('region.photos') as Array<{
+    alt: string;
+    category: string;
+    tag: string;
+    caption: string;
+  }>;
+  const territoryPhotos: GalleryPhoto[] = territoryPhotoMeta.map((meta, i) => ({
+    src: territoryPhotoSrcs[i] ?? '',
+    alt: meta.alt,
+    category: meta.category,
+    tag: meta.tag,
+    caption: meta.caption,
+  }));
 
   const handleCardKeyDown = (e: React.KeyboardEvent, photo: GalleryPhoto) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -95,19 +76,6 @@ const PortugalPage: React.FC = () => {
 
   return (
     <div className="bg-[#121210] text-[#FAF7F2] min-h-screen selection:bg-[#C9ADA1]/30 selection:text-[#FAF7F2]">
-      {/* Top location banner notice */}
-      <nav aria-label="Aviso de localização" className="border-b border-white/10 bg-[#1A1A17] py-2.5 px-4 text-center text-xs tracking-wider text-stone-300 flex items-center justify-center gap-3">
-        <span>Estás no espaço de <strong>Inner Spirit Portugal 🇵🇹</strong></span>
-        <button
-          onClick={() => {
-            setLocation('co');
-          }}
-          className="underline hover:text-white transition-colors cursor-pointer text-[#C9ADA1] focus-visible:ring-2 focus-visible:ring-[#C9ADA1] focus-visible:outline-none rounded px-1 min-h-[32px] inline-flex items-center"
-        >
-          Mudar para Inner Spirit Colombia 🇨🇴
-        </button>
-      </nav>
-
       {/* Hero Section with Nazaré Coastal Atmosphere */}
       <header className="relative min-h-[80vh] sm:min-h-[88vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 py-24 text-center">
         {/* Background Image of Nazaré Coast */}
@@ -131,17 +99,17 @@ const PortugalPage: React.FC = () => {
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center pt-8">
           <div className="flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-[#8B9A8B]/40 bg-[#8B9A8B]/15 text-xs font-sans uppercase tracking-[0.25em] text-[#8B9A8B] backdrop-blur-md">
-            <span>🇵🇹 Costa de Leiria</span>
+            <span>🇵🇹 {t('hero.badgeLocation') as string}</span>
             <span className="opacity-40">•</span>
-            <span>Perto da Nazaré</span>
+            <span>{t('hero.badgeNear') as string}</span>
           </div>
 
           <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 tracking-tight">
-            As primeiras <span className="italic text-[#C9ADA1]">sementes</span> de Inner Spirit em Portugal.
+            {t('hero.titleBefore') as string}<span className="italic text-[#C9ADA1]">{t('hero.titleHighlight') as string}</span>{t('hero.titleAfter') as string}
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl font-light text-stone-300 leading-relaxed mb-10 max-w-2xl">
-            Começamos a semear um novo santuário na zona centro de Portugal, na costa da Nazaré. Antes de ser um espaço de práticas abertas, é um pedaço de terra por construir — e procuramos as primeiras pessoas dispostas a construí-lo connosco através de um programa de voluntariado consciente.
+            {t('hero.description') as string}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
@@ -152,13 +120,13 @@ const PortugalPage: React.FC = () => {
               className="w-full sm:w-auto min-h-[48px] px-8 py-4 rounded-full font-heading text-base tracking-wide uppercase font-semibold transition-all duration-300 shadow-lg hover:opacity-95 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9ADA1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#121210] inline-flex items-center justify-center"
               style={{ background: '#C9ADA1', color: '#121210' }}
             >
-              Candidatar-me ao Voluntariado
+              {t('hero.ctaApply') as string}
             </a>
             <button
               onClick={openLocationGate}
               className="w-full sm:w-auto min-h-[48px] px-8 py-4 rounded-full font-heading text-base tracking-wide uppercase border border-white/25 hover:border-white/70 transition-all text-white backdrop-blur-sm bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#121210] cursor-pointer inline-flex items-center justify-center"
             >
-              Trocar de Sede
+              {t('hero.ctaSwitch') as string}
             </button>
           </div>
         </div>
@@ -170,45 +138,45 @@ const PortugalPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Visual concept render */}
             <div className="lg:col-span-7">
-              <figure 
+              <figure
                 role="button"
                 tabIndex={0}
                 aria-haspopup="dialog"
-                aria-label="Abrir render conceptual do projeto das cabanas e glamping"
+                aria-label={t('vision.render.ariaLabel') as string}
                 onKeyDown={(e) => handleCardKeyDown(e, {
                   src: '/images/portugal/projeto-cabanas-glamping.jpg',
-                  alt: 'Render conceptual do terreno com cabana de madeira e tendas glamping',
-                  caption: 'Conceito arquitetónico do terreno: cabanas sustentáveis integradas com deck panorâmico e tendas glamping sob os pinhais da Nazaré.',
-                  category: 'O Projeto',
-                  tag: 'Visão Futura',
+                  alt: t('vision.render.alt') as string,
+                  caption: t('vision.render.caption') as string,
+                  category: t('vision.render.category') as string,
+                  tag: t('vision.render.tag') as string,
                 })}
                 onClick={() => setActivePhoto({
                   src: '/images/portugal/projeto-cabanas-glamping.jpg',
-                  alt: 'Render conceptual do terreno com cabana de madeira e tendas glamping',
-                  caption: 'Conceito arquitetónico do terreno: cabanas sustentáveis integradas com deck panorâmico e tendas glamping sob os pinhais da Nazaré.',
-                  category: 'O Projeto',
-                  tag: 'Visão Futura',
+                  alt: t('vision.render.alt') as string,
+                  caption: t('vision.render.caption') as string,
+                  category: t('vision.render.category') as string,
+                  tag: t('vision.render.tag') as string,
                 })}
                 className="relative rounded-2xl overflow-hidden border border-white/15 shadow-2xl group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9ADA1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#151513] transition-all"
               >
                 <img
                   src="/images/portugal/projeto-cabanas-glamping.jpg"
-                  alt="Conceito do projeto Inner Spirit Portugal — Cabanas sustentáveis e glamping na terra"
+                  alt={t('vision.render.imgAlt') as string}
                   className="w-full h-[320px] sm:h-[420px] object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                 <div className="absolute top-4 left-4">
                   <span className="text-[11px] uppercase tracking-widest px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[#C9ADA1]">
-                    Visão Arquitetónica
+                    {t('vision.render.badge') as string}
                   </span>
                 </div>
                 <figcaption className="absolute bottom-4 left-4 right-4 text-left">
                   <span className="text-xs font-mono uppercase text-stone-300 tracking-wider block mb-1">
-                    Conceito do Terreno
+                    {t('vision.render.captionLabel') as string}
                   </span>
                   <p className="text-sm text-stone-200 font-light">
-                    Cabanas ecológicas em madeira com painéis solares, tendas glamping e caminhos rústicos integrados na flora atlântica.
+                    {t('vision.render.captionText') as string}
                   </p>
                 </figcaption>
               </figure>
@@ -217,22 +185,22 @@ const PortugalPage: React.FC = () => {
             {/* Context and Roadmap description */}
             <div className="lg:col-span-5">
               <span className="text-xs uppercase tracking-[0.25em] font-sans block mb-3 text-[#8B9A8B]">
-                Fase 0 — A Fundação
+                {t('vision.eyebrow') as string}
               </span>
               <h2 id="visao-projeto" className="font-heading text-3xl sm:text-4xl text-white mb-5 leading-tight">
-                Da terra bruta ao santuário na natureza
+                {t('vision.heading') as string}
               </h2>
               <p className="text-stone-300 text-sm sm:text-base font-light leading-relaxed mb-6">
-                Este pedaço de terra na costa de Leiria, a minutos das praias e falésias da Nazaré, foi escolhido pelo seu silêncio e potência regenerativa. O objetivo é criar um refúgio orgânico para retiros, sound healing, yoga e ecoturismo consciente.
+                {t('vision.description') as string}
               </p>
               <div className="space-y-4 border-l-2 border-[#8B9A8B]/40 pl-4 py-1">
                 <div>
-                  <h3 className="text-sm font-semibold text-white tracking-wide uppercase">Hoje: Mãos na terra & Voluntariado</h3>
-                  <p className="text-xs text-stone-400 font-light mt-1">Limpeza e cultivo do solo para a futura horta, pequenas obras rústicas e estruturação do espaço de campismo.</p>
+                  <h3 className="text-sm font-semibold text-white tracking-wide uppercase">{t('vision.todayTitle') as string}</h3>
+                  <p className="text-xs text-stone-400 font-light mt-1">{t('vision.todayDescription') as string}</p>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-[#C9ADA1] tracking-wide uppercase">Próximo passo: Cabanas & Glamping</h3>
-                  <p className="text-xs text-stone-400 font-light mt-1">Instalação de cabanas ecológicas em madeira e tendas bell para acolher praticantes e viajantes do mundo.</p>
+                  <h3 className="text-sm font-semibold text-[#C9ADA1] tracking-wide uppercase">{t('vision.nextTitle') as string}</h3>
+                  <p className="text-xs text-stone-400 font-light mt-1">{t('vision.nextDescription') as string}</p>
                 </div>
               </div>
             </div>
@@ -245,90 +213,90 @@ const PortugalPage: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center mb-16">
             <span className="text-xs uppercase tracking-[0.25em] font-sans block mb-3 text-[#8B9A8B]">
-              Voluntariado Inner Spirit
+              {t('volunteer.eyebrow') as string}
             </span>
             <h2 id="voluntariado-heading" className="font-heading text-3xl sm:text-4xl text-white mb-6">
-              Constrói connosco desde a primeira pedra
+              {t('volunteer.heading') as string}
             </h2>
             <p className="text-stone-300 text-sm sm:text-base font-light leading-relaxed">
-              Procuramos pessoas para apoiar o início deste projeto: remodelações básicas, pintura, trabalho de terra para a futura horta e preparação da zona de campismo.
+              {t('volunteer.description') as string}
             </p>
           </div>
 
           {/* Visual tasks row: Terra vs Remodelação */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <figure 
+            <figure
               role="button"
               tabIndex={0}
               aria-haspopup="dialog"
-              aria-label="Abrir foto da preparação do solo e horta"
+              aria-label={t('volunteer.terrenoPhoto.ariaLabel') as string}
               onKeyDown={(e) => handleCardKeyDown(e, {
                 src: '/images/portugal/nazare-terreno.jpg',
-                alt: 'Preparação do solo e horta no terreno de Portugal',
-                caption: 'Trabalho de terra: abertura dos primeiros canteiros para a futura horta biológica e zona agroecológica.',
-                category: 'A Terra',
-                tag: 'Horta & Cultivo',
+                alt: t('volunteer.terrenoPhoto.alt') as string,
+                caption: t('volunteer.terrenoPhoto.caption') as string,
+                category: t('volunteer.terrenoPhoto.category') as string,
+                tag: t('volunteer.terrenoPhoto.tag') as string,
               })}
               onClick={() => setActivePhoto({
                 src: '/images/portugal/nazare-terreno.jpg',
-                alt: 'Preparação do solo e horta no terreno de Portugal',
-                caption: 'Trabalho de terra: abertura dos primeiros canteiros para a futura horta biológica e zona agroecológica.',
-                category: 'A Terra',
-                tag: 'Horta & Cultivo',
+                alt: t('volunteer.terrenoPhoto.alt') as string,
+                caption: t('volunteer.terrenoPhoto.caption') as string,
+                category: t('volunteer.terrenoPhoto.category') as string,
+                tag: t('volunteer.terrenoPhoto.tag') as string,
               })}
               className="relative rounded-xl overflow-hidden border border-white/10 group cursor-pointer h-56 sm:h-64 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9A8B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#161614] transition-all"
             >
               <img
                 src="/images/portugal/nazare-terreno.jpg"
-                alt="Trabalho de terra para a futura horta biológica"
+                alt={t('volunteer.terrenoPhoto.imgAlt') as string}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
               <figcaption className="absolute bottom-4 left-4 right-4">
                 <span className="text-[11px] uppercase tracking-widest text-[#8B9A8B] font-semibold block mb-1">
-                  Trabalho de Terra & Horta
+                  {t('volunteer.terrenoPhoto.label') as string}
                 </span>
                 <p className="text-xs text-stone-300 font-light">
-                  Abertura de canteiros, compostagem e regeneração do solo entre oliveiras e pinheiros.
+                  {t('volunteer.terrenoPhoto.description') as string}
                 </p>
               </figcaption>
             </figure>
 
-            <figure 
+            <figure
               role="button"
               tabIndex={0}
               aria-haspopup="dialog"
-              aria-label="Abrir foto da remodelação rústica e carpintaria"
+              aria-label={t('volunteer.remodelacaoPhoto.ariaLabel') as string}
               onKeyDown={(e) => handleCardKeyDown(e, {
                 src: '/images/portugal/nazare-remodelacao.jpg',
-                alt: 'Remodelação rústica e carpintaria com voluntários',
-                caption: 'Remodelações: restauro da estrutura rústica existente, pintura a cal e carpintaria de madeira de pinho.',
-                category: 'A Estrutura',
-                tag: 'Obras & Carpintaria',
+                alt: t('volunteer.remodelacaoPhoto.alt') as string,
+                caption: t('volunteer.remodelacaoPhoto.caption') as string,
+                category: t('volunteer.remodelacaoPhoto.category') as string,
+                tag: t('volunteer.remodelacaoPhoto.tag') as string,
               })}
               onClick={() => setActivePhoto({
                 src: '/images/portugal/nazare-remodelacao.jpg',
-                alt: 'Remodelação rústica e carpintaria com voluntários',
-                caption: 'Remodelações: restauro da estrutura rústica existente, pintura a cal e carpintaria de madeira de pinho.',
-                category: 'A Estrutura',
-                tag: 'Obras & Carpintaria',
+                alt: t('volunteer.remodelacaoPhoto.alt') as string,
+                caption: t('volunteer.remodelacaoPhoto.caption') as string,
+                category: t('volunteer.remodelacaoPhoto.category') as string,
+                tag: t('volunteer.remodelacaoPhoto.tag') as string,
               })}
               className="relative rounded-xl overflow-hidden border border-white/10 group cursor-pointer h-56 sm:h-64 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9ADA1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#161614] transition-all"
             >
               <img
                 src="/images/portugal/nazare-remodelacao.jpg"
-                alt="Remodelação rústica de estrutura de pedra e carpintaria de madeira"
+                alt={t('volunteer.remodelacaoPhoto.imgAlt') as string}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
               <figcaption className="absolute bottom-4 left-4 right-4">
                 <span className="text-[11px] uppercase tracking-widest text-[#C9ADA1] font-semibold block mb-1">
-                  Restauro & Pintura
+                  {t('volunteer.remodelacaoPhoto.label') as string}
                 </span>
                 <p className="text-xs text-stone-300 font-light">
-                  Pintura a cal, carpintaria básica em pinho e montagem de infraestrutura comunitária.
+                  {t('volunteer.remodelacaoPhoto.description') as string}
                 </p>
               </figcaption>
             </figure>
@@ -337,18 +305,18 @@ const PortugalPage: React.FC = () => {
           {/* Cards of details */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-8 rounded-2xl border border-white/10 bg-[#1C1C19]">
-              <span className="text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/15 text-stone-400 bg-white/5">Tarefas</span>
+              <span className="text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/15 text-stone-400 bg-white/5">{t('volunteer.tasksLabel') as string}</span>
               <ul className="mt-4 space-y-2.5">
-                {tasks.map((t) => (
-                  <li key={t} className="text-stone-300 font-light text-sm leading-relaxed flex items-start gap-2">
+                {tasks.map((task) => (
+                  <li key={task} className="text-stone-300 font-light text-sm leading-relaxed flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ background: '#8B9A8B' }} aria-hidden="true" />
-                    <span>{t}</span>
+                    <span>{task}</span>
                   </li>
                 ))}
               </ul>
             </div>
             <div className="p-8 rounded-2xl border border-white/10 bg-[#1C1C19]">
-              <span className="text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/15 text-stone-400 bg-white/5">Oferecemos</span>
+              <span className="text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/15 text-stone-400 bg-white/5">{t('volunteer.offersLabel') as string}</span>
               <ul className="mt-4 space-y-2.5">
                 {offers.map((o) => (
                   <li key={o} className="text-stone-300 font-light text-sm leading-relaxed flex items-start gap-2">
@@ -359,7 +327,7 @@ const PortugalPage: React.FC = () => {
               </ul>
             </div>
             <div className="p-8 rounded-2xl border border-white/10 bg-[#1C1C19]">
-              <span className="text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/15 text-stone-400 bg-white/5">Pedimos</span>
+              <span className="text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/15 text-stone-400 bg-white/5">{t('volunteer.asksLabel') as string}</span>
               <ul className="mt-4 space-y-2.5">
                 {asks.map((a) => (
                   <li key={a} className="text-stone-300 font-light text-sm leading-relaxed flex items-start gap-2">
@@ -378,7 +346,7 @@ const PortugalPage: React.FC = () => {
               rel="noopener noreferrer"
               className="min-h-[44px] inline-flex items-center text-xs font-semibold uppercase tracking-widest text-[#8B9A8B] hover:text-[#FAF7F2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9A8B] rounded px-3 py-2"
             >
-              <span>Candidatar-me pelo Instagram</span>
+              <span>{t('volunteer.applyViaInstagram') as string}</span>
               <svg className="w-3.5 h-3.5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -392,13 +360,13 @@ const PortugalPage: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center mb-16">
             <span className="text-xs uppercase tracking-[0.25em] font-sans block mb-3 text-[#C9ADA1]">
-              A Região
+              {t('region.eyebrow') as string}
             </span>
             <h2 id="regiao-heading" className="font-heading text-3xl sm:text-4xl text-white mb-5">
-              A envolvente mágica da Costa de Leiria
+              {t('region.heading') as string}
             </h2>
             <p className="text-stone-300 text-sm sm:text-base font-light leading-relaxed">
-              O projeto situa-se no coração da região centro de Portugal. Entre a força oceânica da Nazaré, as lagoas de pinhal e as serras calcárias, este é o cenário onde vivem e descansam os voluntários.
+              {t('region.description') as string}
             </p>
           </div>
 
@@ -409,7 +377,7 @@ const PortugalPage: React.FC = () => {
                 role="button"
                 tabIndex={0}
                 aria-haspopup="dialog"
-                aria-label={`Ver detalhes de ${photo.tag}`}
+                aria-label={`${t('region.viewDetailsPrefix') as string} ${photo.tag}`}
                 onKeyDown={(e) => handleCardKeyDown(e, photo)}
                 onClick={() => setActivePhoto(photo)}
                 className="group rounded-2xl overflow-hidden border border-white/10 bg-[#1A1A17] flex flex-col cursor-pointer transition-all duration-300 hover:border-white/30 hover:translate-y-[-2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9ADA1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131311]"
@@ -437,7 +405,7 @@ const PortugalPage: React.FC = () => {
                     </p>
                   </div>
                   <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-stone-400 group-hover:text-[#C9ADA1] transition-colors">
-                    <span>Ver ampliado</span>
+                    <span>{t('region.viewEnlarged') as string}</span>
                     <span aria-hidden="true">↗</span>
                   </div>
                 </figcaption>
@@ -451,13 +419,13 @@ const PortugalPage: React.FC = () => {
       <section aria-labelledby="comunidade-heading" className="py-16 md:py-24 border-t border-white/10 bg-[#121210]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <span className="text-xs uppercase tracking-[0.25em] font-sans block mb-3 text-[#C9ADA1]">
-            Comunidade & Partilha
+            {t('community.eyebrow') as string}
           </span>
           <h2 id="comunidade-heading" className="font-heading text-3xl sm:text-4xl text-white mb-5">
-            Uma comunidade que está a começar agora
+            {t('community.heading') as string}
           </h2>
           <p className="text-stone-300 text-sm sm:text-base font-light leading-relaxed">
-            Inner Spirit Portugal está nos seus primeiros passos na costa da Nazaré. Ainda não temos histórias de comunidade para partilhar aqui — mas é exatamente por isso que procuramos as primeiras pessoas dispostas a construir isto connosco.
+            {t('community.description') as string}
           </p>
         </div>
       </section>
@@ -466,13 +434,13 @@ const PortugalPage: React.FC = () => {
       <section aria-labelledby="contacto-heading" className="py-20 border-t border-white/10 bg-[#191916] text-center px-4 sm:px-6">
         <div className="max-w-2xl mx-auto">
           <span className="text-xs uppercase tracking-[0.28em] font-sans block mb-3 text-[#8B9A8B]">
-            Conversas Abertas
+            {t('contact.eyebrow') as string}
           </span>
           <h2 id="contacto-heading" className="font-heading text-3xl sm:text-4xl text-white mb-4">
-            Queres fazer parte deste início?
+            {t('contact.heading') as string}
           </h2>
           <p className="text-stone-300 text-sm sm:text-base font-light mb-8 leading-relaxed">
-            Segue-nos e escreve-nos pelo Instagram para saber mais sobre o voluntariado e as próximas datas disponíveis.
+            {t('contact.description') as string}
           </p>
           <a
             href={IG_URL}
@@ -480,7 +448,7 @@ const PortugalPage: React.FC = () => {
             rel="noopener noreferrer"
             className="min-h-[48px] inline-flex items-center justify-center px-10 py-4 rounded-full font-heading text-sm tracking-widest uppercase font-semibold text-[#121210] bg-[#FAF7F2] hover:bg-[#EAE0CC] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#191916]"
           >
-            Seguir @innerspirit_portugal
+            {t('contact.cta') as string}
           </a>
         </div>
       </section>
@@ -503,7 +471,7 @@ const PortugalPage: React.FC = () => {
               ref={closeButtonRef}
               onClick={() => setActivePhoto(null)}
               className="absolute top-4 right-4 z-10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center text-base border border-white/20 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9ADA1]"
-              aria-label="Fechar fotografia"
+              aria-label={t('lightbox.close') as string}
             >
               ✕
             </button>

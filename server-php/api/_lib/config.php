@@ -13,12 +13,26 @@ function inner_spirit_config(): array
         return $config;
     }
 
-    $path = dirname(__DIR__, 3) . '/secure_config/config.php';
-    if (!is_file($path)) {
-        throw new RuntimeException("Config file not found: {$path}");
+    $candidates = array_filter([
+        getenv('SECURE_CONFIG_PATH') ?: null,
+        dirname(__DIR__, 3) . '/secure_config/config.php',
+        dirname(__DIR__, 2) . '/../secure_config/config.php',
+        dirname(__DIR__, 2) . '/secure_config/config.php',
+    ]);
+
+    $resolvedPath = null;
+    foreach ($candidates as $candidate) {
+        if (is_file($candidate)) {
+            $resolvedPath = $candidate;
+            break;
+        }
     }
 
-    $loaded = require $path;
+    if ($resolvedPath === null) {
+        throw new RuntimeException("Config file not found. Checked: " . implode(', ', $candidates));
+    }
+
+    $loaded = require $resolvedPath;
     if (!is_array($loaded)) {
         throw new RuntimeException('secure_config/config.php debe retornar un array');
     }

@@ -15,6 +15,8 @@ const NavigationConsumer: React.FC = () => {
       <button onClick={() => navigate('clases')}>Ir a Clases</button>
       <button onClick={() => navigate('eventos')}>Ir a Eventos</button>
       <button onClick={() => navigate('contacto')}>Ir a Contacto</button>
+      <button onClick={() => navigate('terminos')}>Ir a Términos</button>
+      <button onClick={() => navigate('privacidad')}>Ir a Privacidad</button>
       <button onClick={() => navigate('portugal')}>Ir a Portugal</button>
       <button onClick={() => navigate('home')}>Ir a Home</button>
       <button onClick={() => setLocation('pt')}>Elegir Portugal</button>
@@ -92,5 +94,25 @@ describe('Navigation', () => {
     render(<NavigationConsumer />, { wrapper: Wrapper });
     expect(screen.getByTestId('current-page').textContent).toBe('portugal');
     expect(screen.getByTestId('current-location').textContent).toBe('pt');
+  });
+
+  it('navega a terminos al hacer click y actualiza pathname', () => {
+    render(<NavigationConsumer />, { wrapper: Wrapper });
+    fireEvent.click(screen.getByText('Ir a Términos'));
+    expect(screen.getByTestId('current-page').textContent).toBe('terminos');
+    expect(window.location.pathname).toBe('/terminos');
+  });
+
+  it('navega a privacidad al hacer click y actualiza pathname', () => {
+    render(<NavigationConsumer />, { wrapper: Wrapper });
+    fireEvent.click(screen.getByText('Ir a Privacidad'));
+    expect(screen.getByTestId('current-page').textContent).toBe('privacidad');
+    expect(window.location.pathname).toBe('/privacidad');
+  });
+
+  it('detecta alias de URL para terminos (/terms, /cookies)', () => {
+    window.history.pushState({}, '', '/cookies');
+    render(<NavigationConsumer />, { wrapper: Wrapper });
+    expect(screen.getByTestId('current-page').textContent).toBe('terminos');
   });
 });

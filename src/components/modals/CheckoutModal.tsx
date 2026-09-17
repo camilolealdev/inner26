@@ -5,11 +5,13 @@ import { useNavigation } from '../../context/NavigationContext';
 import { CloseIcon } from '../../constants';
 import { Illustration } from '../../assets/Illustrations';
 import { apiUrl } from '../../utils/apiBase';
+import { useTranslation } from '../../i18n/useTranslation';
 
 const CheckoutModal: React.FC = () => {
   const { isCheckoutModalOpen, toggleCheckoutModal, cart, removeFromCart } = useContext(CartContext);
   const { showToast } = useToast();
   const { navigate } = useNavigation();
+  const { t } = useTranslation();
   const [provider, setProvider] = useState<'mercadopago' | 'wompi'>('mercadopago');
   const [fulfillmentType, setFulfillmentType] = useState<'pickup' | 'delivery'>('pickup');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -84,7 +86,7 @@ const CheckoutModal: React.FC = () => {
 
   const handleRemoveItem = (itemName: string, itemId: string) => {
     removeFromCart(itemId);
-    showToast(`${itemName} eliminado del carrito`, 'info');
+    showToast((t('checkout.itemRemoved') as (name: string) => string)(itemName), 'info');
   };
 
   const handleExploreClasses = () => {
@@ -109,13 +111,13 @@ const CheckoutModal: React.FC = () => {
           style={{ background: '#EAE0CC', borderColor: 'rgba(160,160,131,0.25)' }}
         >
           <h2 id="checkout-modal-title" className="text-3xl font-heading font-bold" style={{ color: '#252520' }}>
-            Tu carrito
+            {t('checkout.title') as string}
           </h2>
           <button
             onClick={handleClose}
             className="transition-colors hover:scale-110"
             style={{ color: '#A0A083' }}
-            aria-label="Cerrar carrito"
+            aria-label={t('checkout.close') as string}
           >
             <CloseIcon className="w-5 h-5" />
           </button>
@@ -125,14 +127,14 @@ const CheckoutModal: React.FC = () => {
           {cart.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-lg mb-6" style={{ color: '#A0A083' }}>
-                Tu carrito está vacío.
+                {t('checkout.empty') as string}
               </p>
               <button
                 onClick={handleExploreClasses}
                 className="text-sm font-semibold py-3 px-7 rounded-full transition-all duration-300"
                 style={{ background: '#4D6A6D', color: '#EAE0CC' }}
               >
-                Explorar clases
+                {t('checkout.exploreClasses') as string}
               </button>
             </div>
           ) : (
@@ -167,9 +169,9 @@ const CheckoutModal: React.FC = () => {
                       style={{ color: '#A0A083' }}
                       onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#252520'; }}
                       onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#A0A083'; }}
-                      aria-label={`Quitar ${item.name}`}
+                      aria-label={(t('checkout.removeItem') as (name: string) => string)(item.name)}
                     >
-                      Quitar
+                      {t('checkout.remove') as string}
                     </button>
                   </div>
                 ))}
@@ -179,23 +181,23 @@ const CheckoutModal: React.FC = () => {
                 className="border-t pt-4 flex justify-between items-center font-bold text-lg mb-8"
                 style={{ borderColor: 'rgba(160,160,131,0.3)', color: '#252520' }}
               >
-                <span>Total</span>
+                <span>{t('checkout.total') as string}</span>
                 <span className="font-mono">${totalPrice.toLocaleString('es-CO')} COP</span>
               </div>
 
               <h3 className="text-2xl font-heading font-bold mb-4" style={{ color: '#252520' }}>
-                Información de Pago
+                {t('checkout.paymentInfo') as string}
               </h3>
               <form onSubmit={handlePayment} className="space-y-4">
                 <div>
                   <label htmlFor="checkout-name" className="text-xs font-semibold uppercase tracking-wider block mb-2" style={{ color: '#798478' }}>
-                    Nombre completo
+                    {t('checkout.fullName') as string}
                   </label>
                   <input
                     id="checkout-name"
                     name="name"
                     type="text"
-                    placeholder="Tu nombre"
+                    placeholder={t('checkout.namePlaceholder') as string}
                     className="w-full p-3 rounded-sm outline-none text-sm transition-colors focus:ring-2"
                     style={{ border: '1px solid rgba(160,160,131,0.4)', background: '#F3EDE2', color: '#252520' }}
                     required
@@ -203,7 +205,7 @@ const CheckoutModal: React.FC = () => {
                 </div>
                 <div>
                   <label htmlFor="checkout-email" className="text-xs font-semibold uppercase tracking-wider block mb-2" style={{ color: '#798478' }}>
-                    Correo electrónico
+                    {t('checkout.email') as string}
                   </label>
                   <input
                     id="checkout-email"
@@ -217,7 +219,7 @@ const CheckoutModal: React.FC = () => {
                 </div>
                 <div>
                   <label htmlFor="checkout-phone" className="text-xs font-semibold uppercase tracking-wider block mb-2" style={{ color: '#798478' }}>
-                    WhatsApp / telefono
+                    {t('checkout.phone') as string}
                   </label>
                   <input
                     id="checkout-phone"
@@ -231,7 +233,7 @@ const CheckoutModal: React.FC = () => {
                 </div>
                 <div>
                   <label htmlFor="checkout-provider" className="text-xs font-semibold uppercase tracking-wider block mb-2" style={{ color: '#798478' }}>
-                    Medio de pago
+                    {t('checkout.paymentMethod') as string}
                   </label>
                   <select
                     id="checkout-provider"
@@ -247,7 +249,7 @@ const CheckoutModal: React.FC = () => {
                 {hasProducts && (
                   <div className="space-y-3">
                     <p className="text-xs font-semibold uppercase tracking-wider block" style={{ color: '#798478' }}>
-                      Entrega de articulos
+                      {t('checkout.itemDelivery') as string}
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <label className="flex items-center gap-3 p-3 rounded-sm border cursor-pointer" style={{ borderColor: 'rgba(160,160,131,0.4)', background: '#F3EDE2' }}>
@@ -258,7 +260,7 @@ const CheckoutModal: React.FC = () => {
                           onChange={() => setFulfillmentType('pickup')}
                           style={{ accentColor: '#4D6A6D' }}
                         />
-                        <span className="text-sm" style={{ color: '#252520' }}>Retiro en estudio</span>
+                        <span className="text-sm" style={{ color: '#252520' }}>{t('checkout.pickup') as string}</span>
                       </label>
                       <label className="flex items-center gap-3 p-3 rounded-sm border cursor-pointer" style={{ borderColor: 'rgba(160,160,131,0.4)', background: '#F3EDE2' }}>
                         <input
@@ -268,7 +270,7 @@ const CheckoutModal: React.FC = () => {
                           onChange={() => setFulfillmentType('delivery')}
                           style={{ accentColor: '#4D6A6D' }}
                         />
-                        <span className="text-sm" style={{ color: '#252520' }}>Envio local</span>
+                        <span className="text-sm" style={{ color: '#252520' }}>{t('checkout.delivery') as string}</span>
                       </label>
                     </div>
                     {fulfillmentType === 'delivery' && (
@@ -278,7 +280,7 @@ const CheckoutModal: React.FC = () => {
                           id="checkout-delivery-address"
                           name="deliveryAddress"
                           rows={3}
-                          placeholder="Direccion completa de entrega"
+                          placeholder={t('checkout.deliveryAddress') as string}
                           className="w-full p-3 rounded-sm outline-none text-sm transition-colors focus:ring-2 resize-none"
                           style={{ border: '1px solid rgba(160,160,131,0.4)', background: '#F3EDE2', color: '#252520' }}
                           required
@@ -288,10 +290,20 @@ const CheckoutModal: React.FC = () => {
                   </div>
                 )}
                 <div
-                  className="p-3 rounded-sm text-center"
+                  className="p-3 rounded-sm text-center space-y-1"
                   style={{ background: 'rgba(77,106,109,0.08)' }}
                 >
-                  <p className="text-xs" style={{ color: '#798478' }}>Tu compra se confirma solo cuando la pasarela apruebe el pago.</p>
+                  <p className="text-xs" style={{ color: '#798478' }}>{t('checkout.paymentDisclaimer') as string}</p>
+                  <p className="text-[11px]" style={{ color: '#798478' }}>
+                    Al continuar, aceptas nuestros{' '}
+                    <a href="/terminos" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-900">
+                      Términos y Condiciones
+                    </a>{' '}
+                    y la{' '}
+                    <a href="/privacidad" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-900">
+                      Política de Privacidad
+                    </a>.
+                  </p>
                 </div>
                 {submitError && (
                   <p className="text-sm" role="alert" style={{ color: '#7A2E2E' }}>
@@ -304,7 +316,7 @@ const CheckoutModal: React.FC = () => {
                   style={{ background: '#4D6A6D', color: '#EAE0CC' }}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Creando pago...' : `Pagar - $${totalPrice.toLocaleString('es-CO')} COP`}
+                  {isSubmitting ? (t('checkout.submitting') as string) : (t('checkout.pay') as (total: string) => string)(`$${totalPrice.toLocaleString('es-CO')}`)}
                 </button>
               </form>
             </>
