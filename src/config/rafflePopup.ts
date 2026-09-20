@@ -24,17 +24,19 @@ export interface RafflePopupConfig {
   successMessage: string;
   /** URL de la imagen del premio/rifa */
   imageUrl?: string;
-  /** Milisegundos de espera tras cargar la pagina antes de mostrar el popup. */
+  /** Milisegundos de espera tras cargar la pagina antes de mostrar el popup por tiempo. */
   delayMs: number;
+  /** Porcentaje de scroll (0 a 100) para detonar el popup por roll over/scroll profundo si ocurre antes del tiempo. */
+  scrollPercentTrigger?: number;
   /** Si el usuario lo cierra sin participar, dias antes de volver a mostrarlo. */
   reshowAfterDays: number;
-  /** Paginas donde puede aparecer. */
-  pages: PageName[];
+  /** Paginas donde puede aparecer ('all' para todos los escenarios o lista de PageName). */
+  pages: PageName[] | 'all';
 }
 
 export const rafflePopupConfig: RafflePopupConfig = {
   enabled: true,
-  id: 'rifa-2026-09',
+  id: 'rifa-cuenco-2026',
   eyebrow: 'Rifa Inner Spirit',
   title: 'Gánate un Cuenco Tibetano Artesanal + Sound Healing',
   description:
@@ -52,6 +54,7 @@ export const rafflePopupConfig: RafflePopupConfig = {
   successTitle: '¡Ya estás participando!',
   successMessage: 'Guarda este registro: te escribiremos por WhatsApp si resultas ganador(a).',
   delayMs: 4000,
-  reshowAfterDays: 7,
-  pages: ['home'],
+  scrollPercentTrigger: 30,
+  reshowAfterDays: 2,
+  pages: 'all',
 };

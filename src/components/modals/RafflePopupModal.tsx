@@ -20,7 +20,13 @@ const RafflePopupModal: React.FC = () => {
 
   useEffect(() => {
     if (!config.enabled) return;
-    if (!config.pages.includes(page)) return;
+
+    const isAllowedPage =
+      config.pages === 'all'
+        ? page !== '404'
+        : Array.isArray(config.pages) && config.pages.includes(page);
+    if (!isAllowedPage) return;
+
     if (isLocationGateOpen) return;
     if (typeof window === 'undefined') return;
 
@@ -32,8 +38,37 @@ const RafflePopupModal: React.FC = () => {
       if (daysSince < config.reshowAfterDays) return;
     }
 
-    const timer = setTimeout(() => setIsOpen(true), config.delayMs);
-    return () => clearTimeout(timer);
+    let triggered = false;
+    const triggerOpen = () => {
+      if (triggered) return;
+      triggered = true;
+      setIsOpen(true);
+    };
+
+    // 1. Disparador por tiempo
+    const timer = setTimeout(triggerOpen, config.delayMs);
+
+    // 2. Disparador por roll over / scroll porcentual
+    const scrollThreshold = config.scrollPercentTrigger ?? 30;
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight =
+        document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (scrollHeight > 0) {
+        const percent = (scrollTop / scrollHeight) * 100;
+        if (percent >= scrollThreshold) {
+          triggerOpen();
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [page, isLocationGateOpen, config]);
 
   useEffect(() => {
