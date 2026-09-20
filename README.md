@@ -8,12 +8,20 @@ checkout, ordenes, webhooks de pago, PDF de confirmacion y correo transaccional.
 
 ## Estado Del Proyecto
 
-El historial reciente del repositorio muestra cuatro lineas principales de trabajo:
+> Estado al **2026-09-20**: 65 commits en `main` (`f25de2f`), sincronizada
+> con `origin/main`. Tag actual: `v1-cpanel-php` (baseline desplegable
+> cPanel). Unica rama viva ademas de `main`: `events-ig-booking` (local,
+> ya fusionada — candidata a borrarse).
 
-- `feat(payments): complete checkout fulfillment flow`: checkout con Mercado Pago y Wompi, persistencia de ordenes, webhooks, PDF y email.
-- `feat(ui): expand sanctuary design system`: tokens visuales, primitivas UI y mejoras de experiencia.
-- `fix(seo): titulos y meta descripciones por pagina, JSON-LD, 404, cache headers`: SEO por ruta y configuracion de Vercel.
-- `refactor: reorganize project structure into src/ with best practices`: separacion de componentes, modulos, contextos y utilidades.
+El historial del repositorio muestra cinco lineas principales de trabajo:
+
+- `feat(php)/feat(cpanel)`: backend PHP cPanel (Apache+MySQL) espejo 1:1 de los endpoints `api/*.ts`, packager de deploy y `.cpanel.yml` para deploy via Git.
+- `feat(seo)`: llms.txt para agentes/LLM, sitemap legal, Open Graph dedicado por ruta y prerender.
+- `feat(content)/feat(portugal)`: excursiones Bogota, hub Chicago, Community page, switcher CO/PT y landing de voluntariado.
+- `feat(payments)`: checkout con Mercado Pago y Wompi, persistencia de ordenes, webhooks firmados, PDF y email transaccional.
+- `fix(security)`: CSP/HSTS endurecido, expiracion de order tokens, webhooks protegidos y tests de money-path.
+
+Detalles del flujo Git en [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md).
 
 ## Funcionalidades
 
@@ -49,22 +57,27 @@ El historial reciente del repositorio muestra cuatro lineas principales de traba
 - [API endpoints](docs/API_ENDPOINTS.md)
 - [Esquema de base de datos](docs/DATABASE_SCHEMA.md)
 - [Flujo Git y contribucion](docs/GIT_WORKFLOW.md)
+- [Deploy cPanel via Git](docs/DEPLOY_CPANEL_GIT.md)
 - [Sistema de diseno](design-system/MASTER.md)
 - [Ecosistema de eventos e Instagram](docs/ECOSISTEMA_SOLIDO.md)
+- [Mapa SEO](docs/SEO_MASTER_MAP.md)
 - [Placeholder WordPress](wp-backend/README.md)
 
 ## Estructura
 
 ```text
 inner/
-|-- api/                    # Endpoints serverless y librerias de comercio
+|-- api/                    # Endpoints serverless (Vercel) y librerias de comercio
 |   |-- _lib/               # DB, pagos, ordenes, PDF, email, catalogo
+|   |-- leads/              # Captura de contactos y newsletter
 |   |-- orders/             # status, confirmacion HTML y PDF
 |   `-- webhooks/           # Mercado Pago y Wompi
-|-- docs/                   # Documentacion tecnica del proyecto
+|-- docs/                   # Documentacion tecnica (deploy cPanel, auditorias, SEO)
 |-- design-system/          # Guia del sistema visual
 |-- public/                 # Assets publicos
 |   `-- images/             # Fotografia real (studio/, events/, blog/, instagram/...) y logo.png
+|-- scripts/                # pack-cpanel.js, prerender-portugal.js
+|-- server-php/             # Backend cPanel Apache+MySQL (espejo PHP de api/*.ts)
 |-- src/
 |   |-- components/         # Layout, modales, secciones, UI y efectos
 |   |-- context/            # Cart, Toast y Navigation
@@ -73,11 +86,9 @@ inner/
 |   |-- hooks/              # Hooks compartidos
 |   |-- types/              # Tipos globales
 |   `-- utils/              # Utilidades compartidas
-|-- tests/                  # Tests existentes
+|-- tests/                  # Tests existentes (incluye money-path)
 |-- wp-backend/             # Placeholder para CMS headless futuro
-|-- App.tsx                 # Componente raiz de la app
-|-- index.tsx               # Entry point React
-|-- index.css               # CSS global y tokens visuales
+|-- .cpanel.yml             # Deploy cPanel via Git Version Control
 |-- vite.config.ts          # Configuracion Vite
 `-- vercel.json             # Build, headers y rewrites para Vercel
 ```
@@ -149,11 +160,11 @@ Tambien existe `Makefile` con atajos como `make dev`, `make build`,
 7. Si el pago queda `paid`, se genera PDF y se intenta enviar email.
 
 Detalles completos en [API endpoints](docs/API_ENDPOINTS.md) y
-[base de datos](docs/DATABASE_SCHEMA.md).
+[base de datos](docs/DATABASE_SCHEMA.md).## Deploy
 
-## Deploy
+Hay dos vias documentadas:
 
-El despliegue esperado es Vercel:
+**Vercel (SPA + serverless):**
 
 - `buildCommand`: `npm run build`
 - `outputDirectory`: `dist`
@@ -161,20 +172,32 @@ El despliegue esperado es Vercel:
 - `api/`: funciones serverless
 - `vercel.json`: headers de seguridad, cache para assets y rewrite SPA hacia `index.html`
 
-Antes de publicar, configura las variables server-only en Vercel. No subas `.env`
-ni `.env.local`.
+**cPanel (hosting Apache+PHP):**
+
+- Backend espejo PHP en `server-php/` (mismas rutas que `api/*.ts`).
+- Empaquetado con `npm run pack:cpanel` o clonado directo via
+  Git Version Control con `.cpanel.yml` (ver
+  [docs/DEPLOY_CPANEL_GIT.md](docs/DEPLOY_CPANEL_GIT.md)).
+- Tag `v1-cpanel-php` marca el baseline desplegable.
+
+Antes de publicar, configura las variables server-only en Vercel o en
+`secure_config/` (cPanel). No subas `.env` ni `.env.local`.
 
 ## Git
 
-El repo sigue commits tipo Conventional Commits en el historial reciente:
+El repo usa Conventional Commits de forma consistente (65 commits):
 
 ```text
 feat(payments): complete checkout fulfillment flow
-fix(seo): ...
+feat(seo): add llms.txt for agent/LLM discoverability
+fix(cpanel): fix Windows tar drive-letter bug, add git-native cPanel deploy
 refactor: ...
 chore: ...
 ci: ...
 ```
+
+El hook Husky `pre-commit` corre `npx tsc --noEmit` y `npm run lint`;
+los errores de TypeScript bloquean el commit.
 
 Antes de abrir un PR o hacer push:
 
@@ -189,8 +212,10 @@ Ver [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md) y [CONTRIBUTING.md](CONTRIBUTIN
 ## Notas
 
 - `wp-backend/` es un placeholder para una posible integracion headless futura; hoy no es un backend activo.
-- El esquema SQL se crea desde `api/_lib/db.ts`; todavia no hay migraciones versionadas separadas.
+- `server-php/` es un backend PHP para cPanel que replica 1:1 las rutas de `api/*.ts`; se mantiene en paralelo con la version serverless.
+- El esquema SQL se crea desde `api/_lib/db.ts` (PostgreSQL) y `server-php/schema.sql` (MySQL); todavia no hay migraciones versionadas separadas.
 - `docs/ECOSISTEMA_SOLIDO.md` conserva el estado del modulo de eventos e Instagram.
+- `docs/BRECHAS-Y-PENDIENTES.md` y `docs/AUDITORIA_2026-09-09.md` registran pendientes y hallazgos de seguridad.
 
 ## Contacto Del Estudio
 

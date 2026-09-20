@@ -15,8 +15,10 @@ serverless commerce flow.
 
 ## Before Opening A PR
 
+The Husky `pre-commit` hook runs `npx tsc --noEmit` and `npm run lint`
+automatically. Before pushing, run:
+
 ```bash
-npm run lint
 npm run build
 npm run test:run
 ```
@@ -40,3 +42,6 @@ More details: [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md).
 - Update `docs/API_ENDPOINTS.md` when adding or changing an API route.
 - Update `docs/DATABASE_SCHEMA.md` when changing tables, constraints or status values.
 - Update `design-system/MASTER.md` when changing shared design tokens or UI primitives.
+- Update `docs/GIT_WORKFLOW.md` (branches, tags, hooks) when repo structure changes.
+- Update `docs/DEPLOY_CPANEL_GIT.md` when changing `.cpanel.yml` or the cPanel deploy flow.
+- Update `server-php/ROUTES.md` when adding or changing a mirrored PHP endpoint.
