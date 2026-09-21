@@ -101,7 +101,7 @@ const ChicagoPage: React.FC = () => {
           >
             {t('hero.badge') as string}
           </span>
-          <h1 className="is-display text-4xl sm:text-6xl md:text-7xl leading-[1.05] tracking-tight text-white mb-6">
+          <h1 className="font-heading font-semibold text-4xl sm:text-6xl md:text-7xl leading-[1.05] tracking-tight text-white mb-6">
             {t('hero.title') as string}
           </h1>
           <p className="text-lg sm:text-2xl font-light text-stone-200 max-w-2xl mx-auto leading-relaxed mb-8">
@@ -131,7 +131,7 @@ const ChicagoPage: React.FC = () => {
               <span className="is-eyebrow" style={{ color: '#C9ADA1' }}>
                 {t('philosophy.eyebrow') as string}
               </span>
-              <h2 className="is-display text-3xl sm:text-4xl md:text-5xl text-white">
+              <h2 className="font-heading font-semibold text-3xl sm:text-4xl md:text-5xl text-white">
                 {t('philosophy.title') as string}
               </h2>
               <p className="text-stone-300 font-light text-base sm:text-lg leading-relaxed">
@@ -191,7 +191,7 @@ const ChicagoPage: React.FC = () => {
             <span className="is-eyebrow justify-center" style={{ color: '#8B9A8B' }}>
               {t('agreements.eyebrow') as string}
             </span>
-            <h2 className="is-display text-3xl sm:text-5xl text-white mt-3">
+            <h2 className="font-heading font-semibold text-3xl sm:text-5xl text-white mt-3">
               {t('agreements.title') as string}
             </h2>
             <p className="text-stone-300 font-light text-base mt-4">
@@ -229,7 +229,7 @@ const ChicagoPage: React.FC = () => {
             <span className="is-eyebrow" style={{ color: '#C9ADA1' }}>
               {t('session.eyebrow') as string}
             </span>
-            <h2 className="is-display text-3xl sm:text-5xl text-white mt-3">
+            <h2 className="font-heading font-semibold text-3xl sm:text-5xl text-white mt-3">
               {t('session.title') as string}
             </h2>
             <p className="text-stone-300 font-light text-base mt-4">
