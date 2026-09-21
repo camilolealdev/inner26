@@ -84,20 +84,37 @@ if (fs.existsSync(zipFile)) {
 console.log('  → Creating innerspirit-deploy.zip...');
 const stagingItems = fs.readdirSync(stagingDir);
 
-// Use paths relative to rootDir (not absolute paths with a drive letter):
-// GNU tar (as shipped with Git Bash/MSYS on Windows) misparses an absolute
-// "G:\..." path as a remote "host:path" spec and aborts with
-// "Cannot connect to G: resolve failed".
-const relZipFile = path.relative(rootDir, zipFile);
-const relStagingDir = path.relative(rootDir, stagingDir);
-
 try {
-  execFileSync('tar', ['-a', '-cf', relZipFile, '-C', relStagingDir, ...stagingItems], {
-    cwd: rootDir,
-    stdio: 'inherit',
-  });
+  if (process.platform === 'win32') {
+    // GNU tar (Git Bash/MSYS) has no zip support — its `-a` auto-compress
+    // only recognizes gzip/bzip2/xz/etc, never zip, so `tar -a -cf x.zip`
+    // silently writes a plain POSIX tar archive renamed ".zip" (invalid
+    // zip, fails to open anywhere).
+    //
+    // PowerShell's Compress-Archive is not a safe substitute either: it
+    // writes entry names with backslash path separators on Windows
+    // (a long-standing Microsoft.PowerShell.Archive bug), which Linux
+    // `unzip` on the cPanel server treats as a literal character instead
+    // of a directory separator — every nested file lands as one flat
+    // file with a literal "\" in its name instead of in its folder.
+    // .NET's System.IO.Compression.ZipFile normalizes separators to "/"
+    // per the zip spec, so use that directly instead.
+    const escape = (s) => s.replace(/'/g, "''");
+    const psCommand =
+      'Add-Type -AssemblyName System.IO.Compression.FileSystem; ' +
+      `[System.IO.Compression.ZipFile]::CreateFromDirectory('${escape(stagingDir)}', ` +
+      `'${escape(zipFile)}', [System.IO.Compression.CompressionLevel]::Optimal, $false)`;
+    execFileSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', psCommand], {
+      stdio: 'inherit',
+    });
+  } else {
+    execFileSync('zip', ['-r', zipFile, ...stagingItems], {
+      cwd: stagingDir,
+      stdio: 'inherit',
+    });
+  }
 } catch (err) {
-  console.error('❌ Failed to run tar for zip compression:', err.message);
+  console.error('❌ Failed to create zip archive:', err.message);
   process.exit(1);
 } finally {
   // 7. Cleanup staging

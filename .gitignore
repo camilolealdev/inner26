@@ -55,6 +55,9 @@ next
 .nuxt
 .output
 
+# ── cPanel deploy package (regenerated via npm run pack:cpanel) ─────────────
+deploy/*.zip
+
 # ── OS generated ─────────────────────────────────────────────────────────────
 Thumbs.db
 desktop.ini
