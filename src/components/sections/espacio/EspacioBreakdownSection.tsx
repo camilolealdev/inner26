@@ -15,11 +15,11 @@ const spaces: readonly SpaceItem[] = [
     title: 'Sala principal de movimiento',
     description:
       'Un salón amplio y luminoso para clases, talleres y prácticas grupales. Piso cálido, acústica cuidada y luz natural filtrada del centro histórico.',
-    capacity: 'Hasta 20 personas',
+    capacity: '105 m² · Hasta 20 personas',
   },
   {
     id: 'consultorio',
-    label: 'Consultorio',
+    label: 'Consultorios',
     title: 'Sesiones íntimas y terapias',
     description:
       'Un espacio recogido para acompañamientos individuales, terapias y conversaciones que piden silencio, confidencialidad y presencia.',
@@ -30,8 +30,16 @@ const spaces: readonly SpaceItem[] = [
     label: 'Producción',
     title: 'Acompañamiento operativo',
     description:
-      'Logística, montaje y producción de tu encuentro: coordinamos los detalles para que solo tengas que sostener la experiencia.',
+      'Logística, montaje y producción de tu encuentro, coordinados desde el patio interior — para que solo tengas que sostener la experiencia.',
     capacity: 'Equipo dedicado',
+  },
+  {
+    id: 'jardin',
+    label: 'Jardín Exterior',
+    title: 'Vista a Monserrate',
+    description:
+      'Un jardín al aire libre con vista a Monserrate, pensado para experiencias con fuego, agua y otros rituales elementales.',
+    capacity: 'Experiencias especiales',
   },
 ];
 
@@ -53,7 +61,7 @@ const EspacioBreakdownSection: React.FC = () => {
             id="espacio-breakdown-title"
             className="is-display mt-6 text-4xl sm:text-5xl"
           >
-            Tres ambientes, un mismo cuidado
+            Cuatro ambientes, un mismo cuidado
           </h2>
         </div>
 

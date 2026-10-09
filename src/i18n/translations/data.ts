@@ -32,32 +32,16 @@ export const eventsData = {
         'Lista de espera - Confirmacion por WhatsApp',
       ],
     },
-    'rocket-yoga-training': {
-      tag: 'Formacion - lista de espera',
-      title: 'ROCKET YOGA',
-      subtitle: 'Teacher Training Nivel 1 - 50 horas',
+    kamaflight: {
+      tag: 'Evento Insignia',
+      title: 'KAMAFLIGHT',
+      subtitle: 'Practica de Bienestar en Pareja',
       description:
-        'La cohorte de abril 2026 ya cerro. Dejamos abierta la lista de espera para la siguiente fecha.',
-      dateLabel: 'Siguiente cohorte por confirmar',
-      priceLabel: 'Lista de espera - sin pago anticipado',
+        'Una fusion de AcroYoga, masaje tailandes y danza improvisada. Aprendemos a escuchar, apoyar, recibir y confiar a traves del cuerpo — abierto tanto para quienes vienen por primera vez como para quienes quieren seguir profundizando en la practica.',
+      dateLabel: 'Sabado 10 de octubre - 11:00 AM a 1:00 PM',
+      priceLabel: '$100.000 COP',
       bookingSlots: [
-        'Avisarme siguiente cohorte',
-        'Lista de espera - siguiente cohorte',
-      ],
-      ctaLabel: 'Entrar a lista de espera',
-    },
-    'circulo-luna-llena': {
-      tag: 'Ritual Mensual',
-      title: 'CIRCULO LUNA LLENA',
-      subtitle: 'Meditacion, journaling y sonido',
-      description:
-        'Encuentro mensual para cerrar ciclos con respiracion, escritura guiada y ceremonia sonora en comunidad.',
-      dateLabel: 'Viernes de luna llena - 7:00 PM',
-      priceLabel: '$44.000 COP anticipado',
-      bookingSlots: [
-        'Viernes 7:00 PM - Candelaria',
-        'Viernes 7:00 PM - Streaming privado',
-        'Pack mensual - 3 encuentros',
+        'Sabado 10 de octubre - 11:00 AM a 1:00 PM',
       ],
     },
   },
@@ -76,32 +60,16 @@ export const eventsData = {
         'Lista de espera - Confirmação por WhatsApp',
       ],
     },
-    'rocket-yoga-training': {
-      tag: 'Formação - lista de espera',
-      title: 'ROCKET YOGA',
-      subtitle: 'Formação de Professores Nível 1 - 50 horas',
+    kamaflight: {
+      tag: 'Evento Emblemático',
+      title: 'KAMAFLIGHT',
+      subtitle: 'Prática de Bem-Estar em Casal',
       description:
-        'A turma de abril de 2026 já encerrou. Deixamos aberta a lista de espera para a próxima data.',
-      dateLabel: 'Próxima turma a confirmar',
-      priceLabel: 'Lista de espera - sem pagamento antecipado',
+        'Uma fusão de AcroYoga, massagem tailandesa e dança improvisada. Aprendemos a escutar, apoiar, receber e confiar através do corpo — aberto tanto para quem vem pela primeira vez como para quem quer aprofundar a prática.',
+      dateLabel: 'Sábado 10 de outubro - 11h00 às 13h00',
+      priceLabel: '$100.000 COP',
       bookingSlots: [
-        'Avisem-me da próxima turma',
-        'Lista de espera - próxima turma',
-      ],
-      ctaLabel: 'Entrar na lista de espera',
-    },
-    'circulo-luna-llena': {
-      tag: 'Ritual Mensal',
-      title: 'CÍRCULO DE LUA CHEIA',
-      subtitle: 'Meditação, journaling e som',
-      description:
-        'Encontro mensal para fechar ciclos com respiração, escrita guiada e cerimónia sonora em comunidade.',
-      dateLabel: 'Sexta-feira de lua cheia - 19h00',
-      priceLabel: '$44.000 COP antecipado',
-      bookingSlots: [
-        'Sexta 19h00 - Candelaria',
-        'Sexta 19h00 - Streaming privado',
-        'Pacote mensal - 3 encontros',
+        'Sábado 10 de outubro - 11h00 às 13h00',
       ],
     },
   },
@@ -120,32 +88,16 @@ export const eventsData = {
         'Waitlist - Confirmation via WhatsApp',
       ],
     },
-    'rocket-yoga-training': {
-      tag: 'Training - waitlist',
-      title: 'ROCKET YOGA',
-      subtitle: 'Teacher Training Level 1 - 50 hours',
+    kamaflight: {
+      tag: 'Flagship Event',
+      title: 'KAMAFLIGHT',
+      subtitle: 'Couples Wellness Practice',
       description:
-        'The April 2026 cohort is already closed. We keep the waitlist open for the next date.',
-      dateLabel: 'Next cohort to be confirmed',
-      priceLabel: 'Waitlist - no advance payment',
+        "A fusion of AcroYoga, Thai massage and improvised dance. We learn to listen, support, receive and trust through the body — open to first-timers and to those deepening their practice.",
+      dateLabel: 'Saturday, October 10th - 11:00 AM to 1:00 PM',
+      priceLabel: '$100,000 COP',
       bookingSlots: [
-        'Notify me of the next cohort',
-        'Waitlist - next cohort',
-      ],
-      ctaLabel: 'Join the waitlist',
-    },
-    'circulo-luna-llena': {
-      tag: 'Monthly Ritual',
-      title: 'FULL MOON CIRCLE',
-      subtitle: 'Meditation, journaling and sound',
-      description:
-        'Monthly gathering to close cycles through breathwork, guided writing and a communal sound ceremony.',
-      dateLabel: 'Full moon Friday - 7:00 PM',
-      priceLabel: '$44,000 COP in advance',
-      bookingSlots: [
-        'Friday 7:00 PM - Candelaria',
-        'Friday 7:00 PM - Private streaming',
-        'Monthly pack - 3 gatherings',
+        'Saturday, October 10th - 11:00 AM to 1:00 PM',
       ],
     },
   },

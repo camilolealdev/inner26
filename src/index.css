@@ -1,6 +1,24 @@
 /* Inner Spirit Studio — global stylesheet */
 @import "tailwindcss";
 
+/* Montserrat self-hosted — solo los pesos usados (500 titulos, 300
+   subtitulos). Sin variantes italic. */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/Montserrat-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Inner Spirit Design Tokens */
 @theme {
   --color-sand-dune: #EAE0CC;
@@ -140,7 +158,16 @@ body::selection {
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Subtitulos: mismo Montserrat, peso 300, nunca italic */
+.font-subheading {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
 /* Smooth scrolling */
@@ -175,9 +202,10 @@ html {
 
 .is-page-heading {
   color: var(--is-color-teal);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 3rem;
-  font-weight: 600;
+  font-weight: 500;
+  font-style: normal;
   letter-spacing: 0;
   line-height: 1;
 }
@@ -196,8 +224,10 @@ html {
 
 .is-page-lead {
   color: var(--is-color-muted-soft);
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.125rem;
   font-weight: 300;
+  font-style: normal;
   line-height: 1.7;
 }
 
@@ -251,8 +281,9 @@ html {
 
 .is-display {
   color: var(--is-color-ink);
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
   letter-spacing: 0;
   line-height: 0.96;
 }
@@ -352,7 +383,9 @@ html {
   border-radius: var(--is-radius-sm);
   background: var(--is-color-teal);
   color: var(--is-color-sand);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
   font-size: 1.125rem;
   line-height: 1;
   padding: 0.875rem 1.5rem;

@@ -186,8 +186,31 @@ const ClassesPage: React.FC = () => {
             ))}
           </div>
 
+          {/* Colaboración con Siki */}
           <div
             className="mt-16 p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 rounded-sm"
+            style={{ background: '#FAF7F2', border: '1px solid #EAE0CC' }}
+          >
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#4D6A6D' }}>Colaboración</p>
+              <h3 className="text-2xl font-heading" style={{ color: '#252520' }}>Clases en colaboración con Siki</h3>
+              <p className="text-sm mt-2 max-w-xl font-light leading-relaxed" style={{ color: '#798478' }}>
+                Sumamos a nuestra grilla semanal una colaboración especial con Siki, facilitadora invitada que trae su propia mirada del movimiento consciente a Inner Spirit. Sigue su trabajo y entérate de sus próximas sesiones directamente en su Instagram.
+              </p>
+            </div>
+            <a
+              href="https://www.instagram.com/siki.terra/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-8 py-3 font-heading text-lg text-center transition-all hover:opacity-90"
+              style={{ background: '#4D6A6D', color: '#EAE0CC' }}
+            >
+              Seguir a Siki en Instagram
+            </a>
+          </div>
+
+          <div
+            className="mt-6 p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 rounded-sm"
             style={{ background: '#F3EDE2', border: '1px solid #D9D1C0' }}
           >
             <div>

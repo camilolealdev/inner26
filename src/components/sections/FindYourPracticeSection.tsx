@@ -7,7 +7,7 @@ import { useTranslation } from '../../i18n/useTranslation';
 import { home } from '../../i18n/translations/home';
 
 interface PracticeItem {
-  type: 'class' | 'event' | 'service' | 'blog';
+  type: 'class' | 'event' | 'service';
   title: string;
   description: string;
   illustrationName: string;
@@ -60,8 +60,7 @@ const PracticeCard: React.FC<{ item: PracticeItem }> = ({ item }) => {
         imageUrl: item.imageUrl ?? '',
         illustrationName: item.illustrationName,
       });
-    } else if (item.type === 'service') navigate('consultorio');
-    else if (item.type === 'blog') navigate('blog');
+    } else if (item.type === 'service') navigate('contacto');
   };
 
   return (

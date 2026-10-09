@@ -27,7 +27,7 @@ const EXCURSION_META = [
 
 const HUB_FACET_META = [
   { key: 'espacio' as const, page: 'espacio' as const },
-  { key: 'consultorio' as const, page: 'consultorio' as const },
+  { key: 'consultorio' as const, page: 'contacto' as const },
   { key: 'eventos' as const, page: 'eventos' as const },
 ];
 

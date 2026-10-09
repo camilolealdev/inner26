@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { InstagramIcon, WhatsAppIcon } from '../constants';
+import { InstagramIcon, FacebookIcon, WhatsAppIcon } from '../constants';
 import { useContactForm } from '../hooks/useContactForm';
 import { useTranslation } from '../i18n/useTranslation';
 import { homePages } from '../i18n/translations/homePages';
@@ -99,6 +99,7 @@ const ContactPage: React.FC = () => {
                                 <p className="is-eyebrow mb-3">{t('contact.followLabel') as string}</p>
                                 <div className="flex gap-5">
                                     <a href="https://instagram.com/innerspirit_studio" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label={t('contact.igAriaLabel') as string}><InstagramIcon /></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100068270528809" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label={t('contact.fbAriaLabel') as string}><FacebookIcon /></a>
                                     <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label={t('contact.waAriaLabel') as string}><WhatsAppIcon /></a>
                                 </div>
                              </div>

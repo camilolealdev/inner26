@@ -18,6 +18,11 @@ function inner_spirit_config(): array
         dirname(__DIR__, 3) . '/secure_config/config.php',
         dirname(__DIR__, 2) . '/../secure_config/config.php',
         dirname(__DIR__, 2) . '/secure_config/config.php',
+        // Fallback for hosts where File Manager can't navigate above
+        // public_html: _setup/ is already blocked from direct web access
+        // by the root .htaccess (same rule that protects api/_lib and
+        // api/vendor), so this is no less secure than the other paths.
+        dirname(__DIR__, 2) . '/_setup/secure_config/config.php',
     ]);
 
     $resolvedPath = null;

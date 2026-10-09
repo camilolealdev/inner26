@@ -7,9 +7,7 @@ export type PageName =
   | 'espacio'
   | 'clases'
   | 'eventos'
-  | 'consultorio'
   | 'tienda'
-  | 'blog'
   | 'contacto'
   | 'privacidad'
   | 'terminos'
@@ -31,9 +29,7 @@ export const PAGE_TO_PATH: Record<PageName, string> = {
   espacio: '/espacio',
   clases: '/clases',
   eventos: '/eventos',
-  consultorio: '/consultorio',
   tienda: '/tienda',
-  blog: '/blog',
   contacto: '/contacto',
   privacidad: '/privacidad',
   terminos: '/terminos',

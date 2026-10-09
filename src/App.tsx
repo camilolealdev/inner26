@@ -1,5 +1,5 @@
 
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect, useRef } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { CartProvider } from './context/CartContext';
@@ -52,20 +52,10 @@ const pageSEO: Record<string, PageSEO> = {
     title: 'Eventos y Rituales — Inner Spirit Studio',
     description: 'Inner Dance, ceremonias de luna nueva, retiros y encuentros conscientes en Bogotá. Experiencias transformadoras en comunidad.',
   },
-  consultorio: {
-    canonical: 'https://innerspirit.net/consultorio',
-    title: 'Consultorio — Sesiones Individuales | Inner Spirit Studio',
-    description: 'Acompañamiento individual: yoga terapéutico, meditación guiada, breathwork y arte terapia. Sesiones 1:1 personalizadas en La Candelaria.',
-  },
   tienda: {
     canonical: 'https://innerspirit.net/tienda',
     title: 'Tienda — Objetos Conscientes | Inner Spirit Studio',
     description: 'Cristales, incienso, aceites esenciales, cuencos tibetanos y más. Herramientas para acompañar tu práctica y rituales diarios.',
-  },
-  blog: {
-    canonical: 'https://innerspirit.net/blog',
-    title: 'Blog — Recursos para tu Viaje Interior | Inner Spirit Studio',
-    description: 'Artículos sobre yoga, meditación, breathwork, chakras y crecimiento espiritual. Guías prácticas para nutrir tu bienestar.',
   },
   contacto: {
     canonical: 'https://innerspirit.net/contacto',
@@ -112,9 +102,7 @@ const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const ClassesPage = lazy(() => import('./pages/ClassesPage'));
 const EventsPage = lazy(() => import('./pages/EventsPage'));
-const ConsultorioPage = lazy(() => import('./pages/ConsultorioPage'));
 const ShopPage = lazy(() => import('./modules/shop/pages/ShopPage'));
-const BlogPage = lazy(() => import('./modules/blog/pages/BlogPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const PortugalPage = lazy(() => import('./pages/PortugalPage'));
 const ChicagoPage = lazy(() => import('./pages/ChicagoPage'));
@@ -160,12 +148,8 @@ const PageRenderer: React.FC = () => {
       return <ClassesPage />;
     case 'eventos':
       return <EventsPage />;
-    case 'consultorio':
-      return <ConsultorioPage />;
     case 'tienda':
       return <ShopPage />;
-    case 'blog':
-      return <BlogPage />;
     case 'contacto':
       return <ContactPage />;
     case 'portugal':
@@ -190,9 +174,20 @@ const prefersReducedMotion = () =>
 
 const AppContent: React.FC = () => {
   const { page } = useNavigation();
+  const isFirstPageView = useRef(true);
 
   useEffect(() => {
     const seo = pageSEO[page] ?? pageSEO.home!;
+
+    // Meta Pixel no recarga la pagina en esta SPA, asi que cada cambio de
+    // ruta debe disparar su propio PageView. El primer render ya lo cuenta
+    // el snippet inline en index.html, asi que lo saltamos aqui.
+    if (isFirstPageView.current) {
+      isFirstPageView.current = false;
+    } else {
+      const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+      fbq?.('track', 'PageView');
+    }
 
     // Update document title
     document.title = seo.title;

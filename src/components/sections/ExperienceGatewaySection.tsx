@@ -62,7 +62,7 @@ const ExperienceGatewaySection: React.FC = () => {
     {
       key: 'accompaniment' as const,
       icon: 'hands' as const,
-      onClick: () => navigate('consultorio'),
+      onClick: () => navigate('contacto'),
     },
   ].map((item) => ({
     ...item,

@@ -66,16 +66,20 @@ export const homePages = {
         'Un lugar para soltar el ruido de afuera y volver a escuchar la sabiduría que ya habita en ti.',
       philosophyTitle: 'Nuestra Filosofía',
       philosophyP1:
-        'No somos un gimnasio. No somos un centro de terapia. Somos un espacio donde el movimiento nace desde adentro. Donde la meditación no es una técnica, sino un descanso. Donde la danza no tiene pasos, solo impulso.',
+        '☯️ Inner Spirit es un centro de bienestar de cuidado físico, mental y espiritual ✨ Un espacio seguro para quienes desean tomar acción en el viaje del autodescubrimiento hacia su verdadera esencia.',
       philosophyP2:
-        'Creemos que cada persona posee su propia brújula interna. Nuestro rol no es dar respuestas, sino crear las condiciones de calma y presencia para que puedas escuchar las tuyas.',
+        'Apoyamos y celebramos a las personas en su autorrealización a través de diferentes procesos que nutren y sostienen a cada quien en su viaje de desarrollo de la conciencia.',
+      philosophyP3:
+        'Ofrecemos diferentes tipos de clases, talleres, conciertos, experiencias, ceremonias y medicinas holísticas.',
+      philosophyP4:
+        'Nuestros espacios son una puerta a la libertad, la transformación y el poder personal, un lugar sagrado para recuperar dones internos y avivar el fuego de tu alma, iluminando tu camino en propósito 🔥',
       guideTitle: 'La Guía',
       guideP1: 'El camino de Inner Spirit es sostenido por una escucha.',
       guideP2:
         'Una que ha sido nutrida por estudios en Sanación Energética, Meditación y Yoga Holístico, pero cuya verdadera guía es la presencia compartida en el silencio. Más que enseñar, el propósito es crear el espacio para que cada quien recuerde su propia sabiduría.',
       spaceTitle: 'El Espacio',
       spaceLead:
-        '100 m² de espacio sagrado a los pies de Monserrate, en el barrio La Candelaria de Bogotá. Luz natural, paredes de barro y un piso que ha visto miles de respiraciones.',
+        '105 m² de espacio sagrado a los pies de Monserrate, en el barrio La Candelaria de Bogotá. Luz natural, paredes de barro y un piso que ha visto miles de respiraciones.',
       galleryLabels: ['Movimiento Consciente', 'Silencio Interior', 'Florecimiento'] as string[],
     },
     espacio: {
@@ -212,6 +216,9 @@ export const homePages = {
       ] as ShopProductCopy[],
       helpText: '¿Buscas algo en particular o quieres confirmar disponibilidad? Cuéntanos qué quieres traer a tu espacio.',
       whatsappCta: 'Escríbenos por WhatsApp',
+      ticketsHeading: 'Tickets de Eventos',
+      ticketsLead: 'Asegura tu lugar en los próximos encuentros de Inner Spirit.',
+      ticketsCta: 'Comprar Ticket',
     },
     blog: {
       eyebrow: 'Journal',
@@ -245,6 +252,7 @@ export const homePages = {
       writeLabel: 'Escríbenos',
       followLabel: 'Síguenos',
       igAriaLabel: 'Instagram @innerspirit_studio',
+      fbAriaLabel: 'Facebook Inner Spirit Studio',
       waAriaLabel: 'WhatsApp +57 321 224 8261',
       beforeVisitLabel: 'Antes de tu visita',
       beforeVisitText:
@@ -293,16 +301,20 @@ export const homePages = {
         'Um lugar para soltar o ruído de fora e voltar a escutar a sabedoria que já habita em ti.',
       philosophyTitle: 'A Nossa Filosofia',
       philosophyP1:
-        'Não somos um ginásio. Não somos um centro de terapia. Somos um espaço onde o movimento nasce de dentro. Onde a meditação não é uma técnica, mas um descanso. Onde a dança não tem passos, só impulso.',
+        '☯️ Inner Spirit é um centro de bem-estar de cuidado físico, mental e espiritual ✨ Um espaço seguro para quem deseja agir na jornada de autodescoberta rumo à sua verdadeira essência.',
       philosophyP2:
-        'Acreditamos que cada pessoa possui a sua própria bússola interna. O nosso papel não é dar respostas, mas criar as condições de calma e presença para que possas escutar as tuas.',
+        'Apoiamos e celebramos as pessoas na sua autorrealização através de diferentes processos que nutrem e sustentam cada pessoa na sua jornada de desenvolvimento da consciência.',
+      philosophyP3:
+        'Oferecemos diferentes tipos de aulas, workshops, concertos, experiências, cerimónias e medicinas holísticas.',
+      philosophyP4:
+        'Os nossos espaços são uma porta para a liberdade, a transformação e o poder pessoal, um lugar sagrado para recuperar dons internos e reacender o fogo da tua alma, iluminando o teu caminho em propósito 🔥',
       guideTitle: 'A Guia',
       guideP1: 'O caminho de Inner Spirit é sustentado por uma escuta.',
       guideP2:
         'Uma que foi nutrida por estudos em Cura Energética, Meditação e Yoga Holístico, mas cuja verdadeira guia é a presença partilhada no silêncio. Mais do que ensinar, o propósito é criar o espaço para que cada pessoa recorde a sua própria sabedoria.',
       spaceTitle: 'O Espaço',
       spaceLead:
-        '100 m² de espaço sagrado aos pés de Monserrate, no bairro de La Candelaria em Bogotá. Luz natural, paredes de barro e um piso que já viu milhares de respirações.',
+        '105 m² de espaço sagrado aos pés de Monserrate, no bairro de La Candelaria em Bogotá. Luz natural, paredes de barro e um piso que já viu milhares de respirações.',
       galleryLabels: ['Movimento Consciente', 'Silêncio Interior', 'Florescimento'] as string[],
     },
     espacio: {
@@ -439,6 +451,9 @@ export const homePages = {
       ] as ShopProductCopy[],
       helpText: 'Procuras algo em particular ou queres confirmar disponibilidade? Diz-nos o que queres trazer para o teu espaço.',
       whatsappCta: 'Escreve-nos pelo WhatsApp',
+      ticketsHeading: 'Bilhetes de Eventos',
+      ticketsLead: 'Garante o teu lugar nos próximos encontros da Inner Spirit.',
+      ticketsCta: 'Comprar Bilhete',
     },
     blog: {
       eyebrow: 'Journal',
@@ -472,6 +487,7 @@ export const homePages = {
       writeLabel: 'Escreve-nos',
       followLabel: 'Segue-nos',
       igAriaLabel: 'Instagram @innerspirit_studio',
+      fbAriaLabel: 'Facebook Inner Spirit Studio',
       waAriaLabel: 'WhatsApp +57 321 224 8261',
       beforeVisitLabel: 'Antes da tua visita',
       beforeVisitText:
@@ -523,16 +539,20 @@ export const homePages = {
         'A place to release the noise from outside and listen again to the wisdom that already lives within you.',
       philosophyTitle: 'Our Philosophy',
       philosophyP1:
-        "We're not a gym. We're not a therapy center. We're a space where movement is born from within. Where meditation isn't a technique, but a rest. Where dance has no steps, only impulse.",
+        '☯️ Inner Spirit is a wellness center for physical, mental and spiritual care ✨ A safe space for those who want to take action on the journey of self-discovery toward their true essence.',
       philosophyP2:
-        "We believe every person carries their own inner compass. Our role isn't to give answers, but to create the conditions of calm and presence so you can hear your own.",
+        "We support and celebrate people in their self-realization through different processes that nurture and sustain each person on their journey of conscious development.",
+      philosophyP3:
+        'We offer different kinds of classes, workshops, concerts, experiences, ceremonies and holistic medicines.',
+      philosophyP4:
+        'Our spaces are a door to freedom, transformation and personal power — a sacred place to recover inner gifts and rekindle the fire of your soul, lighting your path with purpose 🔥',
       guideTitle: 'The Guide',
       guideP1: "Inner Spirit's path is held by a kind of listening.",
       guideP2:
         'One nurtured by studies in Energy Healing, Meditation and Holistic Yoga, but whose true guidance is shared presence in silence. More than teaching, the purpose is to create the space for each person to remember their own wisdom.',
       spaceTitle: 'The Space',
       spaceLead:
-        '100 m² of sacred space at the foot of Monserrate, in the La Candelaria neighborhood of Bogotá. Natural light, clay walls and a floor that has witnessed thousands of breaths.',
+        '105 m² of sacred space at the foot of Monserrate, in the La Candelaria neighborhood of Bogotá. Natural light, clay walls and a floor that has witnessed thousands of breaths.',
       galleryLabels: ['Conscious Movement', 'Inner Silence', 'Flourishing'] as string[],
     },
     espacio: {
@@ -668,6 +688,9 @@ export const homePages = {
       ] as ShopProductCopy[],
       helpText: "Looking for something specific, or want to confirm availability? Tell us what you'd like to bring into your space.",
       whatsappCta: 'Message us on WhatsApp',
+      ticketsHeading: 'Event Tickets',
+      ticketsLead: 'Secure your spot at the next Inner Spirit gatherings.',
+      ticketsCta: 'Buy Ticket',
     },
     blog: {
       eyebrow: 'Journal',
@@ -701,6 +724,7 @@ export const homePages = {
       writeLabel: 'Write to Us',
       followLabel: 'Follow Us',
       igAriaLabel: 'Instagram @innerspirit_studio',
+      fbAriaLabel: 'Facebook Inner Spirit Studio',
       waAriaLabel: 'WhatsApp +57 321 224 8261',
       beforeVisitLabel: 'Before Your Visit',
       beforeVisitText:

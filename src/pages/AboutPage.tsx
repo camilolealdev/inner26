@@ -3,6 +3,7 @@ import React from 'react';
 import { Illustration } from '../assets/Illustrations';
 import { useTranslation } from '../i18n/useTranslation';
 import { homePages } from '../i18n/translations/homePages';
+import TestimonialsSection from '../components/sections/TestimonialsSection';
 
 const galleryIllustrations = ['yoga', 'meditation', 'lotus'];
 
@@ -46,6 +47,12 @@ const AboutPage: React.FC = () => {
             </p>
             <p>
               {t('about.philosophyP2') as string}
+            </p>
+            <p>
+              {t('about.philosophyP3') as string}
+            </p>
+            <p>
+              {t('about.philosophyP4') as string}
             </p>
           </div>
         </div>
@@ -119,6 +126,8 @@ const AboutPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <TestimonialsSection />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { InstagramIcon, WhatsAppIcon } from '../../constants';
+import { InstagramIcon, FacebookIcon, WhatsAppIcon } from '../../constants';
 import { useContactForm } from '../../hooks/useContactForm';
 
 const ContactSection: React.FC = () => {
@@ -80,6 +80,9 @@ const ContactSection: React.FC = () => {
                 <div className="flex gap-5">
                   <a href="https://instagram.com/innerspirit_studio" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label="Instagram @innerspirit_studio">
                     <InstagramIcon />
+                  </a>
+                  <a href="https://www.facebook.com/profile.php?id=100068270528809" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label="Facebook Inner Spirit Studio">
+                    <FacebookIcon />
                   </a>
                   <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-slate-is transition-colors transform hover:-translate-y-0.5 duration-300" aria-label="WhatsApp +57 321 224 8261">
                     <WhatsAppIcon />

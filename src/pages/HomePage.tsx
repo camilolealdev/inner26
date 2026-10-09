@@ -7,11 +7,9 @@ import AboutSection from '../components/sections/AboutSection';
 import DestinationsSection from '../components/sections/DestinationsSection';
 import FindYourPracticeSection from '../components/sections/FindYourPracticeSection';
 import EventsSection from '../components/sections/EventsSection';
-import ConsultorioSection from '../components/sections/ConsultorioSection';
 import ShopSection from '../modules/shop/components/ShopSection';
 import TestimonialsSection from '../components/sections/TestimonialsSection';
 import ExploraBogotaSection from '../components/sections/ExploraBogotaSection';
-import BlogSection from '../modules/blog/components/BlogSection';
 import NewsletterSection from '../components/sections/NewsletterSection';
 
 const localBusinessSchema = {
@@ -82,11 +80,9 @@ const HomePage: React.FC = () => {
       <AboutSection />
       <DestinationsSection />
       <FindYourPracticeSection />
-      <ConsultorioSection />
       <ExploraBogotaSection />
       <TestimonialsSection />
       <ShopSection />
-      <BlogSection />
       <NewsletterSection />
     </>
   );

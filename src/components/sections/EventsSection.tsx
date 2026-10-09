@@ -61,16 +61,22 @@ const EventsSection: React.FC = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row items-stretch lg:min-h-[480px] overflow-hidden">
-          <div className="lg:w-5/12 relative overflow-hidden group min-h-[260px] sm:min-h-[320px]">
-            <img
-              src={event.coverImageUrl}
-              alt={(t('events.imageAlt') as (title: string) => string)(event.title)}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
-            />
+          <div className="lg:w-5/12 relative overflow-hidden group min-h-[260px] sm:min-h-[320px] bg-dark-panel">
+            {event.coverImageUrl && (
+              <img
+                src={event.coverImageUrl}
+                alt={(t('events.imageAlt') as (title: string) => string)(event.title)}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            )}
             <div
               className="absolute inset-0 flex items-center justify-center"
-              style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.55))' }}
+              style={{
+                background: event.coverImageUrl
+                  ? 'linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.55))'
+                  : undefined,
+              }}
             >
               <Illustration
                 name={event.illustrationName}
@@ -86,7 +92,7 @@ const EventsSection: React.FC = () => {
             </span>
 
             <h3 className="text-4xl sm:text-5xl md:text-6xl font-heading text-white mb-2 leading-none">{event.title}</h3>
-            <p className="font-serif italic text-xl mb-8 text-muted">
+            <p className="font-subheading text-xl mb-8 text-muted">
               {event.subtitle}
             </p>
 

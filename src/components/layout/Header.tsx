@@ -15,15 +15,22 @@ const aboutLinks: NavLink[] = [
 ];
 
 const navLinks: NavLink[] = [
-  { page: 'clases', navKey: 'clases', href: pageToPath('clases') },
   { page: 'eventos', navKey: 'eventos', href: pageToPath('eventos') },
-  { page: 'consultorio', navKey: 'consultorio', href: pageToPath('consultorio') },
+  { page: 'clases', navKey: 'clases', href: pageToPath('clases') },
   { page: 'tienda', navKey: 'tienda', href: pageToPath('tienda') },
-  { page: 'blog', navKey: 'blog', href: pageToPath('blog') },
   { page: 'contacto', navKey: 'contacto', href: pageToPath('contacto') },
 ];
 
-const mobileLinks: NavLink[] = [...aboutLinks, ...navLinks];
+// Orden pedido: Eventos, Clases, Tienda, Sobre Nosotros, Contacto.
+// Consultorio y Blog salen del nav (quedan sus paginas/rutas sin enlazar,
+// pendiente confirmar si tambien se borran del todo).
+const mobileLinks: NavLink[] = [
+  navLinks[0]!,
+  navLinks[1]!,
+  navLinks[2]!,
+  ...aboutLinks,
+  navLinks[3]!,
+];
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -141,6 +148,19 @@ const Header: React.FC = () => {
         </div>
 
         <nav className="hidden xl:flex flex-1 justify-center items-center gap-7 2xl:gap-10">
+          {navLinks.slice(0, 3).map((link) => (
+            <a
+              key={link.page}
+              href={link.href}
+              onClick={(event) => handleLinkClick(event, link.page)}
+              className={`text-xs font-bold uppercase tracking-widest transition-colors duration-300 hover:opacity-100 ${
+                page === link.page ? 'opacity-100' : 'opacity-70'
+              }`}
+              aria-current={page === link.page ? 'page' : undefined}
+            >
+              {t(`nav.${link.navKey}`) as string}
+            </a>
+          ))}
           <div ref={aboutRef} className="relative">
             <button
               type="button"
@@ -183,7 +203,7 @@ const Header: React.FC = () => {
               ))}
             </div>
           </div>
-          {navLinks.map((link) => (
+          {navLinks.slice(3).map((link) => (
             <a
               key={link.page}
               href={link.href}

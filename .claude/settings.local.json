@@ -17,7 +17,20 @@
       "Bash(taskkill //F //PID 8300)",
       "Bash(npx vite:*)",
       "Bash(echo \"EXIT:$?\")",
-      "Bash(npx vitest:*)"
+      "Bash(npx vitest:*)",
+      "Bash(rtk find *)",
+      "Bash(rtk read *)",
+      "Bash(rtk grep *)",
+      "Bash(mkdir -p \"/c/Users/morce/AppData/Local/Temp/claude/G--Nueva-carpeta-Documentos-inner/55cd72c9-e202-4944-857d-2b945d760d8b/scratchpad/montserrat\")",
+      "Bash(unzip -o \"public/Montserrat.zip\" -d \"/c/Users/morce/AppData/Local/Temp/claude/G--Nueva-carpeta-Documentos-inner/55cd72c9-e202-4944-857d-2b945d760d8b/scratchpad/montserrat\")",
+      "Bash(command -v fonttools)",
+      "Bash(python -c \"import fontTools; print\\(fontTools.__version__\\)\")",
+      "Bash(npx --yes ttf2woff2 --version)",
+      "Bash(pip show *)",
+      "Bash(kill %1)",
+      "Bash(mkdir -p \"public/fonts/montserrat\")",
+      "Bash(cp \"/c/Users/morce/AppData/Local/Temp/claude/G--Nueva-carpeta-Documentos-inner/55cd72c9-e202-4944-857d-2b945d760d8b/scratchpad/montserrat/static/Montserrat-Medium.ttf\" \"public/fonts/montserrat/Montserrat-Medium.ttf\")",
+      "Bash(cp \"/c/Users/morce/AppData/Local/Temp/claude/G--Nueva-carpeta-Documentos-inner/55cd72c9-e202-4944-857d-2b945d760d8b/scratchpad/montserrat/static/Montserrat-Light.ttf\" \"public/fonts/montserrat/Montserrat-Light.ttf\")"
     ]
   }
 }

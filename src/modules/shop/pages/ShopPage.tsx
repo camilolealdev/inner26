@@ -4,6 +4,14 @@ import { CartContext } from '../../../context/CartContext';
 import { Illustration } from '../../../assets/Illustrations';
 import { useTranslation } from '../../../i18n/useTranslation';
 import { homePages } from '../../../i18n/translations/homePages';
+import {
+  getEventCtaLabel,
+  getEventWaitlistUrl,
+  isEventBookable,
+  studioEvents,
+} from '../../events/data/events';
+import { toEventBookingDetails } from '../../events/utils/toBookingDetails';
+import type { StudioEvent } from '../../events/types';
 
 
 type ShopProduct = Product & {
@@ -77,6 +85,58 @@ const ProductCard: React.FC<{ product: ShopProduct }> = ({ product }) => {
   );
 };
 
+const TicketCard: React.FC<{ event: StudioEvent }> = ({ event }) => {
+  const { openBookingModal } = useContext(CartContext);
+  const { t } = useTranslation(homePages);
+
+  const handleClick = () => {
+    if (!isEventBookable(event)) {
+      window.open(getEventWaitlistUrl(event), '_blank', 'noopener,noreferrer');
+      return;
+    }
+    openBookingModal(toEventBookingDetails(event, 'site'));
+  };
+
+  return (
+    <div className="is-surface is-surface--interactive group flex flex-col overflow-hidden">
+      <div className="is-media-stage overflow-hidden aspect-square relative flex items-center justify-center bg-sand-light">
+        {event.coverImageUrl ? (
+          <img
+            src={event.coverImageUrl}
+            alt={event.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : (
+          <Illustration
+            name={event.illustrationName}
+            className="w-1/2 h-1/2 transition-all duration-700 group-hover:scale-110"
+            style={{ color: '#C9ADA1' } as React.CSSProperties}
+          />
+        )}
+      </div>
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-lg font-heading leading-tight text-ink transition-colors group-hover:text-slate-is">{event.title}</h3>
+          <p className="is-metric font-mono text-sm whitespace-nowrap text-muted">{event.priceLabel}</p>
+        </div>
+        <p className="font-subheading mt-1 text-sm text-muted-light">{event.subtitle}</p>
+        <p className="mt-3 text-sm leading-relaxed text-muted-light flex-grow">{event.description}</p>
+        <p className="mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-is">
+          <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full" style={{ background: '#8B9A8B' }} />
+          {event.dateLabel}
+        </p>
+        <button
+          onClick={handleClick}
+          className="is-action mt-5 w-full justify-center"
+        >
+          {isEventBookable(event) ? (t('shop.ticketsCta') as string) : getEventCtaLabel(event)}
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const shopSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -129,6 +189,20 @@ const ShopPage: React.FC = () => {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+
+          {studioEvents.length > 0 && (
+            <div className="mt-20">
+              <div className="text-center mb-10 max-w-2xl mx-auto">
+                <h2 className="is-display text-3xl md:text-4xl">{t('shop.ticketsHeading') as string}</h2>
+                <p className="is-copy mt-3">{t('shop.ticketsLead') as string}</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+                {studioEvents.map((event) => (
+                  <TicketCard key={event.slug} event={event} />
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="mt-16 text-center">
             <p className="is-copy mb-5 max-w-xl mx-auto">

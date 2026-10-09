@@ -35,4 +35,8 @@ return [
     'SMTP_PASS' => '',
     'SMTP_FROM' => 'Inner Spirit Studio <hola@innerspirit.net>',
     'STUDIO_NOTIFY_EMAIL' => 'hola@innerspirit.net',
+
+    // Dashboard de tickets (server-php/api/admin/) — genera el hash con:
+    // php -r "echo password_hash('tu-contraseña-segura', PASSWORD_BCRYPT), PHP_EOL;"
+    'ADMIN_PASSWORD_HASH' => 'replace-with-password-hash',
 ];
