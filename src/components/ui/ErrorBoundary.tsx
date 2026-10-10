@@ -10,6 +10,15 @@ interface State {
   error: Error | null;
 }
 
+// After a new deploy, a tab left open on the old build still references JS
+// chunk filenames (content-hashed by Vite) that no longer exist on the server
+// — the dynamic import 404s and the host serves index.html as a fallback,
+// which the browser rejects as the wrong MIME type. One auto-reload picks up
+// the current build instead of showing an error screen. Guarded by
+// sessionStorage so a genuinely broken deploy doesn't reload-loop the tab.
+const CHUNK_LOAD_ERROR_PATTERN = /dynamically imported module|loading chunk .* failed|importing a module script failed/i;
+const CHUNK_RELOAD_FLAG = 'isp_chunk_reload';
+
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -22,6 +31,10 @@ class ErrorBoundary extends Component<Props, State> {
 
   override componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
+    if (CHUNK_LOAD_ERROR_PATTERN.test(error.message) && !sessionStorage.getItem(CHUNK_RELOAD_FLAG)) {
+      sessionStorage.setItem(CHUNK_RELOAD_FLAG, '1');
+      window.location.reload();
+    }
   }
 
   handleRetry = (): void => {

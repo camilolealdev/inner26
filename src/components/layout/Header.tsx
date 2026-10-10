@@ -37,6 +37,17 @@ const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const aboutRef = useRef<HTMLDivElement | null>(null);
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
+
+  // aria-hidden on the overlay must never land on an ancestor of the focused
+  // element (a11y violation) — blur before hiding if focus is still inside it.
+  const closeMobileMenu = () => {
+    const active = document.activeElement as HTMLElement | null;
+    if (active && mobileNavRef.current?.contains(active)) {
+      active.blur();
+    }
+    setIsOpen(false);
+  };
   const { cart, toggleCheckoutModal } = useContext(CartContext);
   const { page, navigate, location, openLocationGate, setLocation, setLanguage } = useNavigation();
   const { t, language } = useTranslation();
@@ -61,7 +72,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isOpen) {
-        setIsOpen(false);
+        closeMobileMenu();
       }
       if (event.key === 'Escape' && isAboutOpen) {
         setIsAboutOpen(false);
@@ -91,7 +102,7 @@ const Header: React.FC = () => {
 
   const handleNavigate = (targetPage: PageName) => {
     navigate(targetPage);
-    setIsOpen(false);
+    closeMobileMenu();
   };
 
   const handleLinkClick = (
@@ -293,6 +304,7 @@ const Header: React.FC = () => {
           would collapse this fixed inset-0 overlay to the header's height. */}
       <div
         id="mobile-navigation"
+        ref={mobileNavRef}
         aria-hidden={!isOpen}
         className={`fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-base transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
@@ -305,7 +317,7 @@ const Header: React.FC = () => {
             <span className="text-[11px] uppercase tracking-widest text-muted-light font-medium">{t('header.sede') as string}</span>
             <button
               type="button"
-              onClick={() => { setLocation('co'); setIsOpen(false); }}
+              onClick={() => { setLocation('co'); closeMobileMenu(); }}
               className={`text-xs uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full transition-all ${
                 location === 'co' ? 'bg-slate-is text-white' : 'text-ink opacity-70'
               }`}
@@ -314,7 +326,7 @@ const Header: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => { setLocation('pt'); setIsOpen(false); }}
+              onClick={() => { setLocation('pt'); closeMobileMenu(); }}
               className={`text-xs uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full transition-all ${
                 location === 'pt' ? 'bg-slate-is text-white' : 'text-ink opacity-70'
               }`}
@@ -323,7 +335,7 @@ const Header: React.FC = () => {
             </button>
             <button
               type="button"
-              onClick={() => { setLocation('us'); setIsOpen(false); }}
+              onClick={() => { setLocation('us'); closeMobileMenu(); }}
               className={`text-xs uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full transition-all ${
                 location === 'us' ? 'bg-slate-is text-white' : 'text-ink opacity-70'
               }`}
