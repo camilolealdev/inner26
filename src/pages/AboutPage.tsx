@@ -5,7 +5,11 @@ import { useTranslation } from '../i18n/useTranslation';
 import { homePages } from '../i18n/translations/homePages';
 import TestimonialsSection from '../components/sections/TestimonialsSection';
 
-const galleryIllustrations = ['yoga', 'meditation', 'lotus'];
+const galleryItems = [
+  { imageUrl: '/images/about/movimiento-consciente.jpg', alt: 'Movimiento Consciente' },
+  { imageUrl: '/images/about/silencio-interior.jpg', alt: 'Silencio Interior' },
+  { imageUrl: '/images/about/florecimiento.jpg', alt: 'Florecimiento' },
+];
 
 const AboutPage: React.FC = () => {
   const { t } = useTranslation(homePages);
@@ -107,20 +111,23 @@ const AboutPage: React.FC = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {galleryIllustrations.map((name, index) => (
+            {galleryItems.map((item, index) => (
               <div
                 key={index}
-                className="overflow-hidden rounded-sm aspect-[3/4] flex flex-col items-center justify-center group transition-colors duration-500"
-                style={{ background: '#F3EDE2' }}
+                className="is-surface is-surface--interactive group flex flex-col overflow-hidden rounded-sm transition-all duration-500 hover:-translate-y-1 shadow-sm hover:shadow-md"
               >
-                <Illustration
-                  name={name}
-                  className="w-2/5 h-2/5 transition-all duration-700 group-hover:scale-110"
-                  style={{ color: '#C9ADA1' } as React.CSSProperties}
-                />
-                <p className="mt-6 text-xs font-bold uppercase tracking-widest" style={{ color: '#A0A083' }}>
-                  {galleryLabels[index]}
-                </p>
+                <div className="is-media-stage overflow-hidden aspect-[3/4] relative flex items-center justify-center bg-sand-light">
+                  <img
+                    src={item.imageUrl}
+                    alt={galleryLabels[index] ?? item.alt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                  <p className="absolute bottom-6 left-6 right-6 text-xs font-bold uppercase tracking-widest text-white drop-shadow-sm">
+                    {galleryLabels[index]}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
