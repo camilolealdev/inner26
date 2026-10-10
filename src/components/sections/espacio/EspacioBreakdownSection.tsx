@@ -66,44 +66,65 @@ const EspacioBreakdownSection: React.FC = () => {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
-          {/* Media stage */}
-          <div className="is-frame is-media-stage min-h-[20rem] lg:min-h-full">
-            <div className="relative z-[3] flex flex-col items-center justify-center px-8 text-center">
-              <span
-                className="inline-flex h-16 w-16 items-center justify-center rounded-full border"
-                style={{
-                  borderColor: 'rgba(234, 224, 204, 0.7)',
-                  background: 'rgba(255, 255, 255, 0.35)',
-                  color: '#2D4A4D',
-                }}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-7 w-7"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.3}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+          {/* Media stage — real photo for the main studio room (the only
+              space we have actual photography of today); the other 3
+              environments (consultorios/producción/jardín) still use the
+              icon placeholder until there's real photography for them. */}
+          <div className="is-frame is-media-stage min-h-[20rem] lg:min-h-full relative overflow-hidden">
+            {active?.id === 'estudio' ? (
+              <>
+                <img
+                  src="/images/studio/yoga-clase-grupal.jpg"
+                  alt="Sala principal de Inner Spirit Studio, luminosa y amplia, con clase de yoga grupal"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden="true" />
+                <div className="relative z-[3] flex h-full flex-col items-center justify-end px-8 pb-8 text-center">
+                  <p className="font-heading text-2xl text-white">{active.label}</p>
+                  <p className="is-metric mt-2 text-xs font-bold uppercase tracking-[0.18em] text-white/80">
+                    {active.capacity}
+                  </p>
+                </div>
+              </>
+            ) : (
+              <div className="relative z-[3] flex h-full flex-col items-center justify-center px-8 text-center">
+                <span
+                  className="inline-flex h-16 w-16 items-center justify-center rounded-full border"
+                  style={{
+                    borderColor: 'rgba(234, 224, 204, 0.7)',
+                    background: 'rgba(255, 255, 255, 0.35)',
+                    color: '#2D4A4D',
+                  }}
                 >
-                  <rect x="3" y="4" width="18" height="14" rx="2" />
-                  <path d="M3 9h18M9 18v2M15 18v2" />
-                </svg>
-              </span>
-              <p
-                className="font-heading mt-5 text-2xl"
-                style={{ color: '#1A1A18' }}
-              >
-                {active?.label}
-              </p>
-              <p
-                className="is-metric mt-2 text-xs font-bold uppercase tracking-[0.18em]"
-                style={{ color: '#4D6A6D' }}
-              >
-                {active?.capacity}
-              </p>
-            </div>
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="h-7 w-7"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.3}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3" y="4" width="18" height="14" rx="2" />
+                    <path d="M3 9h18M9 18v2M15 18v2" />
+                  </svg>
+                </span>
+                <p
+                  className="font-heading mt-5 text-2xl"
+                  style={{ color: '#1A1A18' }}
+                >
+                  {active?.label}
+                </p>
+                <p
+                  className="is-metric mt-2 text-xs font-bold uppercase tracking-[0.18em]"
+                  style={{ color: '#4D6A6D' }}
+                >
+                  {active?.capacity}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* List */}

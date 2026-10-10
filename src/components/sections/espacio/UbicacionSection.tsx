@@ -51,73 +51,16 @@ const UbicacionSection: React.FC = () => {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
-          {/* Stylized map card */}
-          <div
-            className="is-surface relative overflow-hidden min-h-[20rem]"
-            role="img"
-            aria-label="Mapa estilizado de la ubicación del estudio en La Candelaria, Bogotá"
-          >
-            <div
-              aria-hidden="true"
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(90deg, rgba(77,106,109,0.10) 1px, transparent 1px), linear-gradient(180deg, rgba(77,106,109,0.08) 1px, transparent 1px)',
-                backgroundSize: '2.5rem 2.5rem',
-              }}
+          {/* Real embedded map — same verified Google Business Profile listing
+              linked from TestimonialsSection's "ver reseñas" CTA */}
+          <div className="is-surface relative overflow-hidden min-h-[20rem]">
+            <iframe
+              src="https://maps.google.com/maps?cid=12076127393282276532&output=embed"
+              title="Mapa de ubicación de Inner Spirit Studio en La Candelaria, Bogotá"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 h-full w-full border-0"
             />
-            {/* A diagonal "avenue" */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(118deg, transparent 46%, rgba(201,173,161,0.45) 46%, rgba(201,173,161,0.45) 49%, transparent 49%)',
-              }}
-            />
-
-            {/* Pin */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <span
-                className="relative flex h-5 w-5 items-center justify-center"
-                aria-hidden="true"
-              >
-                <span
-                  className="absolute inline-flex h-full w-full rounded-full"
-                  style={{ background: 'rgba(77, 106, 109, 0.25)', transform: 'scale(2.2)' }}
-                />
-                <span
-                  className="relative inline-flex h-3 w-3 rounded-full ring-4"
-                  style={{ background: '#4D6A6D', color: 'rgba(250,247,242,0.9)' }}
-                />
-              </span>
-            </div>
-
-            {/* Label card */}
-            <div
-              className="absolute bottom-5 left-5 right-5 rounded-md border p-4 sm:right-auto sm:max-w-xs"
-              style={{
-                borderColor: 'rgba(77, 106, 109, 0.18)',
-                background: 'rgba(250, 247, 242, 0.92)',
-                backdropFilter: 'blur(2px)',
-              }}
-            >
-              <p
-                className="is-metric text-xs font-bold uppercase tracking-[0.18em]"
-                style={{ color: '#4D6A6D' }}
-              >
-                Inner Spirit Studio
-              </p>
-              <p
-                className="font-heading mt-1 text-xl leading-snug"
-                style={{ color: '#1A1A18' }}
-              >
-                La Candelaria · Bogotá
-              </p>
-              <p className="mt-1 text-sm font-light" style={{ color: '#5E675D' }}>
-                Centro histórico, a pasos de plazas y calles caminables.
-              </p>
-            </div>
           </div>
 
           {/* Visit panel */}
