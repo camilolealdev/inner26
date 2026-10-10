@@ -7,10 +7,10 @@
 export const chicagoTranslations = {
   es: {
     hero: {
-      badge: 'Pilar MOVE · Hub Chicago',
+      badge: 'Pilar MOVE · Próximamente en Chicago',
       title: 'Static Dance Chicago',
       subtitle:
-        'El arte de la quietud dentro del movimiento. Danza consciente y sobria — sin palabras, sin pantallas — en un loft histórico de Chicago.',
+        'El arte de la quietud dentro del movimiento. Así imaginamos la danza consciente y sobria — sin palabras, sin pantallas — en un futuro espacio de Chicago.',
       heroAlt: 'Static Dance en el Chicago Loft Studio',
       ctaJoin: 'Unirme a la lista de espera',
       ctaHow: 'Cómo funciona la práctica',
@@ -57,8 +57,8 @@ export const chicagoTranslations = {
     },
     session: {
       eyebrow: 'El Recorrido',
-      title: 'Anatomía de una Sesión',
-      subtitle: 'Cada encuentro de Static Dance dura cerca de 2 horas y sigue un arco energético orgánico.',
+      title: 'Cómo imaginamos la experiencia',
+      subtitle: 'Así visualizamos un futuro encuentro de Static Dance: un arco energético orgánico de cerca de 2 horas, todavía en diseño.',
       phases: [
         {
           step: 'Fase 1',
@@ -122,10 +122,10 @@ export const chicagoTranslations = {
   },
   pt: {
     hero: {
-      badge: 'Pilar MOVE · Hub Chicago',
+      badge: 'Pilar MOVE · Brevemente em Chicago',
       title: 'Static Dance Chicago',
       subtitle:
-        'A arte da quietude dentro do movimento. Dança consciente e sóbria — sem palavras, sem ecrãs — num loft histórico de Chicago.',
+        'A arte da quietude dentro do movimento. Assim imaginamos a dança consciente e sóbria — sem palavras, sem ecrãs — num futuro espaço em Chicago.',
       heroAlt: 'Static Dance no Chicago Loft Studio',
       ctaJoin: 'Juntar-me à lista de espera',
       ctaHow: 'Como funciona a prática',
@@ -171,8 +171,8 @@ export const chicagoTranslations = {
     },
     session: {
       eyebrow: 'A Jornada',
-      title: 'Anatomia de uma Sessão',
-      subtitle: 'Cada encontro de Static Dance dura cerca de 2 horas e segue um arco energético orgânico.',
+      title: 'Como imaginamos a experiência',
+      subtitle: 'Assim visualizamos um futuro encontro de Static Dance: um arco energético orgânico de cerca de 2 horas, ainda em desenho.',
       phases: [
         {
           step: 'Fase 1',
@@ -235,10 +235,10 @@ export const chicagoTranslations = {
   },
   en: {
     hero: {
-      badge: 'MOVE Pillar · Chicago Hub',
+      badge: 'MOVE Pillar · Coming soon to Chicago',
       title: 'Static Dance Chicago',
       subtitle:
-        'The art of stillness within movement. Conscious, sober dance — no words, no screens — in a historic Chicago loft.',
+        "The art of stillness within movement. This is how we envision conscious, sober dance — no words, no screens — in a future Chicago space.",
       heroAlt: 'Static Dance en Chicago Loft Studio',
       ctaJoin: 'Join the waitlist',
       ctaHow: 'How the practice works',
@@ -284,8 +284,8 @@ export const chicagoTranslations = {
     },
     session: {
       eyebrow: 'The Journey',
-      title: 'Anatomy of a Session',
-      subtitle: 'Each Static Dance gathering lasts about 2 hours and follows an organic energy arc.',
+      title: 'How we envision the experience',
+      subtitle: "This is how we picture a future Static Dance gathering: an organic energy arc of about 2 hours, still being designed.",
       phases: [
         {
           step: 'Phase 1',

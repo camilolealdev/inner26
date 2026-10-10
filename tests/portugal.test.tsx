@@ -49,13 +49,13 @@ describe('PortugalPage', () => {
     expect(screen.getByText(/A envolvente mágica da Costa de Leiria/i)).toBeDefined();
     
     const nazareImg = screen.getByAltText(/Nazaré ondas gigantes e farol/i) as HTMLImageElement;
-    expect(nazareImg.src).toContain('/images/portugal/regiao-nazare-leiria.jpg');
+    expect(nazareImg.src).toContain('/images/portugal/nazare1.jpeg');
 
     const lagoaImg = screen.getByAltText(/Lagoa da Ervedeira/i) as HTMLImageElement;
-    expect(lagoaImg.src).toContain('/images/portugal/lagoa-ervedeira.jpg');
+    expect(lagoaImg.src).toContain('/images/portugal/ervideira1.jpeg');
 
     const serrasImg = screen.getByAltText(/Cascatas, grutas e vales verdes/i) as HTMLImageElement;
-    expect(serrasImg.src).toContain('/images/portugal/serras-aire-candeeiros.jpg');
+    expect(serrasImg.src).toContain('/images/portugal/serras1.jpeg');
   });
 
   it('opens and closes the image lightbox modal when clicking a photo', () => {

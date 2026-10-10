@@ -11,9 +11,9 @@ Photography of the Inner Spirit Portugal sanctuary and its surrounding territory
 | `projeto-cabanas-glamping.jpg` | 3D render/concept of the land with eco-cabin and glamping tents | `PortugalPage` "O Projeto & O Terreno" spotlight |
 | `nazare-terreno.jpg` | Countryside terrain being prepared for vegetable garden & cabins | `PortugalPage` Voluntariado & work in the land |
 | `nazare-remodelacao.jpg` | Stone structure restoration, carpentry and painting | `PortugalPage` Voluntariado & renovation tasks |
-| `regiao-nazare-leiria.jpg` | Nazaré waves & fort, Leiria castle, and Aveiro canals | `PortugalPage` "Onde Estamos & A Envolvente" |
-| `lagoa-ervedeira.jpg` | Lagoa da Ervedeira with white sand beach and pine walkways | `PortugalPage` "Onde Estamos & A Envolvente" |
-| `serras-aire-candeeiros.jpg` | Serras de Aire e Candeeiros waterfalls, caves and green valleys | `PortugalPage` "Onde Estamos & A Envolvente" |
+| `nazare1.jpeg` / `nazare2.jpeg` / `nazare3.jpeg` | Nazaré waves & fort, Leiria castle, and Aveiro canals | `PortugalPage` "Onde Estamos & A Envolvente" — mini-carousel (auto-rotating + dots) |
+| `ervideira1.jpeg` / `ervideira2.jpeg` / `ervideira3.jpeg` | Lagoa da Ervedeira with white sand beach and pine walkways | `PortugalPage` "Onde Estamos & A Envolvente" — mini-carousel |
+| `serras1.jpeg` / `serras2.jpeg` / `serras3.jpeg` | Serras de Aire e Candeeiros waterfalls, caves and green valleys | `PortugalPage` "Onde Estamos & A Envolvente" — mini-carousel |
 | `nazare-costa.jpg` | Atlantic coastline and golden cliffs of Nazaré / Leiria | `PortugalPage` gallery / visual support |
 
 ## Conventions

@@ -13,6 +13,92 @@ interface GalleryPhoto {
   tag?: string;
 }
 
+const TERRITORY_AUTO_INTERVAL_MS = 4500;
+
+interface TerritoryPhotoCardProps {
+  srcs: string[];
+  meta: { alt: string; category: string; tag: string; caption: string };
+  viewEnlargedLabel: string;
+  viewDetailsPrefix: string;
+  onOpen: (photo: GalleryPhoto) => void;
+}
+
+const TerritoryPhotoCard: React.FC<TerritoryPhotoCardProps> = ({ srcs, meta, viewEnlargedLabel, viewDetailsPrefix, onOpen }) => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (srcs.length < 2) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % srcs.length), TERRITORY_AUTO_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [srcs.length]);
+
+  const currentPhoto: GalleryPhoto = { src: srcs[index] ?? '', ...meta };
+
+  const open = () => onOpen(currentPhoto);
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      open();
+    }
+  };
+
+  return (
+    <figure
+      role="button"
+      tabIndex={0}
+      aria-haspopup="dialog"
+      aria-label={`${viewDetailsPrefix} ${meta.tag}`}
+      onKeyDown={handleKeyDown}
+      onClick={open}
+      className="group rounded-2xl overflow-hidden border border-white/10 bg-[#1A1A17] flex flex-col cursor-pointer transition-all duration-300 hover:border-white/30 hover:translate-y-[-2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9ADA1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131311]"
+    >
+      <div className="relative h-64 overflow-hidden bg-black/40">
+        <img
+          src={currentPhoto.src}
+          alt={meta.alt}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
+        />
+        <div className="absolute top-3 left-3">
+          <span className="text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[#8B9A8B]">
+            {meta.tag}
+          </span>
+        </div>
+        {srcs.length > 1 && (
+          <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-1.5">
+            {srcs.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`${i + 1}/${srcs.length}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIndex(i);
+                }}
+                className={`h-1.5 rounded-full transition-all ${i === index ? 'w-5 bg-[#C9ADA1]' : 'w-1.5 bg-white/40'}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+      <figcaption className="p-6 flex-1 flex flex-col justify-between">
+        <div>
+          <span className="text-[11px] uppercase tracking-wider text-stone-400 block mb-2 font-mono">
+            {meta.category}
+          </span>
+          <p className="text-sm text-stone-300 font-light leading-relaxed">
+            {meta.caption}
+          </p>
+        </div>
+        <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-stone-400 group-hover:text-[#C9ADA1] transition-colors">
+          <span>{viewEnlargedLabel}</span>
+          <span aria-hidden="true">↗</span>
+        </div>
+      </figcaption>
+    </figure>
+  );
+};
+
 const PortugalPage: React.FC = () => {
   const { openLocationGate } = useNavigation();
   const { t } = useTranslation(portugalTranslations);
@@ -49,9 +135,9 @@ const PortugalPage: React.FC = () => {
   const tasks = t('volunteer.tasks') as string[];
 
   const territoryPhotoSrcs = [
-    '/images/portugal/regiao-nazare-leiria.jpg',
-    '/images/portugal/lagoa-ervedeira.jpg',
-    '/images/portugal/serras-aire-candeeiros.jpg',
+    ['/images/portugal/nazare1.jpeg', '/images/portugal/nazare2.jpeg', '/images/portugal/nazare3.jpeg'],
+    ['/images/portugal/ervideira1.jpeg', '/images/portugal/ervideira2.jpeg', '/images/portugal/ervideira3.jpeg'],
+    ['/images/portugal/serras1.jpeg', '/images/portugal/serras2.jpeg', '/images/portugal/serras3.jpeg'],
   ];
   const territoryPhotoMeta = t('region.photos') as Array<{
     alt: string;
@@ -59,8 +145,8 @@ const PortugalPage: React.FC = () => {
     tag: string;
     caption: string;
   }>;
-  const territoryPhotos: GalleryPhoto[] = territoryPhotoMeta.map((meta, i) => ({
-    src: territoryPhotoSrcs[i] ?? '',
+  const territoryGalleries = territoryPhotoMeta.map((meta, i) => ({
+    srcs: territoryPhotoSrcs[i] ?? [],
     alt: meta.alt,
     category: meta.category,
     tag: meta.tag,
@@ -371,45 +457,15 @@ const PortugalPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {territoryPhotos.map((photo) => (
-              <figure 
-                key={photo.src}
-                role="button"
-                tabIndex={0}
-                aria-haspopup="dialog"
-                aria-label={`${t('region.viewDetailsPrefix') as string} ${photo.tag}`}
-                onKeyDown={(e) => handleCardKeyDown(e, photo)}
-                onClick={() => setActivePhoto(photo)}
-                className="group rounded-2xl overflow-hidden border border-white/10 bg-[#1A1A17] flex flex-col cursor-pointer transition-all duration-300 hover:border-white/30 hover:translate-y-[-2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9ADA1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131311]"
-              >
-                <div className="relative h-64 overflow-hidden bg-black/40">
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[#8B9A8B]">
-                      {photo.tag}
-                    </span>
-                  </div>
-                </div>
-                <figcaption className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[11px] uppercase tracking-wider text-stone-400 block mb-2 font-mono">
-                      {photo.category}
-                    </span>
-                    <p className="text-sm text-stone-300 font-light leading-relaxed">
-                      {photo.caption}
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-stone-400 group-hover:text-[#C9ADA1] transition-colors">
-                    <span>{t('region.viewEnlarged') as string}</span>
-                    <span aria-hidden="true">↗</span>
-                  </div>
-                </figcaption>
-              </figure>
+            {territoryGalleries.map((gallery) => (
+              <TerritoryPhotoCard
+                key={gallery.tag}
+                srcs={gallery.srcs}
+                meta={gallery}
+                viewEnlargedLabel={t('region.viewEnlarged') as string}
+                viewDetailsPrefix={t('region.viewDetailsPrefix') as string}
+                onOpen={setActivePhoto}
+              />
             ))}
           </div>
         </div>
