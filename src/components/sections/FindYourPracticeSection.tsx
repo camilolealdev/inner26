@@ -150,6 +150,48 @@ const FindYourPracticeSection: React.FC = () => {
             <PracticeCard key={`${activeCategory}-${idx}`} item={item} />
           ))}
         </div>
+
+        {/* Siki Terra — espacio de clases recurrentes en el estudio */}
+        <div
+          className="mt-10 p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 rounded-sm"
+          style={{ background: '#FAF7F2', border: '1px solid #EAE0CC' }}
+        >
+          <div className="flex items-start gap-4">
+            <img
+              src="/images/siki.jpg"
+              alt="Siki Terra"
+              className="w-14 h-14 rounded-full object-cover shrink-0"
+              loading="lazy"
+            />
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#4D6A6D' }}>Clases recurrentes</p>
+              <h3 className="text-2xl font-heading" style={{ color: '#252520' }}>Siki Terra, movimiento, fuerza y yoga</h3>
+              <p className="text-sm mt-2 max-w-xl font-light leading-relaxed" style={{ color: '#798478' }}>
+                Siki tiene su espacio propio de clases recurrentes en Inner Spirit — locomoción, handstands y trabajo de fuerza con su propia mirada del movimiento consciente.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
+            <a
+              href="https://www.instagram.com/siki.terra/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-6 py-3 font-heading text-base text-center transition-all hover:opacity-90"
+              style={{ background: '#4D6A6D', color: '#EAE0CC' }}
+            >
+              Seguir a Siki
+            </a>
+            <a
+              href="https://wa.me/message/YRTT42ZLRK27H1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-6 py-3 font-heading text-base text-center transition-all hover:opacity-90 border"
+              style={{ borderColor: '#4D6A6D', color: '#4D6A6D' }}
+            >
+              Reservar clase
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

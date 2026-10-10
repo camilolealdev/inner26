@@ -156,7 +156,7 @@ export const home = {
           innerDance: {
             title: 'INNER DANCE',
             description: 'Ritual sonoro de expansión — danza interna, meditación musical y visual.',
-            priceLabel: '$55.000 COP',
+            priceLabel: '$60.000 COP',
           },
           soundHealing: {
             title: 'Sound Healing',
@@ -500,7 +500,7 @@ export const home = {
           innerDance: {
             title: 'INNER DANCE',
             description: 'Ritual sonoro de expansão — dança interna, meditação musical e visual.',
-            priceLabel: '$55.000 COP',
+            priceLabel: '$60.000 COP',
           },
           soundHealing: {
             title: 'Sound Healing',
@@ -843,7 +843,7 @@ export const home = {
           innerDance: {
             title: 'INNER DANCE',
             description: 'A sonic ritual of expansion — inner dance, musical and visual meditation.',
-            priceLabel: '$55.000 COP',
+            priceLabel: '$60.000 COP',
           },
           soundHealing: {
             title: 'Sound Healing',
