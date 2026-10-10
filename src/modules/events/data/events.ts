@@ -15,7 +15,7 @@ export const studioEvents: StudioEvent[] = [
     price: 55000,
     priceLabel: '$55.000 COP puerta - $44.000 anticipado',
     illustrationName: 'dance',
-    coverImageUrl: '/images/events/inner-dance.jpg',
+    coverImageUrl: '/images/events/innerdance.jpeg',
     bookingSlots: [
       'Sabado 6:00 PM - Cupo general',
       'Sabado 7:00 PM - Ingreso tardio',
@@ -34,7 +34,7 @@ export const studioEvents: StudioEvent[] = [
     price: 100000,
     priceLabel: '$100.000 COP',
     illustrationName: 'acro-yoga',
-    coverImageUrl: '',
+    coverImageUrl: '/images/events/kamafligth.jpg',
     bookingSlots: [
       'Sabado 10 de octubre - 11:00 AM a 1:00 PM',
     ],

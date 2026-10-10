@@ -30,7 +30,7 @@ const practiceMeta: Record<Category, { key: string; type: PracticeItem['type']; 
     { key: 'breathwork', type: 'class', illustrationName: 'breathwork', imageUrl: '/images/studio/danza-movimiento.jpg', price: 36000 },
   ],
   conexion: [
-    { key: 'innerDance', type: 'event', illustrationName: 'dance', imageUrl: '/images/events/inner-dance.jpg', price: 55000 },
+    { key: 'innerDance', type: 'event', illustrationName: 'dance', imageUrl: '/images/events/innerdance.jpeg', price: 55000 },
     { key: 'soundHealing', type: 'class', illustrationName: 'sound-healing', imageUrl: '/images/chicago/chicago-sound-movement.jpg', price: 36000 },
   ],
 };
