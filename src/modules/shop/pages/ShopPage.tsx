@@ -25,9 +25,9 @@ const products: ShopProduct[] = [
   { id: 3, name: 'Aceite Esencial',     price: '35.000', imageUrl: '/images/products/aceite-esencial.jpg',   illustrationName: 'oil',       description: 'Mezcla botánica para respiración, descanso y presencia.', availability: 'Retiro en estudio o envío local' },
   { id: 4, name: 'Diario de Gratitud',  price: '65.000', imageUrl: '/images/products/diario-gratitud.jpg',  illustrationName: 'journal',   description: 'Cuaderno para intenciones, seguimiento y journaling.', availability: 'Disponible para retiro' },
   { id: 5, name: 'Vela de Soja',        price: '48.000', imageUrl: '/images/products/vela-soja.jpg',        illustrationName: 'candle',    description: 'Vela mineral para rituales cortos y meditación guiada.', availability: 'Retiro en estudio o envío local' },
-  { id: 6, name: 'Manta de Lino',       price: '120.000', imageUrl: '',                                      illustrationName: 'blanket',  description: 'Textil liviano para savasana, meditación o consultorio.', availability: 'Confirmar color por WhatsApp' },
+  { id: 6, name: 'Manta de Lino',       price: '120.000', imageUrl: '/images/products/manta-lino.jpg',      illustrationName: 'blanket',  description: 'Textil liviano para savasana, meditación o consultorio.', availability: 'Confirmar color por WhatsApp' },
   { id: 7, name: 'Cuenco Tibetano',     price: '160.000', imageUrl: '/images/products/cuenco-tibetano.jpg',  illustrationName: 'bowl',     description: 'Cuenco de práctica para sonido, pausa y vibración.', availability: 'Entrega coordinada' },
-  { id: 8, name: 'Palo Santo',          price: '28.000', imageUrl: '',                                      illustrationName: 'palosanto', description: 'Madera aromática para limpieza consciente del espacio.', availability: 'Disponible para retiro' },
+  { id: 8, name: 'Palo Santo',          price: '28.000', imageUrl: '/images/products/palo-santo.jpg',       illustrationName: 'palosanto', description: 'Madera aromática para limpieza consciente del espacio.', availability: 'Disponible para retiro' },
 ];
 
 const ProductCard: React.FC<{ product: ShopProduct }> = ({ product }) => {
