@@ -30,7 +30,9 @@
       "Bash(kill %1)",
       "Bash(mkdir -p \"public/fonts/montserrat\")",
       "Bash(cp \"/c/Users/morce/AppData/Local/Temp/claude/G--Nueva-carpeta-Documentos-inner/55cd72c9-e202-4944-857d-2b945d760d8b/scratchpad/montserrat/static/Montserrat-Medium.ttf\" \"public/fonts/montserrat/Montserrat-Medium.ttf\")",
-      "Bash(cp \"/c/Users/morce/AppData/Local/Temp/claude/G--Nueva-carpeta-Documentos-inner/55cd72c9-e202-4944-857d-2b945d760d8b/scratchpad/montserrat/static/Montserrat-Light.ttf\" \"public/fonts/montserrat/Montserrat-Light.ttf\")"
+      "Bash(cp \"/c/Users/morce/AppData/Local/Temp/claude/G--Nueva-carpeta-Documentos-inner/55cd72c9-e202-4944-857d-2b945d760d8b/scratchpad/montserrat/static/Montserrat-Light.ttf\" \"public/fonts/montserrat/Montserrat-Light.ttf\")",
+      "Bash(rtk git *)",
+      "Bash(rtk ls *)"
     ]
   }
 }
