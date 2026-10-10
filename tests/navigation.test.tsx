@@ -84,9 +84,9 @@ describe('Navigation', () => {
   });
 
   it('detecta la página correcta desde la URL al iniciar', () => {
-    window.history.pushState({}, '', '/blog');
+    window.history.pushState({}, '', '/eventos');
     render(<NavigationConsumer />, { wrapper: Wrapper });
-    expect(screen.getByTestId('current-page').textContent).toBe('blog');
+    expect(screen.getByTestId('current-page').textContent).toBe('eventos');
   });
 
   it('detecta la página portugal desde la URL al iniciar', () => {

@@ -41,8 +41,8 @@ function service_catalog_entries(): array
         'Danza & Movimiento' => ['name' => 'Danza & Movimiento', 'price' => 36000],
         'Danza & Sound Healing' => ['name' => 'Danza & Sound Healing', 'price' => 36000],
         'Sound Healing' => ['name' => 'Sound Healing', 'price' => 36000],
-        'Inner Dance' => ['name' => 'INNER DANCE', 'price' => 55000],
-        'Kamaflight' => ['name' => 'KAMAFLIGHT', 'price' => 100000],
+        'Inner Dance' => ['name' => 'INNER DANCE', 'price' => 60000],
+        'Kamaflight' => ['name' => 'KAMAFLIGHT', 'price' => 75000],
     ];
 
     $normalized = [];
