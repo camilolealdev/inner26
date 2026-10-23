@@ -178,7 +178,7 @@ const Footer: React.FC = () => {
               )}
               {!isPt && !isUs && (
                 <a
-                  href="https://wa.me/573212248261"
+                  href="https://wa.me/573212248261?text=Hola%2C%20quiero%20hablar%20con%20Inner%20Spirit%20Colombia%20%F0%9F%8C%B1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-colors duration-300 hover:text-white"
@@ -191,7 +191,7 @@ const Footer: React.FC = () => {
             <div className="space-y-2 text-sm">
               {!isPt && !isUs && (
                 <a
-                  href="https://wa.me/573212248261"
+                  href="https://wa.me/573212248261?text=Hola%2C%20quiero%20hablar%20con%20Inner%20Spirit%20Colombia%20%F0%9F%8C%B1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block transition-colors hover:text-white"

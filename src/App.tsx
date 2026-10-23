@@ -76,6 +76,13 @@ const pageSEO: Record<string, PageSEO> = {
     image: 'https://innerspirit.net/images/chicago/chicago-loft-static-dance.jpg',
     locale: 'en_US',
   },
+  landing: {
+    canonical: 'https://innerspirit.net/landing',
+    title: 'Inner Dance — Danza Consciente en Bogotá | Inner Spirit',
+    description: 'Vive Inner Dance: un ritual de movimiento consciente, descalzo y sin coreografía, guiado por sonido en vivo en Inner Spirit Studio, La Candelaria, Bogotá. 4.9★ en Google.',
+    image: 'https://innerspirit.net/images/studio/yoga-clase-grupal.jpg',
+    locale: 'es_CO',
+  },
   comunidad: {
     canonical: 'https://innerspirit.net/comunidad',
     title: 'Comunidad — Nuestra Tribu & Testimonios | Inner Spirit Studio',
@@ -107,6 +114,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const PortugalPage = lazy(() => import('./pages/PortugalPage'));
 const ChicagoPage = lazy(() => import('./pages/ChicagoPage'));
 const CommunityPage = lazy(() => import('./pages/CommunityPage'));
+const LandingPage = lazy(() => import('./pages/LandingPage'));
 import LocationGateModal from './components/modals/LocationGateModal';
 import RafflePopupModal from './components/modals/RafflePopupModal';
 
@@ -158,6 +166,8 @@ const PageRenderer: React.FC = () => {
       return <ChicagoPage />;
     case 'comunidad':
       return <CommunityPage />;
+    case 'landing':
+      return <LandingPage />;
     case 'privacidad':
       return <PrivacyPage />;
     case 'terminos':
@@ -254,7 +264,7 @@ const AppContent: React.FC = () => {
         <main
           id="main-content"
           tabIndex={-1}
-          className={`${page !== 'home' && page !== 'portugal' && page !== 'chicago' ? 'pt-20 md:pt-24' : ''} focus:outline-none`}
+          className={`${page !== 'home' && page !== 'portugal' && page !== 'chicago' && page !== 'landing' ? 'pt-20 md:pt-24' : ''} focus:outline-none`}
         >
           <ErrorBoundary>
             <Suspense fallback={<LoadingSpinner />}>

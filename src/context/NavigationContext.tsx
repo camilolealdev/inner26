@@ -14,6 +14,7 @@ export type PageName =
   | 'portugal'
   | 'chicago'
   | 'comunidad'
+  | 'landing'
   | '404';
 
 export type LocationChoice = 'co' | 'pt' | 'us';
@@ -36,6 +37,7 @@ export const PAGE_TO_PATH: Record<PageName, string> = {
   portugal: '/portugal',
   chicago: '/chicago',
   comunidad: '/comunidad',
+  landing: '/landing',
 };
 
 export const pathToPage = (pathname: string): PageName => {

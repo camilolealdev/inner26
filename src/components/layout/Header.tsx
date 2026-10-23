@@ -374,7 +374,7 @@ const Header: React.FC = () => {
             <a href="https://instagram.com/innerspirit_studio" target="_blank" rel="noopener noreferrer">
               Instagram
             </a>
-            <a href="https://wa.me/573212248261" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/573212248261?text=Hola%2C%20quiero%20hablar%20con%20Inner%20Spirit%20Colombia%20%F0%9F%8C%B1" target="_blank" rel="noopener noreferrer">
               WhatsApp
             </a>
           </div>
