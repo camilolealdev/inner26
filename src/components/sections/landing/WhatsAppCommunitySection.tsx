@@ -8,7 +8,7 @@ const WhatsAppCommunitySection: React.FC = () => {
     <section id="comunidad" className="is-section" aria-label="Comunidad de WhatsApp">
       <div className="is-shell">
         <Surface
-          className="p-8 md:p-14 max-w-3xl mx-auto text-center border-2"
+          className="p-8 md:p-12 max-w-3xl mx-auto text-center border-2"
           style={{ borderColor: `${WHATSAPP_GREEN}55` }}
         >
           <span

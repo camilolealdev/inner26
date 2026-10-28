@@ -52,12 +52,12 @@ const InnerDanceHeroSection: React.FC = () => {
             Danza Consciente · Bogotá
           </span>
 
-          {/* Headline — "Danza" reacts to mouse proximity */}
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] font-heading text-white leading-[0.9] tracking-normal">
+          {/* Headline — "Inner Dance" is the protagonist, reacts to mouse proximity */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[7rem] font-heading text-white leading-[0.9] tracking-normal">
             <span className="block opacity-95">
-              {reduceMotion ? 'Danza' : (
+              {reduceMotion ? 'Inner Dance' : (
                 <VariableProximity
-                  text="Danza"
+                  text="Inner Dance"
                   radius={220}
                   minWeight={300}
                   maxWeight={700}
@@ -65,7 +65,7 @@ const InnerDanceHeroSection: React.FC = () => {
               )}
             </span>
             <span className="block font-light italic opacity-75 mt-2 md:mt-4" style={{ color: '#C9ADA1' }}>
-              que te despierta
+              la danza que te despierta
             </span>
           </h1>
 

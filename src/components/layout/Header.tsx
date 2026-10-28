@@ -60,7 +60,7 @@ const Header: React.FC = () => {
   // On homepage, Portugal & Chicago hero, header is transparent with white text until scrolled.
   // When the mobile menu is open the overlay is light (sand), so the header must
   // switch to its solid/ink style — otherwise the white brand + close icon vanish.
-  const isHeroPage = page === 'home' || page === 'portugal' || page === 'chicago';
+  const isHeroPage = page === 'home' || page === 'portugal' || page === 'chicago' || page === 'landing';
   const isTransparent = isHeroPage && !scrolled && !isOpen;
 
   useEffect(() => {

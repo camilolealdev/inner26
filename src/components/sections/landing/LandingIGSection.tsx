@@ -3,7 +3,7 @@ import InstagramFeedEmbed from '../../../modules/events/components/InstagramFeed
 
 const LandingIGSection: React.FC = () => {
   return (
-    <section id="instagram" className="is-section is-section--sand">
+    <section id="instagram" className="is-section is-section--paper">
       <div className="is-shell">
         <div className="text-center max-w-2xl mx-auto mb-2">
           <span className="is-eyebrow justify-center">Síguenos</span>

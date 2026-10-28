@@ -3,8 +3,7 @@ import React, { useEffect } from 'react';
 import InnerDanceHeroSection from '../components/sections/landing/InnerDanceHeroSection';
 import ExperienciasSection from '../components/sections/landing/ExperienciasSection';
 import LandingIGSection from '../components/sections/landing/LandingIGSection';
-import PortugalTeaserSection from '../components/sections/landing/PortugalTeaserSection';
-import TiendaTeaserSection from '../components/sections/landing/TiendaTeaserSection';
+import DestinosYTiendaSection from '../components/sections/landing/DestinosYTiendaSection';
 import GoogleReviewsSection from '../components/sections/landing/GoogleReviewsSection';
 import WhatsAppCommunitySection from '../components/sections/landing/WhatsAppCommunitySection';
 
@@ -45,8 +44,7 @@ const LandingPage: React.FC = () => {
     <>
       <InnerDanceHeroSection />
       <ExperienciasSection />
-      <PortugalTeaserSection />
-      <TiendaTeaserSection />
+      <DestinosYTiendaSection />
       <GoogleReviewsSection />
       <LandingIGSection />
       <WhatsAppCommunitySection />
