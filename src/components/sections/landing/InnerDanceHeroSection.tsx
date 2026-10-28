@@ -42,8 +42,8 @@ const InnerDanceHeroSection: React.FC = () => {
 
       {/* Main Content */}
       <div
-        className="relative is-shell flex flex-col items-center justify-center text-center"
-        style={{ zIndex: 2, minHeight: '100svh', paddingTop: '4rem', paddingBottom: '2rem' }}
+        className="relative is-shell flex flex-col items-center justify-center text-center pb-8 sm:pb-28"
+        style={{ zIndex: 2, minHeight: '100svh', paddingTop: '4rem' }}
       >
         <div className="animate-fade-in-up flex flex-col items-center w-full max-w-5xl">
 

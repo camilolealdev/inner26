@@ -117,6 +117,8 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
 
   const [isLocationGateOpen, setIsLocationGateOpen] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
+    // The landing page is a focused, single-location experience — never gate it.
+    if (pathToPage(window.location.pathname) === 'landing') return false;
     // Open on first entry if no choice has ever been made and not explicitly on a subpath
     const saved = localStorage.getItem(STORAGE_KEY);
     return !saved;

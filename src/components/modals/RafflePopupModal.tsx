@@ -21,6 +21,9 @@ const RafflePopupModal: React.FC = () => {
   useEffect(() => {
     if (!config.enabled) return;
 
+    // The landing page is a self-contained funnel with its own WhatsApp CTA — never interrupt it.
+    if (page === 'landing') return;
+
     const isAllowedPage =
       config.pages === 'all'
         ? page !== '404'
