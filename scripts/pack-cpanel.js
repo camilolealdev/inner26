@@ -97,13 +97,20 @@ try {
     // `unzip` on the cPanel server treats as a literal character instead
     // of a directory separator — every nested file lands as one flat
     // file with a literal "\" in its name instead of in its folder.
-    // .NET's System.IO.Compression.ZipFile normalizes separators to "/"
-    // per the zip spec, so use that directly instead.
+    // ZipFile.CreateFromDirectory has the same flaw on .NET Framework, which
+    // is what Windows PowerShell 5.1 loads: it stores names with the OS
+    // separator as well. So enumerate the files ourselves and write every
+    // entry name with "/", as the zip spec requires.
     const escape = (s) => s.replace(/'/g, "''");
     const psCommand =
       'Add-Type -AssemblyName System.IO.Compression.FileSystem; ' +
-      `[System.IO.Compression.ZipFile]::CreateFromDirectory('${escape(stagingDir)}', ` +
-      `'${escape(zipFile)}', [System.IO.Compression.CompressionLevel]::Optimal, $false)`;
+      `$src = (Resolve-Path -LiteralPath '${escape(stagingDir)}').Path; ` +
+      `$dst = '${escape(zipFile)}'; ` +
+      "$zip = [System.IO.Compression.ZipFile]::Open($dst, 'Create'); " +
+      'try { Get-ChildItem -LiteralPath $src -Recurse -File | ForEach-Object { ' +
+      "$rel = $_.FullName.Substring($src.Length + 1).Replace([char]92, [char]47)" +
+      '; [void][System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $rel, ' +
+      '[System.IO.Compression.CompressionLevel]::Optimal) } } finally { $zip.Dispose() }';
     execFileSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', psCommand], {
       stdio: 'inherit',
     });
