@@ -6,9 +6,19 @@ import type { PageName } from '../context/NavigationContext';
  * en ningun otro archivo.
  *
  * Para lanzar una rifa nueva, cambia `id` (esto resetea el localStorage de
- * quienes ya vieron/participaron en la anterior) junto con el contenido.
- * Para apagarla sin borrar nada, pon `enabled: false`.
+ * quienes ya la cerraron) junto con el contenido. Para apagarla sin borrar
+ * nada, pon `enabled: false`.
+ *
+ * La participacion ocurre en Instagram (no hay formulario en el sitio): el
+ * modal solo resume las instrucciones y lleva al perfil.
  */
+export interface RaffleStep {
+  /** Instruccion corta y accionable. */
+  title: string;
+  /** Aclaracion opcional que se muestra bajo la instruccion. */
+  detail?: string;
+}
+
 export interface RafflePopupConfig {
   enabled: boolean;
   id: string;
@@ -16,12 +26,15 @@ export interface RafflePopupConfig {
   title: string;
   description: string;
   prizeLabel: string;
+  prizeItems: string[];
+  steps: RaffleStep[];
+  /** Empujan a comentar mas: se muestra como nota destacada. */
+  bonusNote?: string;
   deadlineLabel: string;
-  bullets: string[];
-  termsUrl?: string;
+  locationNote?: string;
+  instagramHandle: string;
+  instagramUrl: string;
   ctaLabel: string;
-  successTitle: string;
-  successMessage: string;
   /** URL de la imagen del premio/rifa */
   imageUrl?: string;
   /** Milisegundos de espera tras cargar la pagina antes de mostrar el popup por tiempo. */
@@ -37,22 +50,40 @@ export interface RafflePopupConfig {
 export const rafflePopupConfig: RafflePopupConfig = {
   enabled: true,
   id: 'rifa-cuenco-2026',
-  eyebrow: 'Rifa Inner Spirit',
-  title: 'Gánate un Cuenco Tibetano Artesanal + Sound Healing',
+  eyebrow: 'Sorteo Inner Spirit',
+  title: 'Gánate un cuenco tibetano artesanal',
   description:
-    'Participa dejando tus datos y quedas inscrito automáticamente. Anunciamos a la persona ganadora por Instagram y WhatsApp.',
-  prizeLabel: '1 Cuenco Tibetano de 7 metales + 1 sesión de Sound Healing',
-  deadlineLabel: 'Cierra el 30 de septiembre de 2026',
-  imageUrl: '/images/raffle/cuenco-tibetano.jpg',
-  bullets: [
-    'Cuenco tibetano artesanal con baqueta de madera y cuero',
-    'Participación gratuita, un registro por persona',
-    'Ganador(a) anunciado en @innerspirit_studio',
+    'Si buscas reducir el estrés, mejorar tus meditaciones o darle un toque de paz y armonía a tus días, este sorteo es para ti.',
+  prizeLabel: '¿Qué puedes ganar?',
+  prizeItems: [
+    'Un cuenco tibetano importado, elaborado artesanalmente',
+    'Su maza / baqueta de madera para hacerlo sonar',
+    'Cojín de soporte',
   ],
-  termsUrl: '/terminos',
-  ctaLabel: 'Quiero participar en la rifa',
-  successTitle: '¡Ya estás participando!',
-  successMessage: 'Guarda este registro: te escribiremos por WhatsApp si resultas ganador(a).',
+  steps: [
+    {
+      title: 'Sigue @innerspirit_studio y @innerdance_music',
+      detail: 'Debes seguir ambas cuentas para validar tu premio.',
+    },
+    {
+      title: 'Dale "Me gusta" a la publicación',
+    },
+    {
+      title: 'Etiqueta a 2 amigos en los comentarios',
+      detail: 'Que necesiten un momento de conexión y relajación.',
+    },
+    {
+      title: 'Comparte la publicación en tus Stories',
+    },
+  ],
+  bonusNote: 'Entre más comentes etiquetando a personas distintas, ¡más oportunidades tienes de ganar!',
+  deadlineLabel: 'Miércoles 30 de noviembre',
+  locationNote:
+    'Sorteo válido para Colombia. La entrega será en nuestro espacio con una clase gratis para asistir.',
+  instagramHandle: '@innerspirit_studio',
+  instagramUrl: 'https://www.instagram.com/innerspirit_studio',
+  ctaLabel: 'Participar en Instagram',
+  imageUrl: '/images/raffle/cuenco-tibetano.jpg',
   delayMs: 4000,
   scrollPercentTrigger: 30,
   reshowAfterDays: 2,
